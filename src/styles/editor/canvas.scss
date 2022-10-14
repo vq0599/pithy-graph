@@ -1,0 +1,9 @@
+.ss-canvas {
+    transform-origin: left top;
+    position: absolute;
+  &-inner {
+    background: #FFF;
+    width: 1920px;
+    aspect-ratio: $canvas-ratio;
+  }
+}

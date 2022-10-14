@@ -1,0 +1,54 @@
+.ss-editor-aside {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  .aside-slider {
+    padding: 12px;
+    overflow-y: auto;
+    flex-grow: 1;
+    &-item {
+      display: flex;
+      margin-bottom: 20px;
+      position: relative;
+      cursor: pointer;
+      & > i {
+        visibility: hidden;
+        width: 3px;
+        transform: translate(-5px);
+        background-color: #5B72DD;
+      }
+      & > span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-basis: 30px;
+        color: #666;
+      }
+      .item-thumbnail {
+        width: 120px;
+        margin-left: 10px;
+        aspect-ratio: $canvas-ratio;
+        border: 1px solid #E7E7E9;
+        background: #FFF;
+      }
+      &.active {
+        & > i {
+          visibility: visible;
+        }
+        & > .item-thumbnail {
+          outline:1px solid #5B72DD;
+        }
+      }
+    }
+  }
+
+  .aside-btn {
+    flex-basis: 42px;
+    flex-shrink: 0;
+    outline: 0;
+    border: 0;
+    border-top: 1px solid #E7E7E9;
+    cursor: pointer;
+    background: #FFFFFF;
+  }
+}

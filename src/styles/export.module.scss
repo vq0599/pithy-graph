@@ -1,0 +1,10 @@
+
+@import "./variable.scss";
+
+:export {
+  sidebarWidth: $sidebar-width;
+  canvasRatio: $canvas-ratio;
+  headerWidth: $header-width;
+  canvasNaturalWidth: $canvas-natural-width;
+  canvasNaturalHeight: $canvas-natural-height;
+}

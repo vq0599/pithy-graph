@@ -1,0 +1,30 @@
+@import "./header.scss";
+@import "./canvas.scss";
+@import "./sidebar.scss";
+@import "./menu.scss";
+
+.ss-editor-page {
+  width: 100vw;
+  height: 100vh;
+  header {
+    border-bottom: 1px solid #E7E7E9;
+    height: $header-width;
+  }
+  & > div {
+    display: flex;
+    height: calc(100vh - $header-width);
+    background-color: #F5F5F5;
+    aside {
+      flex-basis: $sidebar-width;
+      flex-shrink: 0;
+      border-right: 1px solid #E7E7E9;
+    }
+    main {
+      display: flex;
+      justify-content: center;
+      position: relative;
+      flex-grow: 1;
+      padding: 12px;
+    }
+  }
+}

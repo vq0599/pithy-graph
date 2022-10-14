@@ -1,0 +1,12 @@
+@use "sass:math";
+
+$sidebar-width: 190px;
+$header-width: 60px;
+
+
+$canvas-natural-width: 1920px;
+$canvas-natural-height: 1080px;
+
+$canvas-ratio: math.div(16, 9);
+
+

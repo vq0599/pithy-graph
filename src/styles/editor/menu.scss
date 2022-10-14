@@ -1,0 +1,25 @@
+.ss-text-menu {
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    li {
+      cursor: pointer;
+      &:nth-child(n+2) {
+        margin-top: 8px;
+      }
+    }
+  }
+}
+
+.ss-image-menu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  img {
+    cursor: pointer;
+    &:nth-child(n+3) {
+      margin-top: 10px;
+    }
+  }
+}
