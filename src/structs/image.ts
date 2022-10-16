@@ -1,7 +1,6 @@
-import type { IBase } from './base'
+import type { IElementBase } from './base'
 
-export interface IImage extends IBase {
-  type: 'IMAGE'
+export interface IImage extends IElementBase<"IMAGE"> {
   /**
    * 图片地址
    */

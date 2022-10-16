@@ -1,7 +1,8 @@
-import type { IBase } from './base'
+import type { IElementBase } from './base'
 
-export interface IText extends IBase {
-  type: 'TEXT'
+export type ITextLevel = 'H1' | 'H2' | 'H3' | 'P' | 'SP' | 'OL' | 'UL'
+
+export interface IText extends IElementBase<"TEXT"> {
   /**
    * 文字内容（HTML）
    */
@@ -9,7 +10,7 @@ export interface IText extends IBase {
   /**
    * 文字级别
    */
-  level: 'H1' | 'H2' | 'H3' | 'P' | 'SP' | 'OL' | 'UL'
+  level: ITextLevel
   /**
    * 颜色
    */

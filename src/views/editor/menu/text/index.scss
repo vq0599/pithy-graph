@@ -1,0 +1,13 @@
+.pithy-text-menu {
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    li {
+      cursor: pointer;
+      &:nth-child(n+2) {
+        margin-top: 8px;
+      }
+    }
+  }
+}

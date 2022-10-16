@@ -1,17 +1,17 @@
-import { store } from "@/stores";
+import { preziStore } from "@/stores/prezi";
 import { defineComponent } from "vue";
-
+import './index.scss'
 
 export default defineComponent({
-  name: 'ss-sidebar',
+  name: 'pithy-sidebar',
   render() {
     return (
-      <aside class="ss-editor-aside">
+      <aside class="pithy-editor-aside">
         <div class="aside-slider">
           {
-            store.slider.map((item, index) => (
+            preziStore.slides.map((slide, index) => (
               <div
-                class={["aside-slider-item", { active: index === store.current }]}
+                class={["aside-slider-item", { active: slide.id === preziStore.currentSlide.id }]}
                 onClick={() => this.handleSelect(index)}
               >
                 <i></i>
@@ -29,10 +29,10 @@ export default defineComponent({
   },
   methods: {
     handleAddSlider() {
-      store.add()
+      preziStore.appendSlide()
     },
     handleSelect(index: number) {
-      store.focus(index)
+      preziStore.focusSlide(index)
     }
   }
 })

@@ -1,9 +1,6 @@
-@import "./header.scss";
-@import "./canvas.scss";
-@import "./sidebar.scss";
-@import "./menu.scss";
+@import '../../styles/utils/variable';
 
-.ss-editor-page {
+.pithy-editor-page {
   width: 100vw;
   height: 100vh;
   header {

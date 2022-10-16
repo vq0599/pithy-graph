@@ -1,0 +1,11 @@
+.pithy-picture-menu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  img {
+    cursor: pointer;
+    &:nth-child(n+3) {
+      margin-top: 10px;
+    }
+  }
+}

@@ -1,4 +1,5 @@
 import { defineComponent } from "vue";
+import './index.scss'
 
 const list = [
 {
@@ -43,10 +44,10 @@ const list = [
 },
 ]
 export default defineComponent({
-  name: 'ss-image-menu',
+  name: 'pithy-picture-menu',
   render() {
     return (
-      <div class="ss-image-menu">
+      <div class="pithy-picture-menu">
         {
           list.map(v => (
             <img width={100} src={v.url} alt="" />

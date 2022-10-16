@@ -1,10 +1,10 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: 'ss-shape-menu',
+  name: 'pithy-shape-menu',
   render() {
     return (
-      <div class="ss-shape-menu">
+      <div class="pithy-shape-menu">
         hello world shape
       </div>
     )

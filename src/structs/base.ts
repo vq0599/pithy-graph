@@ -1,8 +1,14 @@
-export interface IBase {
+export type IElementTypes = 'TEXT' | 'IMAGE' | 'SHAPE'
+
+export interface IElementBase<Type extends IElementTypes> {
   /**
    * 唯一标识符
    */
-  id: number,
+  id: string,
+  /**
+   * 组件类型
+   */
+  type: Type
   /**
    * 组件宽度
    */
@@ -10,7 +16,7 @@ export interface IBase {
   /**
    * 组件高度
    */
-  height: number,
+  height?: number,
   /**
    * 横轴坐标
    */
@@ -19,6 +25,10 @@ export interface IBase {
    * 纵轴坐标
    */
   y: number
+  /**
+   * 旋转角度
+   */
+  rotate?: number
   /**
    * 层级，默认为添加顺序
    */

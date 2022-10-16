@@ -1,0 +1,20 @@
+@import "@/styles/utils/variable";
+
+.pithy-canvas {
+  transform-origin: left top;
+  position: absolute;
+  &-inner {
+    position: relative;
+    background: #FFF;
+    width: 1920px;
+    font-size: 36px;
+    aspect-ratio: $canvas-ratio;
+    overflow: hidden;
+  }
+
+
+  // ------------ 画布内默认样式
+  p {
+    margin: 0;
+  }
+}

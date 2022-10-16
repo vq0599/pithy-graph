@@ -1,71 +1,56 @@
 import { defineComponent, ref } from "vue";
-import {
-  canvasRatio,
-  sidebarWidth,
-  headerWidth,
-  canvasNaturalWidth,
-  canvasNaturalHeight,
-} from "@/styles/export.module.scss"
-
-const maxWidth = parseInt(canvasNaturalWidth)
-const maxHeight = parseInt(canvasNaturalHeight)
-const calcRect = () => {
-  const containerWidth = window.innerWidth - parseInt(sidebarWidth) - 12 * 2
-  const containerHeight = window.innerHeight - parseInt(headerWidth) - 12 * 2
-  
-  let width, height
-  // 4K屏幕，需要考虑最大值不能对于maxWidth * maxHeight
-  if (containerWidth >= maxWidth && containerHeight / maxHeight) {
-    width = maxWidth
-    height = maxHeight
-  } else if (containerWidth / maxWidth < containerHeight / maxHeight) {
-    width = containerWidth
-    height = containerWidth / canvasRatio
-  } else {
-    width = containerHeight * canvasRatio
-    height = containerHeight
-  }
-  return {
-    width: width,
-    height: height,
-    scale: width / maxWidth
-  }
-}
+import { slideStore } from "@/stores/slide";
+import { PithyElement } from '@/elements'
+import { canvasStore } from "@/stores/canvas";
+import './index.scss'
 
 export default defineComponent({
-  name: 'ss-canvas',
+  name: 'pithy-canvas',
   setup() {
-    const rect = ref(calcRect())
+    const container = ref<HTMLDivElement | null>(null)
     return {
-      rect
+      container,
     }
   },
   computed: {
     styles() {
-     const { height, width } = this.rect
+     const { height, width, scale } = canvasStore
       return {
         width: width + 'px',
         height: height + 'px',
-        transform: `scale(${width / maxWidth})`
+        transform: `scale(${scale})`
       }
     }
   },
   mounted() {
-    window.addEventListener('resize', this.setRect)
+    document.addEventListener('mousedown', this.clearElementFocus)
+    document.addEventListener('resize', this.setRect)
   },
   Unmount() {
-    window.removeEventListener('resize', this.setRect)
+    document.removeEventListener('resize', this.setRect)
   },
   render() {
     return (
-      <div class="ss-canvas" style={this.styles}>
-        <div class='ss-canvas-inner'></div>
+      <div class="pithy-canvas" style={this.styles}>
+        <div ref="container" class='pithy-canvas-inner'>
+          {
+            slideStore.elements.map((el, index) => (
+              <PithyElement data={el} index={index} />
+            ))
+          }
+        </div>
       </div>
     )
   },
   methods: {
     setRect() {
-      this.rect = calcRect()
+      canvasStore.calcRect()
+    },
+    clearElementFocus(ev: MouseEvent) {
+      const target = ev.target as HTMLElement
+      if (!this.container?.contains(target) || target === this.container) {
+        slideStore.focusElement(-1)
+      }
     }
   }
 })
