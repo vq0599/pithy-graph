@@ -1,0 +1,36 @@
+.pithy-media-library-modal {
+  .el-dialog__header {
+    display: none;
+  }
+  .el-dialog__body {
+    padding: 0;
+  }
+}
+
+.pithy-media-library {
+  width: 435px;
+  .el-tabs {
+    height: 360px;
+  }
+  .el-tabs__content {
+    padding: 10px 0;
+    overflow-y: auto;
+  }
+  .library-content{
+    display: flex;
+    flex-wrap: wrap;
+    img {
+      width: 100px;
+      height: 65px;
+      cursor: pointer;
+      object-fit: cover;
+      &:nth-child(n+4) {
+        margin-top: 10px;
+      }
+      &:nth-child(3n+2) {
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+    }
+  }
+}

@@ -17,7 +17,7 @@ const list = [
   },
   {
     label: '图片',
-    width: 240,
+    width: 435 + 24,
     Icon: PicIcon,
     Menu: PicMenu,
   },

@@ -1,6 +1,8 @@
 import { defineComponent, PropType } from "vue";
 import PithyText from './text'
+import PithyImage from './image'
 import { IElement } from "@/structs";
+import PithyWrapper from './wrapper'
 
 export const PithyElement =  defineComponent({
   name: 'PithyElement',
@@ -14,14 +16,26 @@ export const PithyElement =  defineComponent({
       required: true
     }
   },
+  methods: {
+    renderElement() {
+      const { data } = this
+      switch (data.type) {
+        case 'TEXT':
+          return <PithyText data={data} />
+        case 'IMAGE':
+          return <PithyImage data={data} />
+        default:
+          return null
+      }
+    }
+  },
   render() {
     const { data, index } = this
-    switch (data.type) {
-      case 'TEXT':
-        return <PithyText data={data} index={index}/>
+    return (
+      <PithyWrapper data={data} index={index}>
+        {this.renderElement()}
+      </PithyWrapper>
+    )
     
-      default:
-        return null
-    }
   }
 })

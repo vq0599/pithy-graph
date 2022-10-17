@@ -13,15 +13,15 @@ export interface ISlide {
   /**
    * 背景图
    */
-  background?: {
+  background: {
     /**
      * 颜色
      */
-    color: string
+    color?: string
     /**
      * 颜色
      */
-    image: string
+    image?: string
   }
   /**
    * 元素集合

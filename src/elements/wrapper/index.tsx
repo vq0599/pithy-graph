@@ -20,7 +20,7 @@ export default defineComponent({
   },
   computed: {
     styles(): CSSProperties {
-      const { x, y, rotate, order, width, height } = this.data
+      const { x, y, rotate = 0, order, width, height } = this.data
       return {
         width: `${width}px`,
         height: `${height}px`,

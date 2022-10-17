@@ -1,6 +1,7 @@
 import { defineComponent } from "vue";
-import type { ITextLevel } from '@/structs'
+import type { IText } from '@/structs'
 import { slideStore } from "@/stores/slide";
+import * as textCase from './case'
 import './index.scss'
 
 interface TextMenuItem {
@@ -9,71 +10,46 @@ interface TextMenuItem {
   /**
    * 需要添加到元素里的属性
    */
-  options: {
-    level: ITextLevel,
-    fontSize: number,
-  }
+  options: Partial<IText>
 }
 
 const list: TextMenuItem[] = [
   {
     label: '大标题',
     fontSize: 36,
-    options: {
-      fontSize: 3.6,
-      level: 'H1',
-    }
+    options: textCase.H1,
   },
   {
     label: '标题',
     fontSize: 28,
-    options: {
-      fontSize: 3,
-      level: 'H2',
-    }
+    options: textCase.H2,
   },
   {
     label: '副标题',
     fontSize: 24,
-    options: {
-      fontSize: 2.4,
-      level: 'H3',
-    }
+    options: textCase.H3,
   },
   {
     label: '正文',
     fontSize: 14,
-    options: {
-      fontSize: 1,
-      level: 'P',
-    }
+    options: textCase.P,
   },
   {
     label: '小文本',
     fontSize: 12,
-    options: {
-      fontSize: 0.8,
-      level: 'SP',
-    }
+    options: textCase.SP,
   },
   {
     label: '有序列表',
     fontSize: 14,
-    options: {
-      fontSize: 1,
-      level: 'OL',
-    }
+    options: textCase.OL,
   },
   {
     label: '无序列表',
     fontSize: 14,
-    options: {
-      fontSize: 1,
-      level: 'UL',
-    }
+    options: textCase.UL,
   },
 ]
-
 
 export default defineComponent({
   name: 'pithy-text-menu',
@@ -83,11 +59,11 @@ export default defineComponent({
       <div class="pithy-text-menu">
         <ul>
           {
-            list.map(v => (
+            list.map(({ fontSize, options, label }) => (
               <li
-                style={{ fontSize: `${v.fontSize}px` }}
-                onClick={() => this.handleClick(v)}
-              >{v.label}</li>
+                style={{ fontSize: `${fontSize}px` }}
+                onClick={() => this.handleClick(options)}
+              >{label}</li>
             ))
           }
         </ul>
@@ -95,7 +71,7 @@ export default defineComponent({
     )
   },
   methods: {
-    handleClick({ options }: TextMenuItem) {
+    handleClick(options:  Partial<IText>) {
       slideStore.appendElement({
         type: 'TEXT',
         ...options,

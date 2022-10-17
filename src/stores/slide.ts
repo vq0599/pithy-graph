@@ -10,6 +10,9 @@ class SlideStore {
   public get elements() {
     return this.target.elements
   }
+  public get background() {
+    return this.target.background
+  }
   private _current = -1
   get currentElement(): IElement {
     return this.elements[this._current]
@@ -23,16 +26,19 @@ class SlideStore {
     const element = Object.assign({}, property)
     element.order = this.genOrder()
     element.id = genUUID()
-    element.x = 20
-    element.y = 20
+    element.x = 120
+    element.y = 120
     switch (property.type) {
       case 'TEXT':
-       this.elements.push(element as IText)
+        this.elements.push(element as IText)
         break;
-    
+      case 'IMAGE':
+        this.elements.push(element as IText)
+        break;
       default:
         break;
     }
+    this.focusElement(this.elements.length - 1)
   }
   focusElement(index: number) {
     this._current = index
@@ -43,6 +49,9 @@ class SlideStore {
   }
   setContent(html?: string) {
     (this.currentElement as IText).content = html || '<p>添加文本</p>'
+  }
+  setBackgroundImage(url: string) {
+    this.target.background.image = url
   }
 }
 

@@ -1,4 +1,4 @@
-import { defineComponent, ref } from "vue";
+import { CSSProperties, defineComponent, ref } from "vue";
 import { slideStore } from "@/stores/slide";
 import { PithyElement } from '@/elements'
 import { canvasStore } from "@/stores/canvas";
@@ -20,6 +20,20 @@ export default defineComponent({
         height: height + 'px',
         transform: `scale(${scale})`
       }
+    },
+    bgStyle(): CSSProperties {
+      const { background: { image, color } } = slideStore
+      const ret: CSSProperties = {}
+      if (image) {
+        ret.backgroundImage = `url(${image})`
+        ret.backgroundPosition = 'center';
+        ret.backgroundSize = 'cover';
+      } else if (color) {
+        ret.backgroundColor = color
+      }
+      console.log(ret);
+      
+      return ret
     }
   },
   mounted() {
@@ -32,7 +46,7 @@ export default defineComponent({
   render() {
     return (
       <div class="pithy-canvas" style={this.styles}>
-        <div ref="container" class='pithy-canvas-inner'>
+        <div ref="container" class='pithy-canvas-inner' style={this.bgStyle}>
           {
             slideStore.elements.map((el, index) => (
               <PithyElement data={el} index={index} />

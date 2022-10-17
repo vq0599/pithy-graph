@@ -1,6 +1,5 @@
 import { defineComponent, PropType, CSSProperties, ref } from "vue";
 import { IText } from '@/structs'
-import PithyWrapper from '../wrapper'
 import { slideStore } from "@/stores/slide";
 import './index.scss'
 
@@ -9,10 +8,6 @@ export default defineComponent({
   props: {
     data: {
       type: Object as PropType<IText>,
-      required: true
-    },
-    index: {
-      type: Number,
       required: true
     },
   },
@@ -27,13 +22,14 @@ export default defineComponent({
   },
   computed: {
     styles(): CSSProperties {
-      const { fontSize, fontFamily, italic, bold, alignment } = this.data
+      const { fontSize, fontFamily, italic, bold, alignment, color } = this.data
       return {
         fontSize: `${fontSize}em`,
         fontFamily: fontFamily,
         fontStyle: italic ? 'italic' : undefined,
         fontWeight: bold ? 'bold' : undefined,
         textAlign: alignment,
+        color,
       }
     },
     active() {
@@ -68,23 +64,20 @@ export default defineComponent({
   },
   render() {
     return (
-      <PithyWrapper data={this.data} index={this.index}>
+      <div
+        style={this.styles}
+        class="pithy-element-text"
+        onMousedown={this.handleMousedown}
+        onMousemove={this.handleMousemove}
+        onMouseup={this.handleMouseup}
+      >
         <div
-          style={this.styles}
-          class="pithy-element-text"
-          onMousedown={this.handleMousedown}
-          onMousemove={this.handleMousemove}
-          onMouseup={this.handleMouseup}
-        >
-          <div
-            ref="content"
-            onBlur={this.handleBlur}
-            innerHTML={this.html}
-            onInput={this.handleInput}
-          >
-          </div>
-        </div>
-      </PithyWrapper>
+          ref="content"
+          onBlur={this.handleBlur}
+          innerHTML={this.html}
+          onInput={this.handleInput}
+        />
+      </div>
     )
   },
 })
