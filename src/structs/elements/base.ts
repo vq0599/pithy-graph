@@ -1,14 +1,14 @@
 export type IElementTypes = 'TEXT' | 'IMAGE' | 'SHAPE'
 
-export interface IElementBase<Type extends IElementTypes> {
+export interface IElementBase<T extends IElementTypes, U extends Record<string, any>> {
   /**
    * 唯一标识符
    */
-  id: string,
+  id: number,
   /**
    * 组件类型
    */
-  type: Type
+  type: T
   /**
    * 组件宽度
    */
@@ -32,5 +32,13 @@ export interface IElementBase<Type extends IElementTypes> {
   /**
    * 层级，默认为添加顺序
    */
-  order: number
+  zIndex: number
+  /**
+   * 各个元素独有的数据
+   */
+  payload: U
+  /**
+   * 特殊标记
+   */
+  mark: number
 }

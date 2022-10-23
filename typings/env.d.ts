@@ -2,6 +2,14 @@
 
 /// <reference types="vite-svg-loader" />
 
+interface ImportMetaEnv {
+  readonly VITE_API_HOST: string
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv
+}
+
 declare module '*.module.scss' {
   export const sidebarWidth: string
   export const headerWidth: string

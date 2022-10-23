@@ -1,4 +1,4 @@
-import { slideStore } from "@/stores/slide";
+// import { slideStore } from "@/stores/__slide";
 import { IImage } from "@/structs";
 import { defineComponent } from "vue";
 import MediaLibrary from '@/components/media-library'
@@ -15,10 +15,10 @@ export default defineComponent({
         naturalWidth,
         naturalHeight,
       }
-      slideStore.appendElement({
-        type: 'IMAGE',
-        ...options,
-      })
+      // slideStore.appendElement({
+      //   type: 'IMAGE',
+      //   ...options,
+      // })
     }
   },
   render() {

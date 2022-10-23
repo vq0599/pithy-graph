@@ -1,7 +1,8 @@
 import { CSSProperties, defineComponent, ref } from "vue";
+import { PithyElement } from '@/components/elements'
 import { slideStore } from "@/stores/slide";
-import { PithyElement } from '@/elements'
 import { canvasStore } from "@/stores/canvas";
+import EditLayer from '../edit-layer'
 import './index.scss'
 
 export default defineComponent({
@@ -31,28 +32,29 @@ export default defineComponent({
       } else if (color) {
         ret.backgroundColor = color
       }
-      console.log(ret);
-      
       return ret
     }
   },
   mounted() {
     document.addEventListener('mousedown', this.clearElementFocus)
-    document.addEventListener('resize', this.setRect)
+    window.addEventListener('resize', this.setRect)
   },
   Unmount() {
     document.removeEventListener('resize', this.setRect)
   },
   render() {
     return (
-      <div class="pithy-canvas" style={this.styles}>
-        <div ref="container" class='pithy-canvas-inner' style={this.bgStyle}>
-          {
-            slideStore.elements.map((el, index) => (
-              <PithyElement data={el} index={index} />
-            ))
-          }
+      <div class="pithy-canvas-container">
+        <div class="pithy-canvas" style={this.styles}>
+          <div ref="container" class='pithy-canvas-inner' style={this.bgStyle}>
+            {
+              slideStore.elements.map((el, index) => (
+                <PithyElement data={el} index={index} />
+              ))
+            }
+          </div>
         </div>
+        <EditLayer />
       </div>
     )
   },
@@ -64,6 +66,7 @@ export default defineComponent({
       const target = ev.target as HTMLElement
       if (!this.container?.contains(target) || target === this.container) {
         slideStore.focusElement(-1)
+        console.log(1);
       }
     }
   }

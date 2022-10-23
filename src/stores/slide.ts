@@ -1,57 +1,61 @@
+import { SlideAPI } from '@/api'
+import { IElement, ISlide } from '@/structs'
 import { reactive } from 'vue'
-import { preziStore } from './prezi'
-import { IElement, IText } from '@/structs'
-import { genUUID } from '@/utils/uuid'
+import { ImageStore } from './elements/image'
+import { TextStore } from './elements/text'
 
 class SlideStore {
-  private get target() {
-    return preziStore.currentSlide
+  private _data: ISlide = {} as ISlide
+  private caches: Map<number, ISlide> = new Map()
+  private currentIndex = -1
+  public handler?: TextStore | ImageStore
+
+  public get currentElement() {
+    return this.elements[this.currentIndex]
   }
+
+  // public get data() {
+  //   return this._data
+  // }
+
   public get elements() {
-    return this.target.elements
+    return this._data.elements
   }
+
+  public get id() {
+    return this._data.id
+  }
+
   public get background() {
-    return this.target.background
+    return this._data.background
   }
-  private _current = -1
-  get currentElement(): IElement {
-    return this.elements[this._current]
+
+  public async setTarget(id: number) {
+    if (this.caches.has(id)) {
+      this._data = this.caches.get(id)!
+      return
+    }
+    const { data } = await SlideAPI.get(id)
+    this._data = data
+    this.caches.set(id, data)
   }
-  genOrder() {
-    return this.elements.reduce((order, el) => {
-      return el.order >= order ? el.order + 1 : order
-    }, 1)
-  }
+
   appendElement(property: Partial<IElement>) {
-    const element = Object.assign({}, property)
-    element.order = this.genOrder()
-    element.id = genUUID()
-    element.x = 120
-    element.y = 120
-    switch (property.type) {
+    //
+  }
+  focusElement(id: number) {
+    if (id <= 0) {
+      return this.currentIndex = -1
+    }
+    const index = this.elements.findIndex(el => el.id === id)
+    this.currentIndex = index
+    switch (this.currentElement.type) {
       case 'TEXT':
-        this.elements.push(element as IText)
+        this.handler = new TextStore(this.currentElement)
         break;
       case 'IMAGE':
-        this.elements.push(element as IText)
-        break;
-      default:
-        break;
+        this.handler = new ImageStore(this.currentElement)
     }
-    this.focusElement(this.elements.length - 1)
-  }
-  focusElement(index: number) {
-    this._current = index
-  }
-  setPos(x: number, y: number) {
-    this.currentElement.x = x
-    this.currentElement.y = y
-  }
-  setContent(html?: string) {
-    (this.currentElement as IText).content = html || '<p>添加文本</p>'
-  }
-  setBackgroundImage(url: string) {
-    this.target.background.image = url
   }
 }
 

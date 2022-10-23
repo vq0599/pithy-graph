@@ -6,7 +6,7 @@ import { ElPopover } from 'element-plus'
 import TextMenu from "../menu/text";
 import ShapeMenu from "../menu/shape";
 import PicMenu from "../menu/picture";
-import { preziStore } from "@/stores/prezi";
+// import { workspaceStore } from "@/stores/workspace";
 import './index.scss'
 
 const list = [
@@ -32,7 +32,7 @@ export default defineComponent({
   name: 'pithy-editor-header',
   methods: {
     handleSave() {
-      console.log(preziStore.currentSlide);
+      // console.log(preziStore.currentSlide);
     }
   },
   render() {

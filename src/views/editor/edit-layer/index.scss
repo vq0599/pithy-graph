@@ -1,0 +1,11 @@
+.pithy-edit-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  pointer-events: none;
+  .pithy-edit-box {
+    outline: 1px solid #0099FF;
+  }
+}

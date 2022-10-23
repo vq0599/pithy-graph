@@ -1,12 +1,4 @@
-import { IElement } from "."
-
-export interface IPrezi {
-  id: number
-  slides: ISlide[]
-  title: string
-  createdAt: number
-  updatedAt: number
-}
+import { IElement } from './elements'
 
 export interface ISlide {
   id: number

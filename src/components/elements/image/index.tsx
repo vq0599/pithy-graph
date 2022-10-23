@@ -1,12 +1,12 @@
 import { defineComponent, PropType, CSSProperties } from "vue";
-import { IImage } from '@/structs'
+import { IEImage } from '@/structs'
 import './index.scss'
 
 export default defineComponent({
   name: 'pithy-element-image',
   props: {
-    data: {
-      type: Object as PropType<IImage>,
+    payload: {
+      type: Object as PropType<IEImage['payload']>,
       required: true
     }
   },
@@ -18,7 +18,7 @@ export default defineComponent({
     },
   },
   render() {
-    const { url } = this.data
+    const { url } = this.payload
     return (
       <div class="pithy-element-image">
         <img src={url} />

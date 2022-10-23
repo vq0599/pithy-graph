@@ -1,13 +1,12 @@
 import { defineComponent, PropType, CSSProperties, ref } from "vue";
-import { IText } from '@/structs'
-import { slideStore } from "@/stores/slide";
+import { IEText } from '@/structs'
 import './index.scss'
 
 export default defineComponent({
   name: 'pithy-element-text',
   props: {
-    data: {
-      type: Object as PropType<IText>,
+    payload: {
+      type: Object as PropType<IEText['payload']>,
       required: true
     },
   },
@@ -17,12 +16,12 @@ export default defineComponent({
     return {
       editable,
       content,
-      html: props.data.content
+      html: props.payload.content
     }
   },
   computed: {
     styles(): CSSProperties {
-      const { fontSize, fontFamily, italic, bold, alignment, color } = this.data
+      const { fontSize, fontFamily, italic, bold, alignment, color } = this.payload
       return {
         fontSize: `${fontSize}em`,
         fontFamily: fontFamily,
@@ -33,7 +32,8 @@ export default defineComponent({
       }
     },
     active() {
-      return this.data.id === slideStore.currentElement?.id
+      // return this.data.id === slideStore.currentElement?.id
+      return false
     },
   },
   methods: {
@@ -59,10 +59,12 @@ export default defineComponent({
       this.editable = false
     },
     handleInput() {
-      slideStore.setContent(this.content?.innerHTML)
+      // slideStore.setContent(this.content?.innerHTML)
     }
   },
   render() {
+    console.log(this.html);
+    
     return (
       <div
         style={this.styles}

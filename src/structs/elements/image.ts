@@ -1,6 +1,6 @@
-import type { IElementBase } from './base'
+import { IElementBase } from './base'
 
-export interface IImage extends IElementBase<"IMAGE"> {
+export type IEImage = IElementBase<'IMAGE', {
   /**
    * 图片地址
    */
@@ -13,4 +13,4 @@ export interface IImage extends IElementBase<"IMAGE"> {
    * 图片高度，区别于组件本身的高度（裁剪预留）
    */
   naturalHeight: number,
-}
+}>

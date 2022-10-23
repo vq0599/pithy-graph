@@ -1,8 +1,11 @@
 @import "@/styles/utils/variable";
 
 .pithy-canvas {
+  &-container {
+    position: relative;
+  }
   transform-origin: left top;
-  position: absolute;
+  // position: absolute;
   &-inner {
     position: relative;
     background: #FFF;
@@ -11,7 +14,6 @@
     aspect-ratio: $canvas-ratio;
     overflow: hidden;
   }
-
 
   // ------------ 画布内默认样式
   ul, p {

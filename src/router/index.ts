@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/home'
+import NotFoundView from '@/views/not-found'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -10,9 +11,14 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/editor',
+      path: '/editor/:id(\\d+)',
       name: 'editor',
       component: () => import('@/views/editor')
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'not-found',
+      component: NotFoundView
     }
   ]
 })
