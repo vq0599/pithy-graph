@@ -1,6 +1,6 @@
 import { SlideAPI, WorkspaceAPI } from '@/api'
 import { ElementAPI } from '@/api/modules/element'
-import { IElement, IElementTypes, IWorkspace } from '@/structs'
+import { IElement, IElementTypes, ISlide, IWorkspace } from '@/structs'
 import { reactive } from 'vue'
 
 class PreziStore {
@@ -72,7 +72,6 @@ class PreziStore {
       type,
       options
     )
-    // Object.assign(newElement, options)
     this.currentSlide?.elements.push(newElement)
     this.currentElementId = newElement.id
   }
@@ -107,6 +106,13 @@ class PreziStore {
       await ElementAPI.update(id, this.dirty)
       this.dirty = {}
     }
+  }
+
+  setSlideBackground(options: ISlide['background']) {
+    const background = Object.assign(this.currentSlide.background, options)
+    SlideAPI.update(this.currentSlideId, {
+      background
+    })
   }
 }
 

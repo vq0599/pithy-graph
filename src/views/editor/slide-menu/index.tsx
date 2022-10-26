@@ -4,7 +4,7 @@ import TemplateIcon from '@/assets/icons/template.svg?component'
 import BeautifyIcon from '@/assets/icons/beautify.svg?component'
 import MediaLibrary from "@/components/media-library";
 import "./index.scss"
-// import { slideStore } from "@/stores/__slide";
+import { preziStore } from "@/stores/prezi";
 
 export default defineComponent({
   name: 'pithy-slide-menu',
@@ -18,7 +18,7 @@ export default defineComponent({
       this.modelVisible = true
     },
     handleSelectBackground({ url }: { url: string }) {
-      // slideStore.setBackgroundImage(url)
+      preziStore.setSlideBackground({ image: url })
     }
   },
   render() {

@@ -10,9 +10,13 @@ class EditLayerStore {
     return this._data
   }
 
-  setRect(width: number, height: number) {
-    this._data.width = width
-    this._data.height = height
+  setRect(width?: number, height?: number) {
+    if (width) {
+      this._data.width = width
+    }
+    if (height) {
+      this._data.height = height
+    }
   }
 }
 

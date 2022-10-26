@@ -6,7 +6,6 @@ import { ElPopover } from 'element-plus'
 import TextMenu from "@/components/menus/text";
 import ShapeMenu from "@/components/menus/shape";
 import PicMenu from "@/components/menus/picture";
-import { preziStore } from "@/stores/prezi";
 import { IElementTypes } from '@/structs'
 import { globalStore } from "@/stores/global";
 import './index.scss'
@@ -21,7 +20,6 @@ const list = [
   {
     key: 'IMAGE' as IElementTypes,
     label: '图片',
-    width: 435 + 24,
     Icon: PicIcon,
     Menu: PicMenu,
   },
@@ -35,22 +33,18 @@ const list = [
 
 export default defineComponent({
   name: 'pithy-editor-header',
-  methods: {
-    handleSave() {
-      console.log(preziStore.elements);
-    }
-  },
+  methods: {},
   render() {
     return (
       <header class="pithy-editor-header">
         <ul class="header-menu">
           {
-            list.map(({ label, Icon, Menu, width, key }) => (
+            list.map(({ label, Icon, Menu, key }) => (
               <ElPopover
                 trigger="click"
                 hideAfter={0}
                 v-model:visible={globalStore.menuVisible[key]}
-                width={width}
+                width="auto"
                 showArrow={false}
                 v-slots={{
                   reference: () => (
@@ -67,7 +61,6 @@ export default defineComponent({
           }
         </ul>
         <div>
-          <button onClick={this.handleSave}>保存</button>
         </div>
       </header>
     )

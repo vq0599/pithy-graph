@@ -7,5 +7,46 @@
   pointer-events: none;
   .pithy-edit-box {
     outline: 1px solid #0099FF;
+    position: relative;
+    & > i {
+      position: absolute;
+      display: inline-block;
+      background-color: #FFF;
+      box-shadow: 0 0 6px rgb(27 24 60 / 10%), 0 0 2px rgb(39 34 93 / 75%);
+      border-radius: 2px;
+      pointer-events: auto;
+      cursor: pointer;
+    }
+    .action-vertical {
+      width: 6px;
+      height: 16px;
+      top: calc(50% - 8px);
+      &-left {
+        left: -3px;
+      }
+      &-right {
+        right: -3px;
+      }
+    }
+    .action-horizontal {
+      width: 16px;
+      height: 6px;
+      left: calc(50% - 8px);
+      &-top {
+        top: -3px;
+      }
+      &-bottom {
+        bottom: -3px;
+      }
+    }
+    .action-vertex {
+      border-radius: 50%;
+      width: 12px;
+      height: 12px;
+      &-bottom-right {
+        right: -6px;
+        bottom: -6px;
+      }
+    }
   }
 }

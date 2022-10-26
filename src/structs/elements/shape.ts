@@ -25,4 +25,4 @@ export interface IEShapePayload {
   radius: number
 }
 
-export type IEShape = Required<IElement<'SHAPE', IEShapePayload>>
+export type IEShape = IElement<'SHAPE', IEShapePayload>

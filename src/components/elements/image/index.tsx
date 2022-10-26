@@ -12,9 +12,7 @@ export default defineComponent({
   },
   computed: {
     styles(): CSSProperties {
-      return {
-       
-      }
+      return {}
     },
   },
   render() {

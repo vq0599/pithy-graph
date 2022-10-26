@@ -3,9 +3,9 @@
 .pithy-canvas {
   &-container {
     position: relative;
+    overflow: hidden;
   }
   transform-origin: left top;
-  // position: absolute;
   &-inner {
     position: relative;
     background: #FFF;

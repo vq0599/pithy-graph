@@ -1,6 +1,7 @@
 import { defineComponent, PropType } from "vue";
 import PithyText from './text'
 import PithyImage from './image'
+import PithyShape from './shape'
 import { IElement } from "@/structs";
 import { canvasStore } from "@/stores/canvas";
 import { editLayerStore } from "@/stores/edit-layer";
@@ -56,6 +57,8 @@ export const PithyElement =  defineComponent({
           return <PithyText data={data} />
         case 'IMAGE':
           return <PithyImage data={data} />
+        case 'SHAPE':
+            return <PithyShape data={data} />
         default:
           return null
       }

@@ -77,10 +77,6 @@ export default defineComponent({
     handleInput(ev: Event) {
       const html = (ev.target as HTMLDivElement).innerHTML
       const text = (ev.target as HTMLDivElement).innerText.replace('\n', '')
-      console.log({
-        html,
-        text
-      });
       if (!text) {
         (ev.target as HTMLDivElement).innerHTML = '<p><br></p>'
         this.showPlaceholder = true

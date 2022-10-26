@@ -6,6 +6,7 @@ import RectangleShape from './rectangle'
 import TriangleShape from './triangle'
 
 export default defineComponent({
+  name: 'pithy-element-shape',
   props: {
     data: {
       type: Object as PropType<IEShape>,

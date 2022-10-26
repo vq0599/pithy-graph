@@ -65,10 +65,16 @@ export default defineComponent({
   render() {
     if (this.withModal) {
       const slots = {
-        header: () => <div>A</div>,
+        header: () => null,
       };
       return (
-        <ElDialog width={435} class="pithy-media-library-modal" v-slots={slots} v-model={this.modelVisible}>
+        <ElDialog
+          appendToBody
+          width={435}
+          class="pithy-media-library-modal"
+          v-slots={slots}
+          v-model={this.modelVisible}
+        >
           {this.renderLibrary()}
         </ElDialog>
       )

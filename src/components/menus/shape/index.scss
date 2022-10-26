@@ -1,0 +1,15 @@
+.pithy-shape-menu {
+  width: 500px;
+  & > ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    &:nth-child(n+2) {
+      margin-top: 15px;
+    }
+    li {
+      display: flex;
+    }
+  }
+}

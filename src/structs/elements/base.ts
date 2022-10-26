@@ -16,7 +16,7 @@ export interface IElement<T extends IElementTypes = any, U extends Record<string
   /**
    * 组件高度
    */
-  height?: number,
+  height: number,
   /**
    * 横轴坐标
    */
