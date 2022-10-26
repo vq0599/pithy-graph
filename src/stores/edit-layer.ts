@@ -1,10 +1,10 @@
 import { reactive } from 'vue'
 
-export class EditLayerStore {
+class EditLayerStore {
   private _data: {
     width: number,
     height: number,
-  } = { width: 0, height: 0}
+  } = reactive({ width: 0, height: 0})
 
   public get data() {
     return this._data
@@ -16,4 +16,4 @@ export class EditLayerStore {
   }
 }
 
-export const editLayerStore = reactive(new EditLayerStore())
+export const editLayerStore = new EditLayerStore()

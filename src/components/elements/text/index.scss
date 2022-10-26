@@ -1,0 +1,9 @@
+.pithy-element-text {
+  position: relative;
+  .text-placeholder {
+    color: #888;
+    z-index: 0;
+    height: 0;
+    opacity: 0.6;
+  }
+}

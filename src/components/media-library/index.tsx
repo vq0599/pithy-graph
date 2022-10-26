@@ -4,18 +4,9 @@ import { ElTabs, ElTabPane } from 'element-plus'
 import './index.scss'
 
 const list = [
-    'https://images.pexels.com/photos/3805983/pexels-photo-3805983.jpeg',
-    'https://images.pexels.com/photos/1252869/pexels-photo-1252869.jpeg',
-    'https://images.pexels.com/photos/1476321/pexels-photo-1476321.jpeg',
-    'https://images.pexels.com/photos/3608056/pexels-photo-3608056.jpeg',
-    "https://hellorfimg.zcool.cn/provider_image/preview260/hi2242052247.jpg",
-    "https://hellorfimg.zcool.cn/provider_image/preview260/hi2242061081.jpg",
-    "https://hellorfimg.zcool.cn/provider_image/preview260/hi2242027171.jpg",
-    "https://ali.image.hellorf.com/images/a7156c66d446a2a03bb380878b0f4dd1.jpeg",
-    "https://ali.image.hellorf.com/images/53ab5c48fab1450ea405d9e002a8c155.jpeg",
-    "https://ali.image.hellorf.com/images/32d9954cbc35dadad044ce2e9cfb8f77.jpeg",
-    "https://ali.image.hellorf.com/images/96b7faa42b5d064b996638fbe0605fad.jpeg",
-    "https://ali.image.hellorf.com/images/8af4d6b284d0a292eed67ac6435e881a.jpeg",
+  'http://39.96.206.161/static/images/9e87c2e3-b784-4538-a3ce-6c4a949415b7.jpeg',
+  'http://39.96.206.161/static/images/1b5dabbe-9465-444f-9039-24988b4fd6e4.jpg',
+  'http://39.96.206.161/static/images/97b834db-d52d-456c-a408-5e9a346482f3.jpeg',
 ]
 
 export default defineComponent({

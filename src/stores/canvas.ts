@@ -13,6 +13,12 @@ class CanvasStore {
   width = 0
   height = 0
   scale = 0
+
+  /**
+   * 编辑中，禁止移动和删除
+   */
+  editing = false
+
   constructor() {
     this.calcRect()
   }

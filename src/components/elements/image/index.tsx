@@ -5,8 +5,8 @@ import './index.scss'
 export default defineComponent({
   name: 'pithy-element-image',
   props: {
-    payload: {
-      type: Object as PropType<IEImage['payload']>,
+    data: {
+      type: Object as PropType<IEImage>,
       required: true
     }
   },
@@ -18,7 +18,7 @@ export default defineComponent({
     },
   },
   render() {
-    const { url } = this.payload
+    const { url } = this.data.payload
     return (
       <div class="pithy-element-image">
         <img src={url} />

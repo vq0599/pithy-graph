@@ -1,4 +1,5 @@
 import { WorkspaceAPI } from "@/api";
+import { IWorkspace } from "@/structs";
 import { defineComponent, ref } from "vue";
 import { RouterLink } from "vue-router"
 import "./index.scss"
@@ -6,11 +7,11 @@ import "./index.scss"
 export default defineComponent({
   setup() {
     return {
-      workspaces: ref<Remove<EWorkspace, "slides">[]>([])
+      workspaces: ref<Remove<IWorkspace, "slides">[]>([])
     }
   },
   mounted() {
-    // this.getWorkspaces()
+    this.getWorkspaces()
   },
   methods: {
     async getWorkspaces() {

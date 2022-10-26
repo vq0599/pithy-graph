@@ -2,10 +2,10 @@ import { defineComponent, PropType } from "vue";
 import PithyText from './text'
 import PithyImage from './image'
 import { IElement } from "@/structs";
-import { slideStore } from "@/stores/slide";
 import { canvasStore } from "@/stores/canvas";
 import { editLayerStore } from "@/stores/edit-layer";
 import { parseStyles } from "@/utils/parse-styles";
+import { preziStore } from "@/stores/prezi";
 import './index.scss'
 
 export const PithyElement =  defineComponent({
@@ -31,6 +31,21 @@ export const PithyElement =  defineComponent({
         rotate,
         zIndex
       })
+    },
+    active() {
+      return this.data.id === preziStore.currentElementId
+    },
+  },
+  watch: {
+    active(active: boolean) {
+      if (active) {
+        this.setEditLayerRect()
+      }
+    }
+  },
+  mounted() {
+    if(this.active) {
+      this.setEditLayerRect()
     }
   },
   methods: {
@@ -38,34 +53,43 @@ export const PithyElement =  defineComponent({
       const { data } = this
       switch (data.type) {
         case 'TEXT':
-          return <PithyText payload={data.payload} />
+          return <PithyText data={data} />
         case 'IMAGE':
-          return <PithyImage payload={data.payload} />
+          return <PithyImage data={data} />
         default:
           return null
       }
     },
-    handleDragstart(startEvent: MouseEvent) {
-      slideStore.focusElement(this.data.id)
+    setEditLayerRect() {
       editLayerStore.setRect(
         this.$el.clientWidth,
         this.$el.clientHeight,
       )
-
+    },
+    handleDragstart(startEvent: MouseEvent) {
+      preziStore.selectElement(this.data.id)
+      if (canvasStore.editing) return
       const startX = this.data.x
       const startY = this.data.y
+      const threshold = 10
       const callback = (moveEvent: MouseEvent) => {
-        slideStore.handler?.setPos(
-          startX + (moveEvent.pageX - startEvent.pageX) / canvasStore.scale,
-          startY + (moveEvent.pageY - startEvent.pageY) / canvasStore.scale,
-        )
+        const distX = moveEvent.pageX - startEvent.pageX
+        const distY = moveEvent.pageY - startEvent.pageY
+        if (Math.abs(distX) < threshold && Math.abs(distY) < threshold) {
+          return
+        }
+        preziStore.updateElement({
+          x: startX + distX / canvasStore.scale,
+          y: startY + distY / canvasStore.scale,
+        })
       }
       document.onmousemove = callback
       document.onmouseup = () => {
         document.onmousemove = null
         document.onmouseup = null
+        preziStore.save()
       }
-    }
+    },
   },
   render() {
     return (

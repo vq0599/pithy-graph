@@ -1,27 +1,37 @@
 import { defineComponent, PropType, CSSProperties, ref } from "vue";
 import { IEText } from '@/structs'
+import { editLayerStore } from "@/stores/edit-layer";
+import { preziStore } from "@/stores/prezi";
+import { canvasStore } from "@/stores/canvas";
 import './index.scss'
+
+const defaultText = '<p><br></p>'
 
 export default defineComponent({
   name: 'pithy-element-text',
   props: {
-    payload: {
-      type: Object as PropType<IEText['payload']>,
+    data: {
+      type: Object as PropType<IEText>,
       required: true
     },
   },
   setup(props) {
-    const content = ref<HTMLDivElement | null>(null)
+    const content = ref<HTMLDivElement>()
     const editable = ref(false)
     return {
       editable,
       content,
-      html: props.payload.content
+      html: props.data.payload.content || defaultText,
+      showPlaceholder: ref(!props.data.payload.content),
+      resizeObserver: new ResizeObserver(([{ contentRect }]) => {
+        const { width, height } = contentRect
+        editLayerStore.setRect(width, height)
+      })
     }
   },
   computed: {
     styles(): CSSProperties {
-      const { fontSize, fontFamily, italic, bold, alignment, color } = this.payload
+      const { fontSize, fontFamily, italic, bold, alignment, color } = this.data.payload
       return {
         fontSize: `${fontSize}em`,
         fontFamily: fontFamily,
@@ -32,8 +42,7 @@ export default defineComponent({
       }
     },
     active() {
-      // return this.data.id === slideStore.currentElement?.id
-      return false
+      return this.data.id === preziStore.currentElementId
     },
   },
   methods: {
@@ -52,19 +61,36 @@ export default defineComponent({
       if (this.editable) {
         this.content!.contentEditable = 'true'
         this.content?.focus()
+        // 按键(Delete)不可删除元素
+        canvasStore.editing = true
+        // 输入时监听元素大小变化，同步给编辑框
+        this.resizeObserver.observe(this.$el)
       }
     },
     handleBlur() {
       this.content!.contentEditable = 'false'
       this.editable = false
+      canvasStore.editing = false
+      this.resizeObserver.unobserve(this.$el)
+      preziStore.save(this.data.id)
     },
-    handleInput() {
-      // slideStore.setContent(this.content?.innerHTML)
-    }
+    handleInput(ev: Event) {
+      const html = (ev.target as HTMLDivElement).innerHTML
+      const text = (ev.target as HTMLDivElement).innerText.replace('\n', '')
+      console.log({
+        html,
+        text
+      });
+      if (!text) {
+        (ev.target as HTMLDivElement).innerHTML = '<p><br></p>'
+        this.showPlaceholder = true
+      } else if (this.showPlaceholder) {
+        this.showPlaceholder = false
+      }
+      preziStore.updateElementPayload({ content: html })
+    },
   },
   render() {
-    console.log(this.html);
-    
     return (
       <div
         style={this.styles}
@@ -73,10 +99,17 @@ export default defineComponent({
         onMousemove={this.handleMousemove}
         onMouseup={this.handleMouseup}
       >
+        {
+          this.showPlaceholder &&
+          <div class="text-placeholder">
+            <p>Add Text</p>
+          </div>
+        }
         <div
+          class="text-editor"
           ref="content"
           onBlur={this.handleBlur}
-          innerHTML={this.html}
+          v-html={this.html}
           onInput={this.handleInput}
         />
       </div>

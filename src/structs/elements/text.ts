@@ -1,16 +1,16 @@
-import { IElementBase } from './base'
+import { IElement } from './base'
 
-export type ITextLevel = 'H1' | 'H2' | 'H3' | 'P' | 'SP' | 'OL' | 'UL'
+export type IETextLevel = 'H1' | 'H2' | 'H3' | 'P' | 'SP' | 'OL' | 'UL'
 
-export type IEText = IElementBase<'TEXT', {
+export interface IETextPayload {
   /**
    * 文字内容（HTML）
    */
-  content: string
+   content: string
    /**
     * 文字级别
     */
-  level: ITextLevel
+  level: IETextLevel
    /**
     * 颜色
     */
@@ -46,5 +46,8 @@ export type IEText = IElementBase<'TEXT', {
   /**
    * 段落间距
    */
-   paragraphSpacing: number
-}>
+  paragraphSpacing: number
+}
+
+
+export type IEText = IElement<'TEXT', IETextPayload>

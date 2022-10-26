@@ -16,6 +16,7 @@ export const parseStyles = ({
   height,
   x,
   y,
+  zIndex
 }: Partial<StylesParams>) => {
   const ret: CSSProperties = {}
   const transform = []
@@ -34,6 +35,9 @@ export const parseStyles = ({
   }
   if (transform.length) {
     ret.transform = transform.join(' ')
+  }
+  if (zIndex) {
+    ret.zIndex = zIndex
   }
   return ret
 }

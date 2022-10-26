@@ -3,8 +3,7 @@ import Canvas from "./canvas";
 import Sidebar from "./sidebar";
 import Header from "./header";
 import SlideMenu from './slide-menu'
-import { workspaceStore } from "@/stores/workspace";
-import { slideStore } from "@/stores/slide";
+import { preziStore } from "@/stores/prezi";
 import "./index.scss"
 
 export default defineComponent({
@@ -18,10 +17,7 @@ export default defineComponent({
   },
   methods: {
     async initialize() {
-      // 获取workspace数据
-      const workspace = await workspaceStore.initialize(+this.$route.params.id)
-      // 默认打开第一页
-      await slideStore.setTarget(workspace.slides[0].id)
+      await preziStore.initialize(+this.$route.params.id)
       this.ready = true
     }
   },

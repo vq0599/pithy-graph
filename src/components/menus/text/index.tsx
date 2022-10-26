@@ -1,8 +1,9 @@
 import { defineComponent } from "vue";
-import type { IText } from '@/structs'
-import { slideStore } from "@/stores/slide";
+import type { IETextPayload } from '@/structs'
 import * as textCase from './case'
+import { preziStore } from "@/stores/prezi";
 import './index.scss'
+import { globalStore } from "@/stores/global";
 
 interface TextMenuItem {
   label: string,
@@ -10,7 +11,7 @@ interface TextMenuItem {
   /**
    * 需要添加到元素里的属性
    */
-  options: Partial<IText>
+  options: Partial<IETextPayload>
 }
 
 const list: TextMenuItem[] = [
@@ -71,11 +72,13 @@ export default defineComponent({
     )
   },
   methods: {
-    handleClick(options:  Partial<IText>) {
-      slideStore.appendElement({
-        type: 'TEXT',
-        ...options,
+    handleClick(payload: Partial<IETextPayload>) {
+      preziStore.createElement('TEXT', {
+        x: 100,
+        y: 500,
+        payload,
       })
+      globalStore.closeMenu('TEXT')
     }
   }
 })

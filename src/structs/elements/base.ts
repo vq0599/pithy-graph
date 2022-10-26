@@ -1,6 +1,6 @@
 export type IElementTypes = 'TEXT' | 'IMAGE' | 'SHAPE'
 
-export interface IElementBase<T extends IElementTypes, U extends Record<string, any>> {
+export interface IElement<T extends IElementTypes = any, U extends Record<string, any> = any> {
   /**
    * 唯一标识符
    */
