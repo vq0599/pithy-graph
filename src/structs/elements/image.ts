@@ -1,6 +1,6 @@
 import { IElement } from './base'
 
-interface IEImagePayload {
+export interface IEImagePayload {
   /**
    * 图片地址
    */

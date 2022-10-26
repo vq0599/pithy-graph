@@ -1,6 +1,6 @@
 import { IElement } from './base'
 
-type IEShapeAppearance = 'diamond' | 'ellipse' | 'rectangle' | 'triangle'
+export type IEShapeAppearance = 'diamond' | 'ellipse' | 'rectangle' | 'triangle'
 
 export interface IEShapePayload {
   /**
