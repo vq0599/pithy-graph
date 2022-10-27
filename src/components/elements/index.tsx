@@ -3,10 +3,8 @@ import PithyText from './text'
 import PithyImage from './image'
 import PithyShape from './shape'
 import { IElement } from "@/structs";
-import { canvasStore } from "@/stores/canvas";
-import { editLayerStore } from "@/stores/edit-layer";
 import { parseStyles } from "@/utils/parse-styles";
-import { preziStore } from "@/stores/prezi";
+import { useElement } from "@/hooks/element";
 import './index.scss'
 
 export const PithyElement =  defineComponent({
@@ -16,10 +14,13 @@ export const PithyElement =  defineComponent({
       type: Object as PropType<IElement>,
       required: true
     },
-    index: {
-      type: Number,
-      required: true
+    readonly: {
+      type: Boolean,
+      default: false
     }
+  },
+  setup(props) {
+    return props.readonly ? { handleMousedown: undefined } : useElement(props.data)
   },
   computed: {
     styles() {
@@ -33,21 +34,6 @@ export const PithyElement =  defineComponent({
         zIndex
       })
     },
-    active() {
-      return this.data.id === preziStore.currentElementId
-    },
-  },
-  watch: {
-    active(active: boolean) {
-      if (active) {
-        this.setEditLayerRect()
-      }
-    }
-  },
-  mounted() {
-    if(this.active) {
-      this.setEditLayerRect()
-    }
   },
   methods: {
     renderElement() {
@@ -63,36 +49,6 @@ export const PithyElement =  defineComponent({
           return null
       }
     },
-    setEditLayerRect() {
-      editLayerStore.setRect(
-        this.$el.clientWidth,
-        this.$el.clientHeight,
-      )
-    },
-    handleDragstart(startEvent: MouseEvent) {
-      preziStore.selectElement(this.data.id)
-      if (canvasStore.editing) return
-      const startX = this.data.x
-      const startY = this.data.y
-      const threshold = 10
-      const callback = (moveEvent: MouseEvent) => {
-        const distX = moveEvent.pageX - startEvent.pageX
-        const distY = moveEvent.pageY - startEvent.pageY
-        if (Math.abs(distX) < threshold && Math.abs(distY) < threshold) {
-          return
-        }
-        preziStore.updateElement({
-          x: startX + distX / canvasStore.scale,
-          y: startY + distY / canvasStore.scale,
-        })
-      }
-      document.onmousemove = callback
-      document.onmouseup = () => {
-        document.onmousemove = null
-        document.onmouseup = null
-        preziStore.save()
-      }
-    },
   },
   render() {
     return (
@@ -100,7 +56,7 @@ export const PithyElement =  defineComponent({
         class="pithy-element"
         ref="element"
         style={this.styles}
-        onMousedown={this.handleDragstart}
+        onMousedown={this.handleMousedown}
       >
         {this.renderElement()}
       </div>

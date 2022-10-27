@@ -10,7 +10,7 @@ export default defineComponent({
   computed: {
     styles(): CSSProperties {
       if (!preziStore.currentElement) return {}
-      const { width, height } = editLayerStore.data
+      const { width, height } = editLayerStore
       const { x, y, rotate } = preziStore.currentElement
       const { scale } = canvasStore
       return parseStyles({
@@ -26,7 +26,7 @@ export default defineComponent({
     handleMouseDown(startEvent: MouseEvent) {
       startEvent.stopPropagation()
       if (!preziStore.currentElement) return
-      const { width: oldWidth, height: oldHeight } = editLayerStore.data
+      const { width: oldWidth, height: oldHeight } = editLayerStore
       const callback = (moveEvent: MouseEvent) => {
         if (!preziStore.currentElement) return
         const threshold = 10

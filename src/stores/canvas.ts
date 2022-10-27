@@ -12,8 +12,9 @@ class CanvasStore {
   maxHeight = parseInt(canvasNaturalHeight)
   width = 0
   height = 0
-  scale = 0
-
+  get scale () {
+    return this.width / this.maxWidth
+  }
   /**
    * 编辑中，禁止移动和删除
    */
@@ -38,9 +39,8 @@ class CanvasStore {
       width = containerHeight * canvasRatio
       height = containerHeight
     }
-    this.width = width,
-    this.height = height,
-    this.scale = width / maxWidth
+    this.width = width
+    this.height = height
   }
 }
 

@@ -1,8 +1,8 @@
-// import { slideStore } from "@/stores/slide";
-// import { workspaceStore } from "@/stores/workspace";
+import PithyCanvas from "@/components/canvas";
 import { preziStore } from "@/stores/prezi";
-import { ElMessage } from "element-plus";
+import { ElMessage, ElIcon } from "element-plus";
 import { defineComponent } from "vue";
+import { Delete } from '@element-plus/icons-vue'
 import './index.scss'
 
 export default defineComponent({
@@ -15,7 +15,6 @@ export default defineComponent({
     },
     handleSelect(id: number) {
       preziStore.selectSlide(id)
-      // slideStore.setTarget(id)
     },
     handleDelete(ev: MouseEvent, id: number) {
       ev.stopPropagation()
@@ -34,16 +33,28 @@ export default defineComponent({
       <aside class="pithy-editor-aside">
         <div class="aside-slider">
           {
-            preziStore.slides.map(({ id }, index) => (
-              <div
-                class={["aside-slider-item", { active: id === preziStore.currentSlideId }]}
-                onClick={() => this.handleSelect(id)}
-              >
-                <i></i>
-                <span onClick={ev => this.handleDelete(ev, id)}>{index}</span>
-                <div class="item-thumbnail">{id}</div>
-              </div>
-            ))
+            preziStore.slides.map((slide, index) => {
+              const { id } = slide
+              return (
+                <div
+                  class={["aside-slider-item", { active: id === preziStore.currentSlideId }]}
+                  onClick={() => this.handleSelect(id)}
+                >
+                  <i class="item-indicator"></i>
+                  <span>{index}</span>
+                  <div class="item-thumbnail">
+                    <PithyCanvas width={160} height={90} slide={slide} readonly />
+                    <ElIcon
+                      size={22}
+                      // @ts-ignore Element的错误
+                      onClick={ev => this.handleDelete(ev, id)}
+                    >
+                        <Delete />
+                      </ElIcon>
+                  </div>
+                </div>
+              )
+            })
           }
         </div>
         <button class="aside-btn" onClick={this.handleCreate}>

@@ -6,8 +6,12 @@ class EditLayerStore {
     height: number,
   } = reactive({ width: 0, height: 0})
 
-  public get data() {
-    return this._data
+  public get width() {
+    return this._data.width
+  }
+
+  public get height() {
+    return this._data.height
   }
 
   setRect(width?: number, height?: number) {

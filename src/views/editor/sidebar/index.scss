@@ -13,7 +13,7 @@
       margin-bottom: 20px;
       position: relative;
       cursor: pointer;
-      & > i {
+      & > .item-indicator {
         visibility: hidden;
         width: 3px;
         transform: translate(-5px);
@@ -27,11 +27,20 @@
         color: #666;
       }
       .item-thumbnail {
-        width: 120px;
-        margin-left: 10px;
-        aspect-ratio: $canvas-ratio;
-        border: 1px solid #E7E7E9;
-        background: #FFF;
+        position: relative;
+        &:hover i {
+          display: flex;
+        }
+        i {
+          display: none;
+          border-radius: 2px;
+          color: #FFF;
+          position: absolute;
+          bottom: 5px;
+          right: 5px;
+          padding: 2px;
+          background-color: rgba($color: #1a1a1a, $alpha: .4);
+        }
       }
       &.active {
         & > i {
