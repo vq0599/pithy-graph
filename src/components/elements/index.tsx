@@ -38,9 +38,13 @@ export const PithyElement =  defineComponent({
   methods: {
     renderElement() {
       const { data } = this
+      // const props = {
+      //   data,
+      //   this.readonly
+      // }
       switch (data.type) {
         case 'TEXT':
-          return <PithyText data={data} />
+          return <PithyText {...this.$props} />
         case 'IMAGE':
           return <PithyImage data={data} />
         case 'SHAPE':
