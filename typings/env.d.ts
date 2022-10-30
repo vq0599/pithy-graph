@@ -1,4 +1,4 @@
-/// <reference types="vite/client" />
+// / <reference types="vite/client" />
 
 /// <reference types="vite-svg-loader" />
 
@@ -16,4 +16,5 @@ declare module '*.module.scss' {
   export const canvasRatio: number
   export const canvasNaturalWidth: string
   export const canvasNaturalHeight: string
+  export const optionsPanelWidth: string
 }

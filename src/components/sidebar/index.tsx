@@ -3,6 +3,8 @@ import { preziStore } from "@/stores/prezi";
 import { ElMessage, ElIcon } from "element-plus";
 import { defineComponent } from "vue";
 import { Delete } from '@element-plus/icons-vue'
+import { RouterLink } from "vue-router";
+import { encode } from "@/utils/encryption";
 import './index.scss'
 
 export default defineComponent({
@@ -36,9 +38,10 @@ export default defineComponent({
             preziStore.slides.map((slide, index) => {
               const { id } = slide
               return (
-                <div
+                <RouterLink
+                  to={`#${encode(id)}`}
                   class={["aside-slider-item", { active: id === preziStore.currentSlideId }]}
-                  onClick={() => this.handleSelect(id)}
+                  // onClick={() => this.handleSelect(id)}
                 >
                   <i class="item-indicator"></i>
                   <span>{index}</span>
@@ -52,7 +55,7 @@ export default defineComponent({
                         <Delete />
                       </ElIcon>
                   </div>
-                </div>
+                </RouterLink>
               )
             })
           }

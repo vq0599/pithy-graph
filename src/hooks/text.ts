@@ -3,6 +3,7 @@ import { canvasStore } from "@/stores/canvas";
 import { editLayerStore } from "@/stores/edit-layer";
 import { preziStore } from "@/stores/prezi";
 import { IEText } from "@/structs";
+import { watch } from "vue";
 
 export function useText(data: IEText) {
   const root = ref<HTMLDivElement>()
@@ -12,6 +13,14 @@ export function useText(data: IEText) {
   const showPlaceholder = ref(!data.payload.content)
   const active = computed(() => data.id === preziStore.currentElementId)
 
+  watch(active, (val) => {
+    if (val) {
+      resizeObserver.observe(root.value!)
+    } else {
+      resizeObserver.unobserve(root.value!)
+    }
+  })
+  
   const resizeObserver = new ResizeObserver(([{ contentRect }]) => {
     const { width, height } = contentRect
     editLayerStore.setRect(width, height)
@@ -34,10 +43,9 @@ export function useText(data: IEText) {
       content.value.contentEditable = 'true'
       content.value.focus()
       canvasStore.editing = true
-      // 输入时监听元素大小变化，同步给编辑框
-      resizeObserver.observe(root.value!)
     }
   }
+
   const handleBlur = (ev: Event) => {
     const $content = ev.target as HTMLDivElement
     const html = $content.innerHTML
@@ -45,7 +53,6 @@ export function useText(data: IEText) {
     $content.contentEditable = 'false'
     editable.value = false
     canvasStore.editing = false
-    resizeObserver.unobserve(root.value!)
     preziStore.save(data.id)
   }
 

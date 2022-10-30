@@ -1,0 +1,28 @@
+@import '@/styles/utils/variable';
+
+.pithy-options-panels {
+  flex-basis: $options-panel-width;
+  flex-shrink: 0;
+  border-left: 1px solid $border-color;
+
+  .el-tabs__content {
+    padding: 8px 12px;
+  }
+
+  .panel-form {
+    display: flex;
+    justify-content: space-between;
+    & > span {
+      font-weight: bold;
+    }
+    & + .panel-form {
+      margin-top: 30px;
+    }
+
+    .el-slider,
+    .el-select {
+      max-width: 120px;
+    }
+  }
+}
+

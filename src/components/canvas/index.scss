@@ -5,19 +5,14 @@
     position: relative;
     overflow: hidden;
   }
-  transform-origin: left top;
   &-inner {
     position: relative;
     background: #FFF;
     width: 1920px;
-    font-size: 36px;
+    font-size: 40px;
     aspect-ratio: $canvas-ratio;
     overflow: hidden;
   }
 
-  // ------------ 画布内默认样式
-  ul, p {
-    margin: 0;
-    line-height: 1.5;
-  }
+  transform-origin: left top;
 }

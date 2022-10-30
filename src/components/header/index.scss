@@ -1,7 +1,10 @@
+@import '@/styles/utils/variable';
 .pithy-editor-header {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  border-bottom: 1px solid $border-color;;
+  height: $header-width;
   .header-menu {
     margin: 0;
     padding: 0;

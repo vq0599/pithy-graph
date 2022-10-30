@@ -1,7 +1,7 @@
 import { CSSProperties, defineComponent, PropType, ref } from "vue";
 import { PithyElement } from '@/components/elements'
 import { canvasStore } from "@/stores/canvas";
-import EditLayer from '../../views/editor/edit-layer'
+import EditLayer from '@/components/edit-layer'
 import { ISlide } from "@/structs";
 import './index.scss'
 

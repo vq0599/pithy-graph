@@ -37,7 +37,7 @@ export default defineComponent({
   },
   computed: {
     styles(): CSSProperties {
-      const { fontSize, fontFamily, italic, bold, alignment, color } = this.data.payload
+      const { fontSize, fontFamily, italic, bold, alignment, color, letterSpacing, lineSpacing, paragraphSpacing } = this.data.payload
       return {
         fontSize: `${fontSize}em`,
         fontFamily: fontFamily,
@@ -45,6 +45,9 @@ export default defineComponent({
         fontWeight: bold ? 'bold' : undefined,
         textAlign: alignment,
         color,
+        letterSpacing: `${letterSpacing}em`,
+        '--paragraph-spacing': `${paragraphSpacing || 0}em`,
+        lineHeight: `${lineSpacing}`,
       }
     },
   },
@@ -55,7 +58,7 @@ export default defineComponent({
         ref="root"
         class="pithy-element-text"
         onMousedown={this.handleMousedown}
-        // 不直接加在元素上，而是改为类似拖拽的实现，mousedown之后再加事件
+        // TODO: 不直接加在元素上，而是改为类似拖拽的实现，mousedown之后再加事件
         onMousemove={this.handleMousemove}
         onMouseup={this.handleMouseup}
       >

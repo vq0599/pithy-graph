@@ -13,10 +13,11 @@ export default defineComponent({
       const { width, height } = editLayerStore
       const { x, y, rotate } = preziStore.currentElement
       const { scale } = canvasStore
+      // +10/-5: 留点空隙更便于看光标
       return parseStyles({
-        width: width * scale,
+        width: width * scale + 10,
         height: height * scale,
-        x: x * scale,
+        x: x * scale - 5,
         y: y * scale,
         rotate,
       })

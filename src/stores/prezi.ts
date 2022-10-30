@@ -31,10 +31,15 @@ class PreziStore {
   /**
    * 初始化workspace数据
    */
-  async initialize(id: number) {
+  async initialize(id: number, defaultSlideId: number) {
     const { data } = await WorkspaceAPI.getOne(id)
     this._data = data
-    this.currentSlideId = this._data.slides[0].id
+    const exists = this.slides.find(slide => slide.id === defaultSlideId)
+    if (exists) {
+      this.currentSlideId = defaultSlideId
+    } else {
+      this.currentSlideId = this.slides[0].id
+    }
   }
 
   /**
@@ -92,7 +97,7 @@ class PreziStore {
     }
   }
 
-  updateElementPayload(payload: any, id?: number) {
+  updateElementPayload<T = any>(payload: Partial<T>, id?: number) {
     const target = id ? this.elements?.find(el => el.id === id) : this.currentElement
     if (target) {
       this.updateElement({

@@ -1,6 +1,7 @@
 import { defineComponent } from "vue";
 import { ElDialog } from 'element-plus'
 import { ElTabs, ElTabPane } from 'element-plus'
+import { ImageSelectOptions } from '@/structs'
 import './index.scss'
 
 const list = [
@@ -20,7 +21,14 @@ export default defineComponent({
       default: false
     }
   },
-  emits: ['update:modelValue', 'select'],
+  // 2023年了都不知道还在纠结运行时验证干啥
+  emits: {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    'update:modelValue': (payload: boolean) => true,
+    select: (payload: ImageSelectOptions) => {
+      if (payload) return true
+    }
+  },
   computed: {
     modelVisible: {
       get() {

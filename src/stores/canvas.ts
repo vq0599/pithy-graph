@@ -5,6 +5,7 @@ import {
   headerWidth,
   canvasNaturalWidth,
   canvasNaturalHeight,
+  optionsPanelWidth,
 } from "@/styles/export.module.scss"
 
 class CanvasStore {
@@ -25,7 +26,7 @@ class CanvasStore {
   }
   calcRect() {
     const { maxHeight, maxWidth } = this
-    const containerWidth = window.innerWidth - parseInt(sidebarWidth) - 12 * 2
+    const containerWidth = window.innerWidth - parseInt(sidebarWidth) - 12 * 2 - parseInt(optionsPanelWidth)
     const containerHeight = window.innerHeight - parseInt(headerWidth) - 12 * 2
     let width, height
     // 4K屏幕，需要考虑最大值不能对于maxWidth * maxHeight
