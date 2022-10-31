@@ -6,7 +6,7 @@ import {
   canvasNaturalWidth,
   canvasNaturalHeight,
   optionsPanelWidth,
-} from "@/styles/export.module.scss"
+} from "@/styles/utils/layout.module.scss"
 
 class CanvasStore {
   maxWidth = parseInt(canvasNaturalWidth)

@@ -2,8 +2,9 @@ import { defineComponent } from "vue";
 import type { IETextPayload } from '@/structs'
 import * as textCase from './case'
 import { preziStore } from "@/stores/prezi";
-import './index.scss'
 import { globalStore } from "@/stores/global";
+import { Palette }  from '@/utils/default-style-variables'
+import './index.scss'
 
 interface TextMenuItem {
   label: string,
@@ -72,11 +73,14 @@ export default defineComponent({
     )
   },
   methods: {
-    handleClick(payload: Partial<IETextPayload>) {
+    handleClick(options: Partial<IETextPayload>) {
       preziStore.createElement('TEXT', {
         x: 100,
         y: 500,
-        payload,
+        payload: {
+          color: Palette.textColor,
+          ...options
+        },
       })
       globalStore.closeMenu('TEXT')
     }

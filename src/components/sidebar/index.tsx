@@ -41,7 +41,6 @@ export default defineComponent({
                 <RouterLink
                   to={`#${encode(id)}`}
                   class={["aside-slider-item", { active: id === preziStore.currentSlideId }]}
-                  // onClick={() => this.handleSelect(id)}
                 >
                   <i class="item-indicator"></i>
                   <span>{index}</span>

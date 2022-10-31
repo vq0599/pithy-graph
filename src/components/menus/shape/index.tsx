@@ -6,17 +6,17 @@ import TriangleShape from '@/components/elements/shape/triangle'
 import { globalStore } from "@/stores/global";
 import { IEShapePayload } from '@/structs'
 import { preziStore } from "@/stores/prezi";
+import { Palette }  from '@/utils/default-style-variables'
 import "./index.scss"
 
-const color = '#8E8E8E'
 type IEShapeAppearance = 'diamond' | 'ellipse' | 'rectangle' | 'triangle'
 
 const fillCommonOptions = {
-  fill: color
+  fill: Palette.shapeColor
 }
 
 const strokeCommonOptions = {
-  stroke: color,
+  stroke: Palette.shapeColor,
   strokeWidth: 4,
 }
 

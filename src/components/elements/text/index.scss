@@ -1,6 +1,7 @@
+@import "@/styles/utils/variable";
+
 .pithy-element-text {
   position: relative;
-  color: #191919;
   line-height: 1.5;
   letter-spacing: 0;
   ul, p {
@@ -9,8 +10,6 @@
       margin-top: var(--paragraph-spacing);
     }
   }
-
-
   .text-placeholder {
     color: #888;
     z-index: 0;

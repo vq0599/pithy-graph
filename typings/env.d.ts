@@ -10,7 +10,7 @@ interface ImportMeta {
   readonly env: ImportMetaEnv
 }
 
-declare module '*.module.scss' {
+declare module '*/layout.module.scss' {
   export const sidebarWidth: string
   export const headerWidth: string
   export const canvasRatio: number
