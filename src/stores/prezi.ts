@@ -113,7 +113,7 @@ class PreziStore {
     }
   }
 
-  setSlideBackground(options: ISlide['background']) {
+  setSlideBackground(options: Partial<ISlide['background']>) {
     const background = Object.assign(this.currentSlide.background, options)
     SlideAPI.update(this.currentSlideId, {
       background

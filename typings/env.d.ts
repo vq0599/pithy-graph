@@ -18,3 +18,7 @@ declare module '*.module.scss' {
   export const canvasNaturalHeight: string
   export const optionsPanelWidth: string
 }
+
+declare module '@ckpack/vue-color' {
+  const Chrome: any
+}

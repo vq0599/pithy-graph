@@ -1,11 +1,9 @@
 import { defineComponent } from "vue";
 import { preziStore } from "@/stores/prezi";
-import {
-  ElColorPicker,
-  ElSlider,
-} from 'element-plus'
+import { ElSlider } from 'element-plus'
 import { Edit, Share, Delete } from '@element-plus/icons-vue'
 import { IEShape, IEShapePayload } from "@/structs";
+import PithyColorPicker from "@/components/color-picker";
 
 export default defineComponent({
   name: 'pithy-text-panel',
@@ -30,18 +28,16 @@ export default defineComponent({
       <div class="pithy-common-panel" >
         <div class="panel-form">
           <span>边框色</span>
-          <ElColorPicker
-            showAlpha
-            modelValue={this.payload.stroke}
-            onActiveChange={val => this.handleUpdatePayload({ stroke: (val as string) })}
+          <PithyColorPicker
+            color={this.payload.stroke}
+            onSelect={stroke => this.handleUpdatePayload({ stroke })}
           />
         </div>
         <div class="panel-form">
           <span>填充色</span>
-          <ElColorPicker
-            showAlpha
-            modelValue={this.payload.fill}
-            onActiveChange={val => this.handleUpdatePayload({ fill: (val as string) })}
+          <PithyColorPicker
+            color={this.payload.fill}
+            onSelect={fill => this.handleUpdatePayload({ fill })}
           />
         </div>
         <div class="panel-form">

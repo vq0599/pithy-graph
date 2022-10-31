@@ -15,9 +15,9 @@ export default defineComponent({
       const { scale } = canvasStore
       // +10/-5: 留点空隙更便于看光标
       return parseStyles({
-        width: width * scale + 10,
+        width: width * scale,
         height: height * scale,
-        x: x * scale - 5,
+        x: x * scale,
         y: y * scale,
         rotate,
       })

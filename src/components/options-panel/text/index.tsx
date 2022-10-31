@@ -1,7 +1,6 @@
 import { defineComponent } from "vue";
 import { preziStore } from "@/stores/prezi";
 import {
-  ElColorPicker,
   ElSelect,
   ElOption,
   ElSwitch,
@@ -10,8 +9,9 @@ import {
   ElSlider,
 } from 'element-plus'
 import { IEText, IETextPayload } from "@/structs";
-import "./index.scss"
 import { Edit, Share, Delete } from '@element-plus/icons-vue'
+import PithyColorPicker from "@/components/color-picker";
+import "./index.scss"
 
 const options = [
   { label: '20', value: 0.5 },
@@ -48,10 +48,9 @@ export default defineComponent({
       <div class="pithy-text-panel" >
         <div class="panel-form">
           <span>文字颜色</span>
-          <ElColorPicker
-            showAlpha
-            modelValue={this.payload.color}
-            onActiveChange={(color) => this.handleUpdatePayload({ color: (color as string) })}
+          <PithyColorPicker
+            color={this.payload.color}
+            onSelect={(color) => this.handleUpdatePayload({ color })}
           />
         </div>
         <div class="panel-form">

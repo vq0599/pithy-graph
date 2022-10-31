@@ -9,7 +9,7 @@ export interface ISlide {
     /**
      * 颜色
      */
-    color?: string
+    color: string
     /**
      * 颜色
      */

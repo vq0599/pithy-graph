@@ -269,6 +269,14 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
+"@ckpack/vue-color@^1.2.4":
+  version "1.2.4"
+  resolved "https://registry.npmmirror.com/@ckpack/vue-color/-/vue-color-1.2.4.tgz#793104ddbc85e048387b07d7b748029fecccf323"
+  integrity sha512-3IJFlocRd+As2ba6+f8cq4K+G2zfaRM63MtPAE+yxtcIuSHRbtToe+Zix8nqkjQuQxmzRHmUkfsXibtJae51kQ==
+  dependencies:
+    "@ctrl/tinycolor" "^3.4.1"
+    material-colors "^1.2.6"
+
 "@ctrl/tinycolor@^3.4.1":
   version "3.4.1"
   resolved "https://registry.npmmirror.com/@ctrl/tinycolor/-/tinycolor-3.4.1.tgz#75b4c27948c81e88ccd3a8902047bcd797f38d32"
@@ -2026,6 +2034,11 @@ marked@^4.0.19:
   resolved "https://registry.npmmirror.com/marked/-/marked-4.1.1.tgz#2f709a4462abf65a283f2453dc1c42ab177d302e"
   integrity sha512-0cNMnTcUJPxbA6uWmCmjWz4NJRe/0Xfk2NhXCUHjew9qJzFN20krFnsUe7QynwqOwa5m1fZ4UDg0ycKFVC0ccw==
 
+material-colors@^1.2.6:
+  version "1.2.6"
+  resolved "https://registry.npmmirror.com/material-colors/-/material-colors-1.2.6.tgz#6d1958871126992ceecc72f4bcc4d8f010865f46"
+  integrity sha512-6qE4B9deFBIa9YSpOc9O0Sgc43zTeVYbgDT5veRKSlB2+ZuHNoVVxA1L/ckMUayV9Ay9y7Z/SZCLcGteW9i7bg==
+
 mdn-data@2.0.14:
   version "2.0.14"
   resolved "https://registry.npmmirror.com/mdn-data/-/mdn-data-2.0.14.tgz#7113fc4281917d63ce29b43446f701e68c25ba50"
@@ -2566,79 +2579,6 @@ strip-json-comments@^3.1.0, strip-json-comments@^3.1.1:
   resolved "https://registry.npmmirror.com/strip-json-comments/-/strip-json-comments-3.1.1.tgz#31f1281b3832630434831c310c01cccda8cbe006"
   integrity sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==
 
-suitcss-utils-after@^1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/suitcss-utils-after/-/suitcss-utils-after-1.0.1.tgz#23086dc0a1151f236de33a4c696a7b83412f02d4"
-  integrity sha512-QGDsHFkNRFhWM8dwaX8/eoDKKvzY9NPdrB4osO15qnHs0MvTZLOmeK1iWLunWMe130Lou683XrGcVXoCcURCxg==
-
-suitcss-utils-align@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/suitcss-utils-align/-/suitcss-utils-align-1.0.0.tgz#8bf2b96b42c7386bc7ba3adbf14e7e6fcdd796cb"
-  integrity sha512-zF9yRPncYLgLRKAQNXK397h+MtFt49CGlKrs8aYkiuUdJoStldEyrrhmPzomR6wk9X2kI24QUfLkUbt3JHjuuQ==
-
-suitcss-utils-before@^1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/suitcss-utils-before/-/suitcss-utils-before-1.0.1.tgz#977f1b46b65db140571ebe5f767a12a4a7bc4931"
-  integrity sha512-51gN0L3tQepKZW4DiFYl9TxX6ifrZwN3TcsxkeAJI451dJUCvA/TBqYNT2uEMkShM7mNU5H7fOU3vd24ALy6Ug==
-
-suitcss-utils-display@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/suitcss-utils-display/-/suitcss-utils-display-1.0.2.tgz#cb6a4e756eab9aefb149f3e4618c76d02bbab47f"
-  integrity sha512-HNpTXq8JeXQwwiZoZzL148WzFarK8VkUUWwg389gy2MOlqDOE1OcFLPx2/lMfhqqFdLtsNnNTJn4VTH2gFcI6Q==
-
-suitcss-utils-flex@^2.0.0:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/suitcss-utils-flex/-/suitcss-utils-flex-2.0.1.tgz#7ddc146bb0b8d52e5181257c7f4329c495b00c5f"
-  integrity sha512-81y7h4O8vvE54oDneSPQGmWctmtC6a4p536wMCzUKknV3VjNFBD3IBOsqImVBkXhHrIeoCvtvgIWx+TyR3zzHg==
-
-suitcss-utils-layout@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/suitcss-utils-layout/-/suitcss-utils-layout-1.0.1.tgz#a6a0a3d857164b8bbe9dd7f438cc01bc178b0aac"
-  integrity sha512-V8NNWdQdkeTlNNdeFynsfsYhoC7E2Xdlezlxtli997eXGEvLFOyOMUArZIU/ExF7MJquVCZ7FLpGTHgPV6NVQQ==
-
-suitcss-utils-link@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/suitcss-utils-link/-/suitcss-utils-link-1.0.1.tgz#93f48a5261f97a2c7b4bdcb8ecece227cbf3c96c"
-  integrity sha512-7QNOXE8u/1RMu/z4CnhapClFKn6CM/7mkEviFPSx2E3YPp08NN4tI/70SQ36Kbl1XdQnbEHGIMT7vpodmazGvQ==
-
-suitcss-utils-offset@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/suitcss-utils-offset/-/suitcss-utils-offset-1.0.0.tgz#0232b12207bd6419a837a2e4f2b4a23798e087e2"
-  integrity sha512-GRyvnd+2K0oGRDsGu779doRA+Ge8u4I/YGqQgZypoXDj2uNFFBysuNbkZDyIvCo1cJmj7Vik4WFPEX+nA0twOw==
-  dependencies:
-    suitcss-utils-after "^1.0.0"
-    suitcss-utils-before "^1.0.0"
-
-suitcss-utils-position@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/suitcss-utils-position/-/suitcss-utils-position-1.0.1.tgz#28c602f3be756e9330956ad06aab04de7945c4dd"
-  integrity sha512-Ec6bA+IOui87O8BowbFIIoJFzzpwSnyx3vCoKR1ZRd6nHMNb1BLmyo59xKIOa7Svv9i4MoWjnrCwzxoBfjWrzg==
-
-suitcss-utils-size@^2.0.0:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/suitcss-utils-size/-/suitcss-utils-size-2.0.1.tgz#37b74154fad4b885b41eaad97e7fafdcc598b852"
-  integrity sha512-nSwISX0SIgA0vP0YzbrXU2CBKUfUv/iKfGuUeZDE4zDn/b/Byrxuhp+hi9epyjVRgs02s2z9LtcuYh7lm8wSRw==
-
-suitcss-utils-text@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/suitcss-utils-text/-/suitcss-utils-text-1.0.0.tgz#d36f83f4298952db51abad584bfab2773bb389b8"
-  integrity sha512-y/Bs1OHCbLbLrIW5R7HvERiG6DKypx6k7qaeKdf+sUsRajTs8/GQ6p7kdFOQwMrynFox1eQNbVTcpHr+vsF++g==
-
-suitcss-utils@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/suitcss-utils/-/suitcss-utils-3.0.0.tgz#bd13642a74410a508692e3b91d3859597c4afba6"
-  integrity sha512-YqCatti0AWw37VUh9arWxxL9SUp544qW9NCFIaYlrD3s/NtfZl8TdXuWR56sW0dRIxTwmguKL/q5eJItNRNFAg==
-  dependencies:
-    suitcss-utils-align "^1.0.0"
-    suitcss-utils-display "^1.0.2"
-    suitcss-utils-flex "^2.0.0"
-    suitcss-utils-layout "^1.0.1"
-    suitcss-utils-link "^1.0.1"
-    suitcss-utils-offset "^1.0.0"
-    suitcss-utils-position "^1.0.1"
-    suitcss-utils-size "^2.0.0"
-    suitcss-utils-text "^1.0.0"
-
 supports-color@^5.3.0:
   version "5.5.0"
   resolved "https://registry.npmmirror.com/supports-color/-/supports-color-5.5.0.tgz#e2e69a44ac8772f78a1ec0b35b689df6530efc8f"
@@ -2789,11 +2729,6 @@ validate-npm-package-license@^3.0.1:
   dependencies:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
-
-vanilla-colorful@^0.7.1:
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/vanilla-colorful/-/vanilla-colorful-0.7.1.tgz#d6d87b8724831cb05dbecd40349109ea99106f7e"
-  integrity sha512-Fg6xAV8QiImaePr9TgDgFrjm54tRgWnPmlBRzuT9TBOQ2QoAdWPHwHM/ls5tBeDs0rYHftZh9H+kRSmo0MWUDw==
 
 vite-svg-loader@^3.6.0:
   version "3.6.0"
