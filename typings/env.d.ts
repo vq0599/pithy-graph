@@ -1,4 +1,4 @@
-// / <reference types="vite/client" />
+/// <reference types="vite/client" />
 
 /// <reference types="vite-svg-loader" />
 
@@ -10,7 +10,7 @@ interface ImportMeta {
   readonly env: ImportMetaEnv
 }
 
-declare module '*/layout.module.scss' {
+declare module '*.module.scss' {
   export const sidebarWidth: string
   export const headerWidth: string
   export const canvasRatio: number
