@@ -1,14 +1,10 @@
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import { ElDialog } from 'element-plus'
-import { ElTabs, ElTabPane } from 'element-plus'
+import { ElTabs, ElTabPane, ElUpload, ElButton } from 'element-plus'
 import { ImageSelectOptions } from '@/structs'
+import { ImageAPI } from "@/api";
 import './index.scss'
-
-const list = [
-  'http://39.96.206.161/static/images/9e87c2e3-b784-4538-a3ce-6c4a949415b7.jpeg',
-  'http://39.96.206.161/static/images/1b5dabbe-9465-444f-9039-24988b4fd6e4.jpg',
-  'http://39.96.206.161/static/images/97b834db-d52d-456c-a408-5e9a346482f3.jpeg',
-]
+import { http } from "@/api/http";
 
 export default defineComponent({
   props: {
@@ -19,6 +15,12 @@ export default defineComponent({
     modelValue: {
       type: Boolean,
       default: false
+    }
+  },
+  setup() {
+    return {
+      images: ref<string[]>([]),
+      uploadImages: ref<string[]>([]),
     }
   },
   // 2023年了都不知道还在纠结运行时验证干啥
@@ -39,6 +41,10 @@ export default defineComponent({
       }
     }
   },
+  async mounted() {
+    const { data: images } = await ImageAPI.getAll()
+    this.images = images
+  },
   methods: {
     handleSelect(ev: Event) {
       const { naturalHeight, naturalWidth, src: url } = (ev.target as HTMLImageElement)
@@ -51,6 +57,10 @@ export default defineComponent({
         this.$emit('update:modelValue', false)
       }
     },
+    handleUpload(url: string) {
+      this.uploadImages.push(url)
+      
+    },
     renderLibrary() {
       return (
         <div class="pithy-media-library">
@@ -58,13 +68,29 @@ export default defineComponent({
             <ElTabPane label="在线图片">
               <div class="library-content">
               {
-                list.map(url => (
+                this.images.map(url => (
                   <img src={url} onClick={this.handleSelect} />
                 ))
               }
               </div>
             </ElTabPane>
-            <ElTabPane label="我的图片">暂无</ElTabPane>
+            <ElTabPane label="我的图片">
+              <div class="library-content">
+              {
+                this.uploadImages.map(url => (
+                  <img src={url} onClick={this.handleSelect} />
+                ))
+              }
+              </div>
+              <hr />
+              <ElUpload
+                showFileList={false}
+                action={`${http.getUri()}/images/upload`}
+                onSuccess={this.handleUpload}
+              >
+                <ElButton>上传图片</ElButton>
+              </ElUpload>
+            </ElTabPane>
           </ElTabs>
         </div>
       )
