@@ -3,6 +3,16 @@ import { ElementAPI } from '@/api/modules/element'
 import { IElement, IElementTypes, ISlide, IWorkspace } from '@/structs'
 import { reactive } from 'vue'
 
+/**
+ * 变更层级选项
+ */
+export enum ZIndexOptions {
+  highest,
+  higher,
+  lower,
+  lowest
+}
+
 class PreziStore {
   private _data: IWorkspace = {} as IWorkspace
 
@@ -18,6 +28,10 @@ class PreziStore {
 
   public get currentElement() {
     return this.currentSlide.elements.find(el => el.id === this.currentElementId)
+  }
+
+  private get currentElementIndex() {
+    return this.currentSlide.elements.findIndex(el => el.id === this.currentElementId)
   }
 
   public get slides() {
@@ -119,6 +133,46 @@ class PreziStore {
       background
     })
   }
+
+  updateZIndex(step: ZIndexOptions) {
+    const { elements, currentElementIndex: from } = this
+    const params: Record<number, Record<'zIndex', number>> = {}
+    let to
+
+    switch (step) {
+      case ZIndexOptions.highest:
+        to = this.elements.length - 1
+        break;
+      case ZIndexOptions.higher:
+        to = from + 1
+        break;
+      case ZIndexOptions.lower:
+        to = from - 1
+        break;
+      case ZIndexOptions.lowest:
+        to = 0
+        break;
+    }
+
+    if (to > elements.length - 1 || to < 0 || from === to) {
+      return
+    }
+
+    // 裁剪出目标元素
+    const [ target ] = elements.splice(from, 1)
+    // 插入到它本该在的位置
+    elements.splice(to, 0, target)
+
+    const [prev, next] = [from, to].sort()
+    for (let i = prev; i < next + 1; i++) {
+      const el = elements[i]
+      el.zIndex = i + 1
+      params[el.id] = { zIndex: el.zIndex }
+    }
+
+    ElementAPI.bulkUpdate(params)
+  }
+
 }
 
 export const preziStore = reactive(new PreziStore())
