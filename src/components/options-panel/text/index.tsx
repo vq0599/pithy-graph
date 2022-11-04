@@ -38,7 +38,6 @@ export default defineComponent({
   },
   methods: {
     handleUpdatePayload(payload: Partial<IETextPayload>) {
-      console.log(payload);
       preziStore.updateElementPayload<IETextPayload>(payload)
       preziStore.save()
     }

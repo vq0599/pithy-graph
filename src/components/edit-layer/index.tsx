@@ -50,7 +50,6 @@ export default defineComponent({
             break;
         }
         preziStore.updateElement(changes)
-        editLayerStore.setRect(changes.width, changes.height)
       }
       document.onmousemove = callback
       document.onmouseup = () => {

@@ -4,7 +4,6 @@ import {
   ElButton,
   ElButtonGroup,
 } from 'element-plus'
-// import { IElement } from "@/structs";
 import { Edit, Share, Delete } from '@element-plus/icons-vue'
 
 const list = [

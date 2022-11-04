@@ -55,7 +55,6 @@ export default defineComponent({
     return (
       <div
         style={this.styles}
-        ref="root"
         class="pithy-element-text"
         onMousedown={this.handleMousedown}
         // TODO: 不直接加在元素上，而是改为类似拖拽的实现，mousedown之后再加事件

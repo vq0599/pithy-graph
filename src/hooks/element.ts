@@ -13,6 +13,29 @@ export function useElement(data: IElement) {
       element.value?.clientHeight,
     )
   }
+
+  const resizeObserver = new ResizeObserver(([{ contentRect }]) => {
+    const { width, height } = contentRect
+    editLayerStore.setRect(width, height)
+  })
+
+  // 初始化选中 & 启动resizeObserver
+  onMounted(() => {
+    if (active.value) {
+      setEditLayerRect()
+      resizeObserver.observe(element.value!)
+    }
+  })
+  // 激活选中
+  watch(active, (val) => {
+    if (val) {
+      setEditLayerRect()
+      resizeObserver.observe(element.value!)
+    } else {
+      resizeObserver.unobserve(element.value!)
+    }
+  })
+
   const handleMousedown = (startEvent: MouseEvent) => {
     preziStore.selectElement(data.id)
     if (canvasStore.editing) return
@@ -36,20 +59,8 @@ export function useElement(data: IElement) {
       document.onmouseup = null
       preziStore.save()
     }
-    
   }
-  // 初始化选中
-  onMounted(() => {
-    if (active.value) {
-      setEditLayerRect()
-    }
-  })
-  // 点击选中
-  watch(active, (val) => {
-    if (val) {
-      setEditLayerRect()
-    }
-  })
+
   return {
     active,
     element,

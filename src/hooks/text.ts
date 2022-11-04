@@ -3,24 +3,14 @@ import { canvasStore } from "@/stores/canvas";
 import { editLayerStore } from "@/stores/edit-layer";
 import { preziStore } from "@/stores/prezi";
 import { IEText } from "@/structs";
-import { watch } from "vue";
 
 export function useText(data: IEText) {
-  const root = ref<HTMLDivElement>()
   const content = ref<HTMLDivElement>()
   // 选中时标记可编辑，如果有移动则禁止进入编辑
   const editable = ref(false)
   const showPlaceholder = ref(!data.payload.content)
   const active = computed(() => data.id === preziStore.currentElementId)
 
-  watch(active, (val) => {
-    if (val) {
-      resizeObserver.observe(root.value!)
-    } else {
-      resizeObserver.unobserve(root.value!)
-    }
-  })
-  
   const resizeObserver = new ResizeObserver(([{ contentRect }]) => {
     const { width, height } = contentRect
     editLayerStore.setRect(width, height)
@@ -70,7 +60,6 @@ export function useText(data: IEText) {
     editable,
     active,
     content,
-    root,
     showPlaceholder,
     resizeObserver,
     handleMousedown,
