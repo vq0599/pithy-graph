@@ -2,45 +2,45 @@ export interface DraggableData {
   /**
    * 单次拖动事件移动的距离[X]
    */
-  dx: number,
+  dx: number;
   /**
    * 单次拖动事件移动的距离[Y]
    */
-  dy: number,
+  dy: number;
   /**
    * 累计移动的距离[X]
    */
-  tx: number,
+  tx: number;
   /**
    * 累计移动的距离[Y]
    */
-  ty: number,
+  ty: number;
   /**
    * 相对el的坐标[X]
    */
-  offsetX: number,
+  offsetX: number;
   /**
    * 相对el的坐标[Y]
    */
-  offsetY: number,
+  offsetY: number;
 }
 
-export interface DraggableOptions {
-  onStart?: (event: MouseEvent, data: DraggableData) => any
-  onDrag?: (event: MouseEvent, data: DraggableData, truck: any) => void
-  onStop?: (event: MouseEvent) => void,
+export interface DraggableOptions<T = any> {
+  onStart(event: MouseEvent, data: DraggableData): T;
+  onDrag(event: MouseEvent, data: DraggableData, truck: T): void;
+  onStop(event: MouseEvent): void;
   /**
    * 是否将move事件添加至document上
    */
-  document?: boolean
+  document: boolean;
 }
 
-const defaultOptions: Required<DraggableOptions> = {
-  /* eslint-disable @typescript-eslint/no-empty-function */
-  onStart: () => {},
-  onDrag: () => {},
-  onStop: () => {},
-  /* eslint-enable @typescript-eslint/no-empty-function */
+const noop = () => {};
+
+const defaultOptions: DraggableOptions = {
+  onStart: noop,
+  onDrag: noop,
+  onStop: noop,
   document: false,
 };
 
@@ -76,7 +76,10 @@ const getRealOffsetRect = (el: HTMLElement, ev: MouseEvent) => {
  * @param dragCallback
  * @param options
  */
-export function draggable(el: HTMLElement, draggableOptions: DraggableOptions) {
+export function draggable<T>(
+  el: HTMLElement,
+  draggableOptions: Partial<DraggableOptions<T>>
+) {
   const options = Object.assign({}, defaultOptions, draggableOptions);
   const moveTarget = options.document ? document.body : el;
   let lastX = 0;
@@ -84,6 +87,21 @@ export function draggable(el: HTMLElement, draggableOptions: DraggableOptions) {
   let initialX = 0;
   let initialY = 0;
   let truck: any = null;
+
+  function onmousedown(ev: MouseEvent) {
+    const [offsetX, offsetY] = getRealOffsetRect(el, ev);
+    const ret = options.onStart(ev, getDraggableData({ offsetX, offsetY }));
+    if (ret === false) {
+      return;
+    }
+    truck = ret;
+    lastX = ev.screenX;
+    lastY = ev.screenY;
+    initialX = ev.screenX;
+    initialY = ev.screenY;
+    moveTarget.addEventListener('mousemove', onmousemove);
+    document.addEventListener('mouseup', onmouseup);
+  }
 
   function onmousemove(ev: MouseEvent) {
     const { screenX, screenY } = ev;
@@ -109,21 +127,6 @@ export function draggable(el: HTMLElement, draggableOptions: DraggableOptions) {
     options.onStop(ev);
     moveTarget.removeEventListener('mousemove', onmousemove);
     document.removeEventListener('mouseup', onmouseup);
-  }
-
-  function onmousedown(ev: MouseEvent) {
-    const [offsetX, offsetY] = getRealOffsetRect(el, ev);
-    const ret = options.onStart(ev, getDraggableData({ offsetX, offsetY }));
-    if (ret === false) {
-      return;
-    }
-    truck = ret;
-    lastX = ev.screenX;
-    lastY = ev.screenY;
-    initialX = ev.screenX;
-    initialY = ev.screenY;
-    moveTarget.addEventListener('mousemove', onmousemove);
-    document.addEventListener('mouseup', onmouseup);
   }
 
   el.addEventListener('mousedown', onmousedown);

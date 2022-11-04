@@ -1,13 +1,13 @@
-import { CSSProperties } from "vue"
+import { CSSProperties } from 'vue';
 
 interface StylesParams {
-  x: number,
-  y: number,
-  height: number,
-  width: number,
-  scale: number,
-  rotate: number,
-  zIndex: number
+  x: number;
+  y: number;
+  height: number;
+  width: number;
+  scale: number;
+  rotate: number;
+  zIndex: number;
 }
 
 export const parseStyles = ({
@@ -16,28 +16,28 @@ export const parseStyles = ({
   height,
   x,
   y,
-  zIndex
+  zIndex,
 }: Partial<StylesParams>) => {
-  const ret: CSSProperties = {}
-  const transform = []
+  const ret: CSSProperties = {};
+  const transform = [];
   if (x || y) {
-    transform.push(`translate(${x}px, ${y}px)`)
+    transform.push(`translate(${x}px, ${y}px)`);
   }
   if (rotate) {
-    transform.push(`rotate($rotate}deg)`)
+    transform.push(`rotate($rotate}deg)`);
   }
   // 宽高值为0时忽略
   if (width) {
-    ret.width = `${width}px`
+    ret.width = `${width}px`;
   }
   if (height) {
-    ret.height = `${height}px`
+    ret.height = `${height}px`;
   }
   if (transform.length) {
-    ret.transform = transform.join(' ')
+    ret.transform = transform.join(' ');
   }
   if (zIndex) {
-    ret.zIndex = zIndex
+    ret.zIndex = zIndex;
   }
-  return ret
-}
+  return ret;
+};

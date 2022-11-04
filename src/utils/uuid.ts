@@ -1,3 +1,6 @@
-import { customAlphabet } from 'nanoid'
+import { customAlphabet } from 'nanoid';
 
-export const genUUID = customAlphabet('1234567890abcdefghijklmnopqrstuvwxyj!@#$%^&*', 16)
+export const genUUID = customAlphabet(
+  '1234567890abcdefghijklmnopqrstuvwxyj!@#$%^&*',
+  16
+);

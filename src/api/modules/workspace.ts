@@ -1,12 +1,12 @@
-import { http } from '../http'
-import { IWorkspace } from '@/structs'
+import { http } from '../http';
+import { IWorkspace } from '@/structs';
 
 export const WorkspaceAPI = {
   getAll() {
-    return http.get<Remove<IWorkspace, 'slides'>[]>('/workspaces')
+    return http.get<Remove<IWorkspace, 'slides'>[]>('/workspaces');
   },
 
   getOne(id: number) {
-    return http.get<IWorkspace>(`/workspaces/${id}`)
-  }
-}
+    return http.get<IWorkspace>(`/workspaces/${id}`);
+  },
+};

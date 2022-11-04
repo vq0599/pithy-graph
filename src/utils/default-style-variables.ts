@@ -1,4 +1,3 @@
-
 export const Palette = {
   /**
    * 背景颜色
@@ -12,4 +11,4 @@ export const Palette = {
    * 背景颜色
    */
   shapeColor: 'rgba(142, 142, 142, 1)',
-}
+};

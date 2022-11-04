@@ -1,5 +1,5 @@
 export interface ImageSelectOptions {
-  url: string,
-  naturalHeight: number,
-  naturalWidth: number
+  url: string;
+  naturalHeight: number;
+  naturalWidth: number;
 }

@@ -36,7 +36,6 @@ export function useElement(data: IElement, readonly: boolean) {
   const addDragListener = () => {
     if (!element.value) return
     const threshold = 10
-
     const onStart = () => {
       if (canvasStore.editing) return false
       return {

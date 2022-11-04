@@ -1,44 +1,47 @@
-export type IElementTypes = 'TEXT' | 'IMAGE' | 'SHAPE'
+export type IElementTypes = 'TEXT' | 'IMAGE' | 'SHAPE';
 
-export interface IElement<T extends IElementTypes = any, U extends Record<string, any> = any> {
+export interface IElement<
+  T extends IElementTypes = any,
+  U extends Record<string, any> = any
+> {
   /**
    * 唯一标识符
    */
-  id: number,
+  id: number;
   /**
    * 组件类型
    */
-  type: T
+  type: T;
   /**
    * 组件宽度
    */
-  width: number,
+  width: number;
   /**
    * 组件高度
    */
-  height: number,
+  height: number;
   /**
    * 横轴坐标
    */
-  x: number
+  x: number;
   /**
    * 纵轴坐标
    */
-  y: number
+  y: number;
   /**
    * 旋转角度
    */
-  rotate?: number
+  rotate?: number;
   /**
    * 层级，默认为添加顺序
    */
-  zIndex: number
+  zIndex: number;
   /**
    * 各个元素独有的数据
    */
-  payload: U
+  payload: U;
   /**
    * 特殊标记
    */
-  mark: number
+  mark: number;
 }

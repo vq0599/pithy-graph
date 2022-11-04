@@ -1,7 +1,7 @@
-import { IElement } from './elements'
+import { IElement } from './elements';
 
 export interface ISlide {
-  id: number
+  id: number;
   /**
    * 背景图
    */
@@ -9,18 +9,18 @@ export interface ISlide {
     /**
      * 颜色
      */
-    color: string
+    color: string;
     /**
      * 颜色
      */
-    image?: string
-  }
+    image?: string;
+  };
   /**
    * 元素集合
    */
-  elements: IElement[]
+  elements: IElement[];
   /**
    * 演讲稿
    */
-  notes?: string
+  notes?: string;
 }
