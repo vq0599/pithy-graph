@@ -20,7 +20,7 @@ export const PithyElement =  defineComponent({
     }
   },
   setup(props) {
-    return props.readonly ? { handleMousedown: undefined } : useElement(props.data)
+    return useElement(props.data, props.readonly)
   },
   computed: {
     styles() {
@@ -38,10 +38,6 @@ export const PithyElement =  defineComponent({
   methods: {
     renderElement() {
       const { data } = this
-      // const props = {
-      //   data,
-      //   this.readonly
-      // }
       switch (data.type) {
         case 'TEXT':
           return <PithyText {...this.$props} />

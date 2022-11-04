@@ -1,40 +1,58 @@
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { canvasStore } from "@/stores/canvas";
-import { editLayerStore } from "@/stores/edit-layer";
 import { preziStore } from "@/stores/prezi";
 import { IEText } from "@/structs";
+import { draggable } from "@/utils/draggable";
 
-export function useText(data: IEText) {
+const defaultText = '<p><br></p>'
+
+export function useText(data: IEText, readonly: boolean) {
+  if (readonly) return {
+    html: data.payload.content,
+    handleBlur: undefined,
+    handleInput: undefined,
+    showPlaceholder: false
+  }
   const content = ref<HTMLDivElement>()
-  // 选中时标记可编辑，如果有移动则禁止进入编辑
+  /**
+   * 选中时的可编辑标记，如果有移动则禁止进入编辑
+   */
   const editable = ref(false)
   const showPlaceholder = ref(!data.payload.content)
   const active = computed(() => data.id === preziStore.currentElementId)
 
-  const resizeObserver = new ResizeObserver(([{ contentRect }]) => {
-    const { width, height } = contentRect
-    editLayerStore.setRect(width, height)
+  const addFocusListener = () => {
+    if (!content.value) return
+    const onStart = () => {
+      if (active.value && !canvasStore.editing) {
+        editable.value = true
+      } else {
+        // 不会再继续执行
+        return false
+      }
+    }
+    const onDrag = () => {
+      if (editable.value) {
+        editable.value = false
+      }
+    }
+    const onStop = () => {
+      if (editable.value) {
+        content.value!.contentEditable = 'true'
+        content.value!.focus()
+        canvasStore.editing = true
+      }
+    }
+    draggable(content.value, {
+      onDrag,
+      onStart,
+      onStop,
+    })
+  }
+
+  onMounted(() => {
+    addFocusListener()
   })
-
-  const handleMousedown = () => {
-    if (canvasStore.editing) return
-    if (active.value) {
-      editable.value = true
-    }
-  }
-
-  const handleMousemove = () => {
-    if (canvasStore.editing) return
-    editable.value = false
-  }
-
-  const handleMouseup = () => {
-    if (editable.value && content.value && !canvasStore.editing) {
-      content.value.contentEditable = 'true'
-      content.value.focus()
-      canvasStore.editing = true
-    }
-  }
 
   const handleBlur = (ev: Event) => {
     const $content = ev.target as HTMLDivElement
@@ -60,11 +78,8 @@ export function useText(data: IEText) {
     editable,
     active,
     content,
+    html: data.payload.content || defaultText,
     showPlaceholder,
-    resizeObserver,
-    handleMousedown,
-    handleMousemove,
-    handleMouseup,
     handleBlur,
     handleInput,
   }

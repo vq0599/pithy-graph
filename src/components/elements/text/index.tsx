@@ -3,8 +3,6 @@ import { IEText } from '@/structs'
 import { useText } from "@/hooks/text";
 import './index.scss'
 
-const defaultText = '<p><br></p>'
-
 export default defineComponent({
   name: 'pithy-element-text',
   props: {
@@ -18,22 +16,7 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const ret = {
-      html: props.data.payload.content || defaultText
-    }
-
-    if (props.readonly) {
-      return Object.assign(ret, {
-        handleMousedown: undefined,
-        handleMousemove: undefined,
-        handleMouseup: undefined,
-        handleBlur: undefined,
-        handleInput: undefined,
-        showPlaceholder: false,
-      })
-    } 
-    
-    return Object.assign(ret, useText(props.data))
+    return useText(props.data, props.readonly)
   },
   computed: {
     styles(): CSSProperties {
@@ -53,14 +36,7 @@ export default defineComponent({
   },
   render() {
     return (
-      <div
-        style={this.styles}
-        class="pithy-element-text"
-        onMousedown={this.handleMousedown}
-        // TODO: 不直接加在元素上，而是改为类似拖拽的实现，mousedown之后再加事件
-        onMousemove={this.handleMousemove}
-        onMouseup={this.handleMouseup}
-      >
+      <div style={this.styles} class="pithy-element-text">
         {
           this.showPlaceholder &&
           <div class="text-placeholder">
