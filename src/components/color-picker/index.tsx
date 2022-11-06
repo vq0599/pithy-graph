@@ -13,7 +13,7 @@ export default defineComponent({
   },
   emits: {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    select: (color: string) => true
+    select: (color: string) => true,
   },
   methods: {
     createSlots() {
@@ -24,12 +24,12 @@ export default defineComponent({
             class="pithy-picker-trigger"
             style={{ backgroundColor: color }}
           ></div>
-        )
-      }
+        ),
+      };
     },
     handleChange({ rgba: { r, g, b, a } }: any) {
-      this.$emit('select', `rgba(${r},${g},${b},${a})`)
-    }
+      this.$emit('select', `rgba(${r},${g},${b},${a})`);
+    },
   },
   render() {
     const { color } = this;
@@ -46,6 +46,6 @@ export default defineComponent({
           onUpdate:modelValue={this.handleChange}
         />
       </ElPopover>
-    )
+    );
   },
 });

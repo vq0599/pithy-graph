@@ -1,5 +1,5 @@
-import { defineComponent } from "vue";
-import { preziStore } from "@/stores/prezi";
+import { defineComponent } from 'vue';
+import { preziStore } from '@/stores/prezi';
 import {
   ElSelect,
   ElOption,
@@ -7,11 +7,11 @@ import {
   ElButton,
   ElButtonGroup,
   ElSlider,
-} from 'element-plus'
-import { IEText, IETextPayload } from "@/structs";
-import { Edit, Share, Delete } from '@element-plus/icons-vue'
-import PithyColorPicker from "@/components/color-picker";
-import "./index.scss"
+} from 'element-plus';
+import { IEText, IETextPayload } from '@/structs';
+import { Edit, Share, Delete } from '@element-plus/icons-vue';
+import PithyColorPicker from '@/components/color-picker';
+import './index.scss';
 
 const options = [
   { label: '20', value: 0.5 },
@@ -22,7 +22,7 @@ const options = [
   { label: '120', value: 3 },
   { label: '140', value: 3.5 },
   { label: '160', value: 4 },
-]
+];
 
 export default defineComponent({
   name: 'pithy-text-panel',
@@ -33,18 +33,18 @@ export default defineComponent({
   },
   computed: {
     payload() {
-      return (preziStore.currentElement as IEText).payload
+      return (preziStore.currentElement as IEText).payload;
     },
   },
   methods: {
     handleUpdatePayload(payload: Partial<IETextPayload>) {
-      preziStore.updateElementPayload<IETextPayload>(payload)
-      preziStore.save()
-    }
+      preziStore.updateElementPayload<IETextPayload>(payload);
+      preziStore.save();
+    },
   },
   render() {
     return (
-      <div class="pithy-text-panel" >
+      <div class="pithy-text-panel">
         <div class="panel-form">
           <span>文字颜色</span>
           <PithyColorPicker
@@ -59,33 +59,47 @@ export default defineComponent({
             modelValue={this.payload.fontSize}
             onChange={(fontSize) => this.handleUpdatePayload({ fontSize })}
           >
-            {
-              options.map(({ label, value }) => (
-                <ElOption label={label} value={value} />
-              ))
-            }
+            {options.map(({ label, value }) => (
+              <ElOption label={label} value={value} />
+            ))}
           </ElSelect>
         </div>
         <div class="panel-form">
           <span>加粗</span>
           <ElSwitch
             modelValue={this.payload.bold}
-            onChange={(val) =>this.handleUpdatePayload({ bold: (val as boolean) })}
+            onChange={(val) =>
+              this.handleUpdatePayload({ bold: val as boolean })
+            }
           />
         </div>
         <div class="panel-form">
           <span>斜体</span>
           <ElSwitch
             modelValue={this.payload.italic}
-            onChange={(val) =>this.handleUpdatePayload({ italic: (val as boolean) })}
+            onChange={(val) =>
+              this.handleUpdatePayload({ italic: val as boolean })
+            }
           />
         </div>
         <div class="panel-form">
           <span>对齐</span>
           <ElButtonGroup size="small">
-            <ElButton onClick={() => this.handleUpdatePayload({ alignment: 'left' })}>左</ElButton>
-            <ElButton onClick={() => this.handleUpdatePayload({ alignment: 'center' })}>中</ElButton>
-            <ElButton onClick={() => this.handleUpdatePayload({ alignment: 'right' })}>右</ElButton>
+            <ElButton
+              onClick={() => this.handleUpdatePayload({ alignment: 'left' })}
+            >
+              左
+            </ElButton>
+            <ElButton
+              onClick={() => this.handleUpdatePayload({ alignment: 'center' })}
+            >
+              中
+            </ElButton>
+            <ElButton
+              onClick={() => this.handleUpdatePayload({ alignment: 'right' })}
+            >
+              右
+            </ElButton>
           </ElButtonGroup>
         </div>
         <div class="panel-form">
@@ -96,7 +110,9 @@ export default defineComponent({
             min={0}
             max={1}
             step={0.1}
-            onInput={val => this.handleUpdatePayload({ letterSpacing: val as number })}
+            onInput={(val) =>
+              this.handleUpdatePayload({ letterSpacing: val as number })
+            }
           />
         </div>
         <div class="panel-form">
@@ -107,7 +123,9 @@ export default defineComponent({
             min={1}
             max={2}
             step={0.25}
-            onInput={val => this.handleUpdatePayload({ lineSpacing: val as number })}
+            onInput={(val) =>
+              this.handleUpdatePayload({ lineSpacing: val as number })
+            }
           />
         </div>
         <div class="panel-form">
@@ -118,10 +136,12 @@ export default defineComponent({
             min={0}
             max={2}
             step={0.25}
-            onInput={val => this.handleUpdatePayload({ paragraphSpacing: val as number })}
+            onInput={(val) =>
+              this.handleUpdatePayload({ paragraphSpacing: val as number })
+            }
           />
         </div>
       </div>
-    )
-  }
-})
+    );
+  },
+});

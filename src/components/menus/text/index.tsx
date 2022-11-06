@@ -1,18 +1,18 @@
-import { defineComponent } from "vue";
-import type { IETextPayload } from '@/structs'
-import * as textCase from './case'
-import { preziStore } from "@/stores/prezi";
-import { globalStore } from "@/stores/global";
-import { Palette }  from '@/utils/default-style-variables'
-import './index.scss'
+import { defineComponent } from 'vue';
+import type { IETextPayload } from '@/structs';
+import * as textCase from './case';
+import { preziStore } from '@/stores/prezi';
+import { globalStore } from '@/stores/global';
+import { Palette } from '@/utils/default-style-variables';
+import './index.scss';
 
 interface TextMenuItem {
-  label: string,
-  fontSize: number,
+  label: string;
+  fontSize: number;
   /**
    * 需要添加到元素里的属性
    */
-  options: Partial<IETextPayload>
+  options: Partial<IETextPayload>;
 }
 
 const list: TextMenuItem[] = [
@@ -51,7 +51,7 @@ const list: TextMenuItem[] = [
     fontSize: 14,
     options: textCase.UL,
   },
-]
+];
 
 export default defineComponent({
   name: 'pithy-text-menu',
@@ -60,17 +60,17 @@ export default defineComponent({
     return (
       <div class="pithy-text-menu">
         <ul>
-          {
-            list.map(({ fontSize, options, label }) => (
-              <li
-                style={{ fontSize: `${fontSize}px` }}
-                onClick={() => this.handleClick(options)}
-              >{label}</li>
-            ))
-          }
+          {list.map(({ fontSize, options, label }) => (
+            <li
+              style={{ fontSize: `${fontSize}px` }}
+              onClick={() => this.handleClick(options)}
+            >
+              {label}
+            </li>
+          ))}
         </ul>
       </div>
-    )
+    );
   },
   methods: {
     handleClick(options: Partial<IETextPayload>) {
@@ -79,10 +79,10 @@ export default defineComponent({
         y: 500,
         payload: {
           color: Palette.textColor,
-          ...options
+          ...options,
         },
-      })
-      globalStore.closeMenu('TEXT')
-    }
-  }
-})
+      });
+      globalStore.closeMenu('TEXT');
+    },
+  },
+});

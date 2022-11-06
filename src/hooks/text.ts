@@ -1,78 +1,79 @@
-import { computed, onMounted, ref } from "vue";
-import { canvasStore } from "@/stores/canvas";
-import { preziStore } from "@/stores/prezi";
-import { IEText } from "@/structs";
-import { draggable } from "@/utils/draggable";
+import { computed, onMounted, ref } from 'vue';
+import { canvasStore } from '@/stores/canvas';
+import { preziStore } from '@/stores/prezi';
+import { IEText } from '@/structs';
+import { draggable } from '@/utils/draggable';
 
-const defaultText = '<p><br></p>'
+const defaultText = '<p><br></p>';
 
 export function useText(data: IEText, readonly: boolean) {
-  if (readonly) return {
-    html: data.payload.content,
-    handleBlur: undefined,
-    handleInput: undefined,
-    showPlaceholder: false
-  }
-  const content = ref<HTMLDivElement>()
+  if (readonly)
+    return {
+      html: data.payload.content,
+      handleBlur: undefined,
+      handleInput: undefined,
+      showPlaceholder: false,
+    };
+  const content = ref<HTMLDivElement>();
   /**
    * 选中时的可编辑标记，如果有移动则禁止进入编辑
    */
-  const editable = ref(false)
-  const showPlaceholder = ref(!data.payload.content)
-  const active = computed(() => data.id === preziStore.currentElementId)
+  const editable = ref(false);
+  const showPlaceholder = ref(!data.payload.content);
+  const active = computed(() => data.id === preziStore.currentElementId);
 
   const addFocusListener = () => {
-    if (!content.value) return
+    if (!content.value) return;
     const onStart = () => {
       if (active.value && !canvasStore.editing) {
-        editable.value = true
+        editable.value = true;
       } else {
         // 不会再继续执行
-        return false
+        return false;
       }
-    }
+    };
     const onDrag = () => {
       if (editable.value) {
-        editable.value = false
+        editable.value = false;
       }
-    }
+    };
     const onStop = () => {
       if (editable.value) {
-        content.value!.contentEditable = 'true'
-        content.value!.focus()
-        canvasStore.editing = true
+        content.value!.contentEditable = 'true';
+        content.value!.focus();
+        canvasStore.editing = true;
       }
-    }
+    };
     draggable(content.value, {
       onDrag,
       onStart,
       onStop,
-    })
-  }
+    });
+  };
 
   onMounted(() => {
-    addFocusListener()
-  })
+    addFocusListener();
+  });
 
   const handleBlur = (ev: Event) => {
-    const $content = ev.target as HTMLDivElement
-    const html = $content.innerHTML
-    preziStore.updateElementPayload({ content: html }, data.id)
-    $content.contentEditable = 'false'
-    editable.value = false
-    canvasStore.editing = false
-    preziStore.save(data.id)
-  }
+    const $content = ev.target as HTMLDivElement;
+    const html = $content.innerHTML;
+    preziStore.updateElementPayload({ content: html }, data.id);
+    $content.contentEditable = 'false';
+    editable.value = false;
+    canvasStore.editing = false;
+    preziStore.save(data.id);
+  };
 
   const handleInput = (ev: Event) => {
-    const text = (ev.target as HTMLDivElement).innerText.replace('\n', '')
+    const text = (ev.target as HTMLDivElement).innerText.replace('\n', '');
     if (!text) {
-      (ev.target as HTMLDivElement).innerHTML = '<p><br></p>'
-      showPlaceholder.value = true
+      (ev.target as HTMLDivElement).innerHTML = '<p><br></p>';
+      showPlaceholder.value = true;
     } else if (showPlaceholder.value) {
-      showPlaceholder.value = false
+      showPlaceholder.value = false;
     }
-  }
+  };
 
   return {
     editable,
@@ -82,5 +83,5 @@ export function useText(data: IEText, readonly: boolean) {
     showPlaceholder,
     handleBlur,
     handleInput,
-  }
+  };
 }

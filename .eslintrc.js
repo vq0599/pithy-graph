@@ -18,5 +18,18 @@ module.exports = {
   },
   rules: {
     'prettier/prettier': 'warn',
+
+    '@typescript-eslint/no-non-null-assertion': 'off',
+
+    '@typescript-eslint/no-explicit-any': 'off',
+
+    // 使用window.name而不是name
+    'no-restricted-globals': [
+      'error',
+      {
+        name: 'name',
+        message: 'Use `window.name` instead',
+      },
+    ],
   },
 };

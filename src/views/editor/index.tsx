@@ -3,11 +3,13 @@ import Canvas from '@/components/canvas';
 import Sidebar from '@/components/sidebar';
 import Header from '@/components/header';
 import SlideMenu from '@/components/options-panel';
+import PithyEditLayer from '@/components/edit-layer';
 import { preziStore } from '@/stores/prezi';
 import { canvasStore } from '@/stores/canvas';
 import { decode } from '@/utils/encryption';
-import './index.scss';
 import { useRoute } from 'vue-router';
+import { CANVAS_ID } from '@/utils/constants';
+import './index.scss';
 
 export default defineComponent({
   setup() {
@@ -28,6 +30,11 @@ export default defineComponent({
       canvas,
       hashToId,
     };
+  },
+  computed: {
+    canvasEl(): HTMLDivElement {
+      return this.canvas?.$el;
+    },
   },
   mounted() {
     this.initialize();
@@ -89,12 +96,16 @@ export default defineComponent({
         <div>
           <Sidebar />
           <main>
-            <Canvas
-              ref="canvas"
-              slide={preziStore.currentSlide}
-              width={width}
-              height={height}
-            />
+            <div class="pithy-editor-main">
+              <Canvas
+                id={CANVAS_ID}
+                ref="canvas"
+                slide={preziStore.currentSlide}
+                width={width}
+                height={height}
+              />
+              <PithyEditLayer canvas={this.canvasEl} />
+            </div>
           </main>
           <SlideMenu />
         </div>

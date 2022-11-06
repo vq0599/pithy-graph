@@ -2,6 +2,8 @@
 declare type Remove<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
 // 递归可选
-type DeepPartial<T> = T extends object ? {
-  [P in keyof T]?: DeepPartial<T[P]>;
-} : T;
+type DeepPartial<T> = T extends object
+  ? {
+      [P in keyof T]?: DeepPartial<T[P]>;
+    }
+  : T;

@@ -1,44 +1,44 @@
-import { defineComponent, ref } from "vue";
-import PithyMediaLibrary from '@/components/media-library'
-import { ImageSelectOptions } from '@/structs'
-import { Close } from "@element-plus/icons-vue";
-import { ElIcon } from "element-plus";
-import "./index.scss"
+import { defineComponent, ref } from 'vue';
+import PithyMediaLibrary from '@/components/media-library';
+import { ImageSelectOptions } from '@/structs';
+import { Close } from '@element-plus/icons-vue';
+import { ElIcon } from 'element-plus';
+import './index.scss';
 
 export default defineComponent({
   name: 'pithy-image-picker',
   setup() {
     return {
-      modelVisible: ref(false)
-    }
+      modelVisible: ref(false),
+    };
   },
   props: {
     url: {
       type: String,
       default: '',
-    }
+    },
   },
   emits: {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    select: (payload?: ImageSelectOptions) => true
+    select: (payload?: ImageSelectOptions) => true,
   },
   methods: {
     handleOpenModal() {
-      this.modelVisible = true
+      this.modelVisible = true;
     },
     handleSelect(payload?: ImageSelectOptions) {
-      this.$emit('select', payload)
-    }
+      this.$emit('select', payload);
+    },
   },
   render() {
     return (
       <div class="pithy-image-picker">
         <div class="picker-preview" onClick={this.handleOpenModal}>
-          {
-            this.url
-              ? <img src={this.url} />
-              : <div class="picker-preview-placeholder" />
-          }
+          {this.url ? (
+            <img src={this.url} />
+          ) : (
+            <div class="picker-preview-placeholder" />
+          )}
         </div>
         <PithyMediaLibrary
           withModal
@@ -46,6 +46,7 @@ export default defineComponent({
           onSelect={this.handleSelect}
         />
         <ElIcon
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore Element的错误
           onClick={this.handleSelect}
           class="picker-reset"
@@ -53,6 +54,6 @@ export default defineComponent({
           <Close />
         </ElIcon>
       </div>
-    )
-  }
-})
+    );
+  },
+});

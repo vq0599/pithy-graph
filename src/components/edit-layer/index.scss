@@ -5,8 +5,23 @@
   height: 100%;
   width: 100%;
   pointer-events: none;
+  .v-line,
+  .h-line {
+    left: 0;
+    top: 0;
+    position: absolute;
+    background-color: #FF00CC;
+    z-index: 1;
+  }
+  .v-line {
+    width: 1px
+  }
+  .h-line {
+    height: 1px
+  }
   .pithy-edit-box {
     outline: 1px solid #0099FF;
+    outline-offset: -1px;
     position: relative;
     & > i {
       position: absolute;
