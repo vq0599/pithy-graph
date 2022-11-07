@@ -34,10 +34,12 @@ export const OL: Partial<IETextPayload> = {
   fontSize: 1,
   level: 'UL',
   content: '<ol><li>添加文本</li></ol>',
+  lineSpacing: 1.5,
 };
 
 export const UL: Partial<IETextPayload> = {
   fontSize: 1,
   level: 'UL',
   content: '<ul><li>添加文本</li></ul>',
+  lineSpacing: 1.5,
 };

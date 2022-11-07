@@ -6,12 +6,19 @@ import { draggable } from '@/utils/draggable';
 
 const defaultText = '<p><br></p>';
 
+const getText = (html: string) => {
+  const span = document.createElement('span');
+  span.innerHTML = html;
+  return span.innerText;
+};
+
 export function useText(data: IEText, readonly: boolean) {
   if (readonly)
     return {
       html: data.payload.content,
       handleBlur: undefined,
       handleInput: undefined,
+      handlePaste: undefined,
       showPlaceholder: false,
     };
   const content = ref<HTMLDivElement>();
@@ -19,7 +26,7 @@ export function useText(data: IEText, readonly: boolean) {
    * 选中时的可编辑标记，如果有移动则禁止进入编辑
    */
   const editable = ref(false);
-  const showPlaceholder = ref(!data.payload.content);
+  const showPlaceholder = ref(!getText(data.payload.content));
   const active = computed(() => data.id === preziStore.currentElementId);
 
   const addFocusListener = () => {
@@ -75,6 +82,12 @@ export function useText(data: IEText, readonly: boolean) {
     }
   };
 
+  const handlePaste = (ev: ClipboardEvent) => {
+    const text = ev.clipboardData?.getData('Text');
+    document.execCommand('insertText', false, text);
+    ev.preventDefault();
+  };
+
   return {
     editable,
     active,
@@ -82,6 +95,7 @@ export function useText(data: IEText, readonly: boolean) {
     html: data.payload.content || defaultText,
     showPlaceholder,
     handleBlur,
+    handlePaste,
     handleInput,
   };
 }

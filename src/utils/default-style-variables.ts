@@ -4,11 +4,15 @@ export const Palette = {
    */
   slideColor: 'rgba(255, 255, 255, 1)',
   /**
-   * 背景颜色
+   * 文字颜色
    */
   textColor: 'rgb(25, 25, 25, 1)',
   /**
-   * 背景颜色
+   * 图形颜色
    */
   shapeColor: 'rgba(142, 142, 142, 1)',
+  /**
+   * 行高
+   */
+  lineSpacing: 1.25,
 };

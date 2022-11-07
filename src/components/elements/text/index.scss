@@ -2,17 +2,25 @@
 
 .pithy-element-text {
   position: relative;
-  line-height: 1.5;
-  letter-spacing: 0;
-  ul, p {
+  ul, ol, p {
     margin: 0;
     &:nth-child(n+2) {
       margin-top: var(--paragraph-spacing);
     }
   }
+  ul, ol {
+    padding-left: 1em;
+  }
+  ul li {
+    list-style: disc;
+  }
+  ol li {
+    list-style: decimal;
+  }
   .text-placeholder {
     color: #888;
     z-index: 0;
+    pointer-events: none;
     height: 0;
     opacity: 0.6;
   }

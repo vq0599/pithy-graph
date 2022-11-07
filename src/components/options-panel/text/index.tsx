@@ -1,8 +1,7 @@
 import { defineComponent } from 'vue';
 import { preziStore } from '@/stores/prezi';
 import {
-  ElSelect,
-  ElOption,
+  ElInputNumber,
   ElSwitch,
   ElButton,
   ElButtonGroup,
@@ -12,17 +11,6 @@ import { IEText, IETextPayload } from '@/structs';
 import { Edit, Share, Delete } from '@element-plus/icons-vue';
 import PithyColorPicker from '@/components/color-picker';
 import './index.scss';
-
-const options = [
-  { label: '20', value: 0.5 },
-  { label: '40', value: 1 },
-  { label: '60', value: 1.5 },
-  { label: '80', value: 2 },
-  { label: '100', value: 2.5 },
-  { label: '120', value: 3 },
-  { label: '140', value: 3.5 },
-  { label: '160', value: 4 },
-];
 
 export default defineComponent({
   name: 'pithy-text-panel',
@@ -54,15 +42,14 @@ export default defineComponent({
         </div>
         <div class="panel-form">
           <span>字号</span>
-          <ElSelect
-            teleported={false}
+          <ElInputNumber
             modelValue={this.payload.fontSize}
             onChange={(fontSize) => this.handleUpdatePayload({ fontSize })}
-          >
-            {options.map(({ label, value }) => (
-              <ElOption label={label} value={value} />
-            ))}
-          </ElSelect>
+            size="small"
+            min={0.5}
+            max={8}
+            step={0.1}
+          />
         </div>
         <div class="panel-form">
           <span>加粗</span>

@@ -79,6 +79,7 @@ export default defineComponent({
         y: 500,
         payload: {
           color: Palette.textColor,
+          lineSpacing: Palette.lineSpacing,
           ...options,
         },
       });

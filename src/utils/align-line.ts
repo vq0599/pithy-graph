@@ -125,7 +125,6 @@ class AlignLineCalculator {
       lr: x + w / 2,
       tb: y + h / 2,
     }));
-    console.log(this.children);
   }
 
   calc = (index: number, x: number, y: number) => {
