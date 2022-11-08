@@ -8,13 +8,14 @@
 }
 
 .pithy-media-library {
-  width: 435px;
+  width: 450px;
   .el-tabs {
     height: 360px;
   }
   .el-tabs__content {
     padding: 10px 0;
     overflow-y: auto;
+    height: 100%;
   }
   .library-content{
     display: flex;

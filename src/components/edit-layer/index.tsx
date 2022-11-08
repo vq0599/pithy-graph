@@ -7,6 +7,13 @@ import { parseStyles } from '@/utils/parse-styles';
 import { CSSProperties, defineComponent, PropType, ref } from 'vue';
 import './index.scss';
 
+/**
+ * 如果不是需要全部的拖拽按钮，就定义出来
+ */
+const controllerDisplayRecord: Record<string, string[]> = {
+  TEXT: ['left', 'right'],
+};
+
 export default defineComponent({
   props: {
     canvas: {
@@ -48,11 +55,11 @@ export default defineComponent({
   methods: {
     handleDragStart(ev: MouseEvent) {
       ev.stopPropagation();
-      const action = (ev.target as HTMLElement).dataset.action;
+      const actions = (ev.target as HTMLElement).dataset.action;
       const { width, height } = editLayerStore;
       const { x, y } = preziStore.currentElement!;
       return {
-        action,
+        actions,
         originalWidth: width,
         originalHeight: height,
         originalX: x,
@@ -63,13 +70,13 @@ export default defineComponent({
       ev: MouseEvent,
       { tx, ty }: DraggableData,
       {
-        action,
+        actions,
         originalWidth,
         originalHeight,
         originalX,
         originalY,
       }: {
-        action: string;
+        actions: string;
         originalWidth: number;
         originalHeight: number;
         originalX: number;
@@ -86,24 +93,30 @@ export default defineComponent({
       const changes: Partial<Pick<IElement, 'height' | 'width' | 'x' | 'y'>> =
         {};
 
-      switch (action) {
-        case 'left':
-          changes.x = originalX + tx / scale;
-          changes.width = originalWidth - tx / scale;
-          break;
-        case 'right':
-          changes.width = originalWidth + tx / scale;
-          break;
-        case 'top':
-          changes.y = originalY + ty / scale;
-          changes.height = originalHeight - ty / scale;
-          break;
-        case 'bottom':
-          changes.height = originalHeight + ty / scale;
-          break;
-        default:
-          break;
-      }
+      // TODO: 处理等比缩放的情况
+      const realTx = tx / scale;
+      const realTy = ty / scale;
+      actions.split('-').forEach((action) => {
+        switch (action) {
+          case 'left':
+            changes.x = originalX + realTx;
+            changes.width = originalWidth - realTx;
+            break;
+          case 'right':
+            changes.width = originalWidth + realTx;
+            break;
+          case 'top':
+            changes.y = originalY + realTy;
+            changes.height = originalHeight - realTy;
+            break;
+          case 'bottom':
+            changes.height = originalHeight + realTy;
+            break;
+          default:
+            break;
+        }
+      });
+
       if (
         (changes.height || Number.MAX_SAFE_INTEGER) < 50 ||
         (changes.width || Number.MAX_SAFE_INTEGER) < 50
@@ -113,40 +126,6 @@ export default defineComponent({
     },
     handleDragStop() {
       preziStore.save();
-    },
-    handleMouseDown(startEvent: MouseEvent) {
-      startEvent.stopPropagation();
-      if (!preziStore.currentElement) return;
-      const { width: oldWidth, height: oldHeight } = editLayerStore;
-      const callback = (moveEvent: MouseEvent) => {
-        if (!preziStore.currentElement) return;
-        const threshold = 10;
-        const distX = moveEvent.pageX - startEvent.pageX;
-        const distY = moveEvent.pageY - startEvent.pageY;
-        if (Math.abs(distX) < threshold && Math.abs(distY) < threshold) {
-          return;
-        }
-        const width = oldWidth + distX / canvasStore.scale;
-        const height = oldHeight + distY / canvasStore.scale;
-        if (width < 50 || height < 50) return;
-        const changes: Partial<Pick<IElement, 'height' | 'width'>> = {};
-        switch (preziStore.currentElement.type) {
-          case 'TEXT':
-            changes.width = width;
-            break;
-          default:
-            changes.width = width;
-            changes.height = height;
-            break;
-        }
-        preziStore.updateElement(changes);
-      };
-      document.onmousemove = callback;
-      document.onmouseup = () => {
-        document.onmousemove = null;
-        document.onmouseup = null;
-        preziStore.save();
-      };
     },
     renderAlignLines() {
       const { scale } = canvasStore;
@@ -172,16 +151,43 @@ export default defineComponent({
       return VLines.concat(HLines);
     },
     renderActionDots() {
+      const { type } = preziStore.currentElement!;
+      const filters = controllerDisplayRecord[type];
+      const controllers = [
+        <i key="left" data-action="left" class="action-rect-ver ver-left" />,
+        <i key="right" data-action="right" class="action-rect-ver ver-right" />,
+        <i key="top" data-action="top" class="action-rect-hor hor-top" />,
+        <i
+          key="bottom"
+          data-action="bottom"
+          class="action-rect-hor hor-bottom"
+        />,
+        <i
+          key="bottom-right"
+          data-action="bottom-right"
+          class="action-dot dot-bottom-right"
+        />,
+        <i
+          key="top-left"
+          data-action="top-left"
+          class="action-dot dot-top-left"
+        />,
+        <i
+          key="bottom-left"
+          data-action="bottom-left"
+          class="action-dot dot-bottom-left"
+        />,
+        <i
+          key="top-right"
+          data-action="top-right"
+          class="action-dot dot-top-right"
+        />,
+      ];
       return (
         <div class="pithy-edit-actions">
-          <i data-action="left" class="action-rect-ver ver-left"></i>
-          <i data-action="right" class="action-rect-ver ver-right"></i>
-          <i data-action="top" class="action-rect-hor hor-top"></i>
-          <i data-action="bottom" class="action-rect-hor hor-bottom"></i>
-          <i data-action="bottom-right" class="action-dot dot-bottom-right"></i>
-          <i data-action="top-left" class="action-dot dot-top-left"></i>
-          <i data-action="bottom-left" class="action-dot dot-bottom-left"></i>
-          <i data-action="top-right" class="action-dot dot-top-right"></i>
+          {filters
+            ? controllers.filter((el) => filters.includes(el.key as string))
+            : controllers}
         </div>
       );
     },

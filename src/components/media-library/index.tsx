@@ -103,7 +103,7 @@ export default defineComponent({
       return (
         <ElDialog
           appendToBody
-          width={435}
+          width={450}
           class="pithy-media-library-modal"
           v-slots={slots}
           v-model={this.modelVisible}
