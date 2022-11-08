@@ -25,16 +25,17 @@ export interface DraggableData {
   offsetY: number;
 }
 
-export interface DraggableOptions<T = any> {
+export interface DraggableOptions<T = any, U = any> {
   onStart(event: MouseEvent, data: DraggableData): T;
-  onDrag(event: MouseEvent, data: DraggableData, truck: T): void;
-  onStop(event: MouseEvent): void;
+  onDrag(event: MouseEvent, data: DraggableData, truck: T): U;
+  onStop(event: MouseEvent, data: DraggableData, payload: U): void;
   /**
    * 是否将move事件添加至document上
    */
   document: boolean;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-function
 const noop = () => {};
 
 const defaultOptions: DraggableOptions = {
@@ -76,9 +77,9 @@ const getRealOffsetRect = (el: HTMLElement, ev: MouseEvent) => {
  * @param dragCallback
  * @param options
  */
-export function draggable<T>(
+export function draggable<T, U>(
   el: HTMLElement,
-  draggableOptions: Partial<DraggableOptions<T>>
+  draggableOptions: Partial<DraggableOptions<T, U>>
 ) {
   const options = Object.assign({}, defaultOptions, draggableOptions);
   const moveTarget = options.document ? document.body : el;
@@ -86,7 +87,9 @@ export function draggable<T>(
   let lastY = 0;
   let initialX = 0;
   let initialY = 0;
-  let truck: any = null;
+  let truck: any;
+  let payload: any;
+  let draggableData: DraggableData;
 
   function onmousedown(ev: MouseEvent) {
     const [offsetX, offsetY] = getRealOffsetRect(el, ev);
@@ -120,11 +123,12 @@ export function draggable<T>(
     const offsetX = ev.pageX - left;
     const offsetY = ev.pageY - top;
 
-    options.onDrag(ev, { dx, dy, tx, ty, offsetX, offsetY }, truck);
+    draggableData = { dx, dy, tx, ty, offsetX, offsetY };
+    payload = options.onDrag(ev, draggableData, truck);
   }
 
   function onmouseup(ev: MouseEvent) {
-    options.onStop(ev);
+    options.onStop(ev, draggableData, payload);
     moveTarget.removeEventListener('mousemove', onmousemove);
     document.removeEventListener('mouseup', onmouseup);
   }

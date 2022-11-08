@@ -19,10 +19,19 @@
   .h-line {
     height: 1px
   }
-  .pithy-edit-box {
+  .pithy-edit-frame {
+    position: relative;
     outline: 1px solid #0099FF;
     outline-offset: -1px;
-    position: relative;
+  }
+
+  &-inner {
+    height: 0;
+    width: 0;
+  }
+
+  .pithy-edit-actions {
+    pointer-events: auto;
     & > i {
       position: absolute;
       display: inline-block;
@@ -31,36 +40,49 @@
       border-radius: 2px;
       pointer-events: auto;
       cursor: pointer;
+
     }
-    .action-vertical {
+    .action-rect-ver {
       width: 6px;
       height: 16px;
       top: calc(50% - 8px);
-      &-left {
+      &.ver-left {
         left: -3px;
       }
-      &-right {
+      &.ver-right {
         right: -3px;
       }
     }
-    .action-horizontal {
+    .action-rect-hor {
       width: 16px;
       height: 6px;
       left: calc(50% - 8px);
-      &-top {
+      &.hor-top {
         top: -3px;
       }
-      &-bottom {
+      &.hor-bottom {
         bottom: -3px;
       }
     }
-    .action-vertex {
+    .action-dot {
       border-radius: 50%;
-      width: 12px;
-      height: 12px;
-      &-bottom-right {
-        right: -6px;
-        bottom: -6px;
+      width: 10px;
+      height: 10px;
+      &.dot-bottom-right {
+        bottom: -5px;
+        right: -5px;
+      }
+      &.dot-bottom-left {
+        bottom: -5px;
+        left: -5px;
+      }
+      &.dot-top-right {
+        top: -5px;
+        right: -5px;
+      }
+      &.dot-top-left {
+        top: -5px;
+        left: -5px;
       }
     }
   }
