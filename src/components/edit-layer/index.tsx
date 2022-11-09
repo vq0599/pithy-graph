@@ -4,6 +4,7 @@ import { preziStore } from '@/stores/prezi';
 import { IElement } from '@/structs';
 import { draggable, DraggableData } from '@/utils/draggable';
 import { parseStyles } from '@/utils/parse-styles';
+import { calcPointsOfIntersection } from '@/utils/tool';
 import { CSSProperties, defineComponent, PropType, ref } from 'vue';
 import './index.scss';
 
@@ -83,6 +84,7 @@ export default defineComponent({
         originalY: number;
       }
     ) {
+      if (!preziStore.currentElement) return;
       const threshold = 10;
       const { scale } = canvasStore;
 
@@ -94,8 +96,37 @@ export default defineComponent({
         {};
 
       // TODO: 处理等比缩放的情况
-      const realTx = tx / scale;
-      const realTy = ty / scale;
+      let realTx = tx / scale;
+      let realTy = ty / scale;
+
+      // 拖拽四个点
+      if (actions.includes('-')) {
+        let p1;
+        let p2;
+
+        if (actions === 'top-right' || actions === 'bottom-left') {
+          // 右上点和左下点
+          p1 = { x: originalX + originalWidth, y: originalY };
+          p2 = {
+            x: originalX,
+            y: originalY + originalHeight,
+          };
+        } else {
+          // 右下点和左上点
+          p1 = { x: originalX, y: originalX };
+          p2 = {
+            x: p1.x + originalWidth,
+            y: p1.y + originalHeight,
+          };
+        }
+
+        const p = { x: p2.x + realTx, y: p2.y + realTy };
+        // 拖拽鼠标点与直线[p1-p2]的垂直交点
+        const moveto = calcPointsOfIntersection(p, p1, p2);
+        realTx = moveto.x - p2.x;
+        realTy = moveto.y - p2.y;
+      }
+
       actions.split('-').forEach((action) => {
         switch (action) {
           case 'left':
@@ -154,31 +185,51 @@ export default defineComponent({
       const { type } = preziStore.currentElement!;
       const filters = controllerDisplayRecord[type];
       const controllers = [
-        <i key="left" data-action="left" class="action-rect-ver ver-left" />,
-        <i key="right" data-action="right" class="action-rect-ver ver-right" />,
-        <i key="top" data-action="top" class="action-rect-hor hor-top" />,
+        <i
+          key="left"
+          draggable="false"
+          data-action="left"
+          class="action-rect-ver ver-left"
+        />,
+        <i
+          key="right"
+          draggable="false"
+          data-action="right"
+          class="action-rect-ver ver-right"
+        />,
+        <i
+          key="top"
+          draggable="false"
+          data-action="top"
+          class="action-rect-hor hor-top"
+        />,
         <i
           key="bottom"
+          draggable="false"
           data-action="bottom"
           class="action-rect-hor hor-bottom"
         />,
         <i
           key="bottom-right"
+          draggable="false"
           data-action="bottom-right"
           class="action-dot dot-bottom-right"
         />,
         <i
           key="top-left"
+          draggable="false"
           data-action="top-left"
           class="action-dot dot-top-left"
         />,
         <i
           key="bottom-left"
+          draggable="false"
           data-action="bottom-left"
           class="action-dot dot-bottom-left"
         />,
         <i
           key="top-right"
+          draggable="false"
           data-action="top-right"
           class="action-dot dot-top-right"
         />,
