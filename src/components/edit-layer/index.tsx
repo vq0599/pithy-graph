@@ -85,10 +85,12 @@ export default defineComponent({
       }
     ) {
       if (!preziStore.currentElement) return;
-      const threshold = 10;
+      const moveThreshold = 10;
+      const scaleThreshold = 30;
       const { scale } = canvasStore;
+      let fixedRatio = false;
 
-      if (Math.abs(tx) < threshold && Math.abs(ty) < threshold) {
+      if (Math.abs(tx) < moveThreshold && Math.abs(ty) < moveThreshold) {
         return;
       }
 
@@ -101,6 +103,7 @@ export default defineComponent({
 
       // 拖拽四个点
       if (actions.includes('-')) {
+        fixedRatio = true;
         let p1;
         let p2;
 
@@ -148,11 +151,23 @@ export default defineComponent({
         }
       });
 
-      if (
-        (changes.height || Number.MAX_SAFE_INTEGER) < 50 ||
-        (changes.width || Number.MAX_SAFE_INTEGER) < 50
-      )
-        return;
+      if (fixedRatio) {
+        // 如果是固定比例缩放，则一边小于极值就不再缩放，以保持比例不变
+        if (
+          (changes.height || Number.MAX_SAFE_INTEGER) < scaleThreshold ||
+          (changes.width || Number.MAX_SAFE_INTEGER) < scaleThreshold
+        )
+          return;
+      } else {
+        // 如果是任意比例缩放，则分别限制宽高不小于极值即可
+        if (changes.width && changes.width < scaleThreshold) {
+          changes.width = scaleThreshold;
+        }
+        if (changes.height && changes.height < scaleThreshold) {
+          changes.height = scaleThreshold;
+        }
+      }
+
       preziStore.updateElement(changes);
     },
     handleDragStop() {
