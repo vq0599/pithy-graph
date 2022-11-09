@@ -14,7 +14,7 @@ export default defineComponent({
     styles(): CSSProperties {
       const { radius } = this.data.payload;
       return {
-        borderRadius: `${radius}%`,
+        borderRadius: `${radius}px`,
       };
     },
   },

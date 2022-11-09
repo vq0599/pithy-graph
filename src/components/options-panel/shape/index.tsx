@@ -55,7 +55,7 @@ export default defineComponent({
           <div class="panel-form">
             <span>圆角</span>
             <ElInputNumber
-              modelValue={this.payload.radius}
+              modelValue={this.payload.radius || 0}
               onChange={(radius) => this.handleUpdatePayload({ radius })}
               size="small"
               min={0}
