@@ -25,6 +25,7 @@ export default defineComponent({
     const layer = ref<HTMLDivElement>();
     return {
       layer,
+      resizing: ref<string>(),
     };
   },
   computed: {
@@ -57,6 +58,7 @@ export default defineComponent({
     handleDragStart(ev: MouseEvent) {
       ev.stopPropagation();
       const actions = (ev.target as HTMLElement).dataset.action;
+      this.resizing = actions;
       const { width, height } = editLayerStore;
       const { x, y } = preziStore.currentElement!;
       return {
@@ -86,7 +88,7 @@ export default defineComponent({
     ) {
       if (!preziStore.currentElement) return;
       const moveThreshold = 10;
-      const scaleThreshold = 30;
+      const scaleThreshold = 20;
       const { scale } = canvasStore;
       let fixedRatio = false;
 
@@ -172,6 +174,7 @@ export default defineComponent({
     },
     handleDragStop() {
       preziStore.save();
+      this.resizing = '';
     },
     renderAlignLines() {
       const { scale } = canvasStore;
@@ -198,7 +201,11 @@ export default defineComponent({
     },
     renderActionDots() {
       const { type } = preziStore.currentElement!;
-      const filters = controllerDisplayRecord[type];
+      // 如果拖拽中，则只显示在拖拽的按钮
+      const filters = this.resizing
+        ? [this.resizing]
+        : controllerDisplayRecord[type];
+
       const controllers = [
         <i
           key="left"
