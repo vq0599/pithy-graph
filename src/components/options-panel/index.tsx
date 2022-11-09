@@ -4,13 +4,15 @@ import { ElTabPane, ElTabs } from 'element-plus';
 import SlidePanel from './slide';
 import TextPanel from './text';
 import ShapePanel from './shape';
+import ImagePanel from './image';
 import CommonPanel from './common';
+import { IElementTypes } from '@/structs';
 import './index.scss';
 
 export default defineComponent({
   name: 'pithy-options-panel',
   computed: {
-    currentName() {
+    currentName(): IElementTypes | 'SLIDE' {
       const { currentElement } = preziStore;
       return currentElement ? currentElement.type : 'SLIDE';
     },
@@ -22,6 +24,8 @@ export default defineComponent({
           return <SlidePanel />;
         case 'TEXT':
           return <TextPanel />;
+        case 'IMAGE':
+          return <ImagePanel />;
         case 'SHAPE':
           return <ShapePanel />;
         default:

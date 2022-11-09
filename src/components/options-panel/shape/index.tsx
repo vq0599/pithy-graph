@@ -1,6 +1,6 @@
 import { defineComponent } from 'vue';
 import { preziStore } from '@/stores/prezi';
-import { ElSlider } from 'element-plus';
+import { ElSlider, ElInputNumber } from 'element-plus';
 import { Edit, Share, Delete } from '@element-plus/icons-vue';
 import { IEShape, IEShapePayload } from '@/structs';
 import PithyColorPicker from '@/components/color-picker';
@@ -51,6 +51,19 @@ export default defineComponent({
             }
           />
         </div>
+        {this.payload.appearance === 'rectangle' && (
+          <div class="panel-form">
+            <span>圆角</span>
+            <ElInputNumber
+              modelValue={this.payload.radius}
+              onChange={(radius) => this.handleUpdatePayload({ radius })}
+              size="small"
+              min={0}
+              max={50}
+              step={1}
+            />
+          </div>
+        )}
       </div>
     );
   },

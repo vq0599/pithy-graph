@@ -12,13 +12,16 @@ export default defineComponent({
   },
   computed: {
     styles(): CSSProperties {
-      return {};
+      const { radius } = this.data.payload;
+      return {
+        borderRadius: `${radius}%`,
+      };
     },
   },
   render() {
     const { url } = this.data.payload;
     return (
-      <div class="pithy-element-image">
+      <div style={this.styles} class="pithy-element-image">
         <img src={url} />
       </div>
     );
