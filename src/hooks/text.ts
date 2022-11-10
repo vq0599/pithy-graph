@@ -64,11 +64,13 @@ export function useText(data: IEText, readonly: boolean) {
   });
 
   const handleBlur = (ev: Event) => {
-    const { width, height } = editLayerStore;
     const $content = ev.target as HTMLDivElement;
     const html = $content.innerHTML;
     preziStore.updateElementPayload({ content: html }, data.id);
-    preziStore.updateElement({ width, height }, data.id);
+    preziStore.updateElement(
+      { width: $content.clientWidth, height: $content.clientHeight },
+      data.id
+    );
     $content.contentEditable = 'false';
     editable.value = false;
     canvasStore.editing = false;
