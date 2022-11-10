@@ -24,15 +24,32 @@ export const PithyElement = defineComponent({
   },
   computed: {
     styles() {
-      const { x, y, rotate = 0, zIndex, width, height } = this.data;
-      return parseStyles({
+      const {
+        x,
+        y,
+        rotate = 0,
+        zIndex,
+        width,
+        height,
+        type,
+        payload,
+      } = this.data;
+      const base: Record<string, any> = {
         width,
         height,
         x,
         y,
         rotate,
         zIndex,
-      });
+      };
+      if (type === 'TEXT') {
+        delete base.height;
+      }
+      if (payload.free) {
+        delete base.height;
+        delete base.width;
+      }
+      return parseStyles(base);
     },
   },
   methods: {

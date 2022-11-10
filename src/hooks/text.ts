@@ -3,6 +3,7 @@ import { canvasStore } from '@/stores/canvas';
 import { preziStore } from '@/stores/prezi';
 import { IEText } from '@/structs';
 import { draggable } from '@/utils/draggable';
+import { editLayerStore } from '@/stores/edit-layer';
 
 const defaultText = '<p><br></p>';
 
@@ -63,9 +64,11 @@ export function useText(data: IEText, readonly: boolean) {
   });
 
   const handleBlur = (ev: Event) => {
+    const { width, height } = editLayerStore;
     const $content = ev.target as HTMLDivElement;
     const html = $content.innerHTML;
     preziStore.updateElementPayload({ content: html }, data.id);
+    preziStore.updateElement({ width, height }, data.id);
     $content.contentEditable = 'false';
     editable.value = false;
     canvasStore.editing = false;

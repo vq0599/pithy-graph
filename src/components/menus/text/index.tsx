@@ -81,6 +81,7 @@ export default defineComponent({
           color: Palette.textColor,
           lineSpacing: Palette.lineSpacing,
           ...options,
+          free: true,
         },
       });
       globalStore.closeMenu('TEXT');

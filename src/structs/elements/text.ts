@@ -47,6 +47,10 @@ export interface IETextPayload {
    * 段落间距
    */
   paragraphSpacing: number;
+  /**
+   * 自适应宽高（不适用width和height）
+   */
+  free: boolean;
 }
 
 export type IEText = IElement<'TEXT', IETextPayload>;

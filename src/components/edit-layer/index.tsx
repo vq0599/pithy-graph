@@ -1,7 +1,7 @@
 import { canvasStore } from '@/stores/canvas';
 import { editLayerStore } from '@/stores/edit-layer';
 import { preziStore } from '@/stores/prezi';
-import { IElement } from '@/structs';
+import { IElement, IETextPayload } from '@/structs';
 import { draggable, DraggableData } from '@/utils/draggable';
 import { parseStyles } from '@/utils/parse-styles';
 import { calcPointsOfIntersection } from '@/utils/tool';
@@ -87,6 +87,12 @@ export default defineComponent({
       }
     ) {
       if (!preziStore.currentElement) return;
+      if (
+        preziStore.currentElement.type === 'TEXT' &&
+        preziStore.currentElement.payload.free
+      ) {
+        preziStore.updateElementPayload<IETextPayload>({ free: false });
+      }
       const moveThreshold = 10;
       const scaleThreshold = 20;
       const { scale } = canvasStore;

@@ -13,6 +13,13 @@ export enum ZIndexOptions {
   lowest,
 }
 
+function isEqual(a: string | number | boolean, b: string | number | boolean) {
+  if (typeof a === 'number' && typeof b === 'number') {
+    return Math.abs(a - b) < 0.1;
+  }
+  return a === b;
+}
+
 class PreziStore {
   private _data: IWorkspace = {} as IWorkspace;
 
@@ -109,27 +116,34 @@ class PreziStore {
     }
   }
 
-  updateElement(options: any, id?: number) {
+  updateElement(options: Partial<IElement>, id?: number) {
     const target = id
       ? this.elements?.find((el) => el.id === id)
       : this.currentElement;
-    if (target) {
-      Object.assign(target, options);
-      Object.assign(this.dirty, options);
+    if (!target) return;
+    for (const _key in options) {
+      const key = _key as keyof typeof options;
+      if (!isEqual(target[key], options[key])) {
+        target[key] = options[key];
+        this.dirty[key] = options[key];
+      }
     }
   }
 
-  updateElementPayload<T = any>(payload: Partial<T>, id?: number) {
+  updateElementPayload<T = any>(options: Partial<T>, id?: number) {
     const target = id
       ? this.elements?.find((el) => el.id === id)
       : this.currentElement;
-    if (target) {
-      this.updateElement(
-        {
-          payload: Object.assign(target.payload, payload),
-        },
-        id
-      );
+    if (!target) return;
+    let changed = false;
+    for (const key in options) {
+      if (target.payload[key] !== options[key]) {
+        target.payload[key] = options[key];
+        changed = true;
+      }
+    }
+    if (changed) {
+      this.dirty.payload = target.payload;
     }
   }
 

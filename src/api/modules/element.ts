@@ -3,7 +3,7 @@ import { http } from '../http';
 
 export const ElementAPI = {
   create(slideId: number, type: IElementTypes, options: Partial<IElement>) {
-    if (options.payload) {
+    if (typeof options.payload === 'object') {
       options.payload = JSON.stringify(options.payload);
     }
     return http.post<IElement>(`/elements`, {
@@ -16,7 +16,7 @@ export const ElementAPI = {
     return http.delete(`/elements/${id}`);
   },
   update(id: number, options: Partial<IElement>) {
-    if (options.payload) {
+    if (typeof options.payload === 'object') {
       options.payload = JSON.stringify(options.payload);
     }
     return http.patch(`/elements/${id}`, options);
