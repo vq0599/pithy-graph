@@ -43,6 +43,7 @@ export default defineComponent({
         <div class="panel-form">
           <span>字号</span>
           <ElInputNumber
+            v-editable
             modelValue={this.payload.fontSize}
             onChange={(fontSize) => this.handleUpdatePayload({ fontSize })}
             size="small"
