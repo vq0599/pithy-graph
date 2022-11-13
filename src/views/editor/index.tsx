@@ -10,6 +10,7 @@ import { decode } from '@/utils/encryption';
 import { useRoute } from 'vue-router';
 import { CANVAS_ID } from '@/utils/constants';
 import './index.scss';
+import { globalStore } from '@/stores/global';
 
 export default defineComponent({
   setup() {
@@ -53,6 +54,7 @@ export default defineComponent({
       // hash记录着默认的打开的slide
       await preziStore.initialize(+params.id, this.hashToId(hash));
       this.ready = true;
+      globalStore.fetchImages();
     },
     setRect() {
       canvasStore.calcRect();

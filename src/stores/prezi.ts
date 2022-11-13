@@ -201,4 +201,7 @@ class PreziStore {
   }
 }
 
+/**
+ * workspace数据仓库
+ */
 export const preziStore = reactive(new PreziStore());

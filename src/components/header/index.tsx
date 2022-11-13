@@ -5,7 +5,7 @@ import ShapeIcon from '@/assets/icons/shape.svg?component';
 import { ElPopover } from 'element-plus';
 import TextMenu from '@/components/menus/text';
 import ShapeMenu from '@/components/menus/shape';
-import PicMenu from '@/components/menus/picture';
+import PicMenu from '@/components/menus/image';
 import { IElementTypes } from '@/structs';
 import { globalStore } from '@/stores/global';
 import './index.scss';

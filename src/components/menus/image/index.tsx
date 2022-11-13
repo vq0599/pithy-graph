@@ -1,11 +1,11 @@
 import { defineComponent } from 'vue';
 import MediaLibrary from '@/components/media-library';
 import { preziStore } from '@/stores/prezi';
-import './index.scss';
 import { globalStore } from '@/stores/global';
+import './index.scss';
 
 export default defineComponent({
-  name: 'pithy-picture-menu',
+  name: 'pithy-image-menu',
   methods: {
     handleSelect({
       url,

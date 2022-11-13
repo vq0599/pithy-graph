@@ -1,30 +1,27 @@
 import { reactive } from 'vue';
 import { IElementTypes } from '@/structs';
-
-interface GlobalState {
-  menuVisible: Record<IElementTypes, boolean>
-}
+import { ImageAPI } from '@/api';
 
 class GlobalStore {
-  private _data: GlobalState = reactive({
-    menuVisible: {
-      TEXT: false,
-      IMAGE: false,
-      SHAPE: false,
-    },
-  });
+  menuVisible: Record<IElementTypes, boolean> = {
+    TEXT: false,
+    IMAGE: false,
+    SHAPE: false,
+  };
 
-  get menuVisible() {
-    return this._data.menuVisible;
-  }
-
-  public get data() {
-    return this._data;
-  }
+  images: string[] = [];
 
   closeMenu(key: IElementTypes) {
     this.menuVisible[key] = false;
   }
+
+  async fetchImages() {
+    const { data: images } = await ImageAPI.getAll();
+    this.images = images;
+  }
 }
 
-export const globalStore = new GlobalStore();
+/**
+ * 全局数据仓库
+ */
+export const globalStore = reactive(new GlobalStore());

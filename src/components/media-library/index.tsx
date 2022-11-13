@@ -2,9 +2,9 @@ import { defineComponent, ref } from 'vue';
 import { ElDialog } from 'element-plus';
 import { ElTabs, ElTabPane, ElUpload, ElButton } from 'element-plus';
 import { ImageSelectOptions } from '@/structs';
-import { ImageAPI } from '@/api';
-import './index.scss';
 import { http } from '@/api/http';
+import { globalStore } from '@/stores/global';
+import './index.scss';
 
 export default defineComponent({
   props: {
@@ -19,7 +19,6 @@ export default defineComponent({
   },
   setup() {
     return {
-      images: ref<string[]>([]),
       uploadImages: ref<string[]>([]),
     };
   },
@@ -40,10 +39,9 @@ export default defineComponent({
         this.$emit('update:modelValue', v);
       },
     },
-  },
-  async mounted() {
-    const { data: images } = await ImageAPI.getAll();
-    this.images = images;
+    images() {
+      return globalStore.images;
+    },
   },
   methods: {
     handleSelect(ev: Event) {
