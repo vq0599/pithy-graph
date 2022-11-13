@@ -22,9 +22,12 @@ export const SlideAPI = {
     return http.post<ISlide>(`/slides`, { workspaceId });
   },
   delete(id: number) {
-    http.delete(`/slides/${id}`);
+    return http.delete(`/slides/${id}`);
   },
   update(id: number, options: Pick<ISlide, 'background' | 'notes'>) {
-    http.patch(`/slides/${id}`, formatParams(options, ['background']));
+    return http.patch(`/slides/${id}`, formatParams(options, ['background']));
+  },
+  copy(id: number) {
+    return http.post<ISlide>(`/slides/${id}/copy`);
   },
 };

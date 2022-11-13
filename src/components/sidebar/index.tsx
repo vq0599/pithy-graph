@@ -2,9 +2,7 @@ import PithyCanvas from '@/components/canvas';
 import { preziStore } from '@/stores/prezi';
 import { ElMessage, ElIcon } from 'element-plus';
 import { defineComponent } from 'vue';
-import { Delete } from '@element-plus/icons-vue';
-import { RouterLink } from 'vue-router';
-import { encode } from '@/utils/encryption';
+import { Delete, CopyDocument } from '@element-plus/icons-vue';
 import './index.scss';
 
 export default defineComponent({
@@ -28,6 +26,11 @@ export default defineComponent({
         ElMessage.warning('不能删除最后一页');
       }
     },
+    async handleCopy(ev: MouseEvent, id: number) {
+      ev.stopPropagation();
+      const slide = await preziStore.copySlide(id);
+      preziStore.selectSlide(slide.id);
+    },
   },
   render() {
     return (
@@ -36,8 +39,8 @@ export default defineComponent({
           {preziStore.slides.map((slide, index) => {
             const { id } = slide;
             return (
-              <RouterLink
-                to={`#${encode(id)}`}
+              <div
+                onClick={() => this.handleSelect(id)}
                 class={[
                   'aside-slider-item',
                   { active: id === preziStore.currentSlideId },
@@ -47,16 +50,26 @@ export default defineComponent({
                 <span>{index}</span>
                 <div class="item-thumbnail">
                   <PithyCanvas width={160} height={90} slide={slide} readonly />
-                  <ElIcon
-                    size={22}
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    // @ts-ignore Element的错误
-                    onClick={(ev) => this.handleDelete(ev, id)}
-                  >
-                    <Delete />
-                  </ElIcon>
+                  <div class="item-actions">
+                    <ElIcon
+                      size={22}
+                      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                      // @ts-ignore Element的错误
+                      onClick={(ev) => this.handleDelete(ev, id)}
+                    >
+                      <Delete />
+                    </ElIcon>
+                    <ElIcon
+                      size={22}
+                      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                      // @ts-ignore Element的错误
+                      onClick={(ev) => this.handleCopy(ev, id)}
+                    >
+                      <CopyDocument />
+                    </ElIcon>
+                  </div>
                 </div>
-              </RouterLink>
+              </div>
             );
           })}
         </div>

@@ -24,4 +24,7 @@ export const ElementAPI = {
   bulkUpdate(body: Record<number, Partial<IElement>>) {
     return http.patch(`/elements/bulk`, body);
   },
+  copy(id: number) {
+    return http.post<IElement>(`/elements/${id}/copy`);
+  },
 };

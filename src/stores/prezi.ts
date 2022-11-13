@@ -2,6 +2,8 @@ import { SlideAPI, WorkspaceAPI } from '@/api';
 import { ElementAPI } from '@/api/modules/element';
 import { IElement, IElementTypes, ISlide, IWorkspace } from '@/structs';
 import { reactive } from 'vue';
+import { router } from '@/router';
+import { encode } from '@/utils/encryption';
 
 /**
  * 变更层级选项
@@ -74,6 +76,7 @@ class PreziStore {
     if (id !== this.currentSlideId) {
       this.currentElementId = 0;
       this.currentSlideId = id;
+      router.push({ hash: `#${encode(id)}` });
     }
   }
 
@@ -98,6 +101,13 @@ class PreziStore {
     await SlideAPI.delete(id);
   }
 
+  async copySlide(id: number) {
+    const index = this.slides.findIndex((slide) => slide.id === id);
+    const { data: newSlide } = await SlideAPI.copy(id);
+    this.slides.splice(index + 1, 0, newSlide);
+    return newSlide;
+  }
+
   async createElement(type: IElementTypes, options: Partial<IElement>) {
     const { data: newElement } = await ElementAPI.create(
       this.currentSlideId,
@@ -114,6 +124,14 @@ class PreziStore {
       this.elements?.splice(index, 1);
       await ElementAPI.delete(id);
     }
+  }
+
+  async copyElement(id = this.currentElementId) {
+    const { data: el } = await ElementAPI.copy(id);
+    el.x += 100;
+    el.y += 100;
+    this.elements.push(el);
+    this.selectElement(el.id);
   }
 
   updateElement(options: Partial<IElement>, id?: number) {

@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '@/views/home';
 import NotFoundView from '@/views/not-found';
 
-const router = createRouter({
+export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
@@ -22,5 +22,3 @@ const router = createRouter({
     },
   ],
 });
-
-export default router;

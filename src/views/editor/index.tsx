@@ -1,4 +1,4 @@
-import { defineComponent, ref, watch } from 'vue';
+import { defineComponent, ref } from 'vue';
 import Canvas from '@/components/canvas';
 import Sidebar from '@/components/sidebar';
 import Header from '@/components/header';
@@ -7,25 +7,18 @@ import PithyEditLayer from '@/components/edit-layer';
 import { preziStore } from '@/stores/prezi';
 import { canvasStore } from '@/stores/canvas';
 import { decode } from '@/utils/encryption';
-import { useRoute } from 'vue-router';
 import { CANVAS_ID } from '@/utils/constants';
-import './index.scss';
 import { globalStore } from '@/stores/global';
+import { bindKeyboardEvents } from '@/utils/element-events-bind';
+import './index.scss';
 
 export default defineComponent({
   setup() {
     // 这个要记牢
     const canvas = ref<InstanceType<typeof Canvas>>();
-    const route = useRoute();
     const hashToId = (hash: string) => {
       return hash ? decode(hash.replace(/^#/, '')) : 0;
     };
-    watch(
-      () => route.hash,
-      (hash) => {
-        preziStore.selectSlide(hashToId(hash));
-      }
-    );
     return {
       ready: ref(false),
       canvas,
@@ -41,12 +34,11 @@ export default defineComponent({
     this.initialize();
     window.addEventListener('resize', this.setRect);
     document.addEventListener('mousedown', this.clearElementFocus);
-    document.addEventListener('keydown', this.deleteCurrentElement);
+    document.addEventListener('keydown', bindKeyboardEvents);
   },
   unmounted() {
     window.removeEventListener('resize', this.setRect);
     document.removeEventListener('mousedown', this.clearElementFocus);
-    document.removeEventListener('keydown', this.deleteCurrentElement);
   },
   methods: {
     async initialize() {
@@ -78,16 +70,6 @@ export default defineComponent({
 
       preziStore.selectElement(-1);
     },
-    deleteCurrentElement(ev: KeyboardEvent) {
-      // 非编辑状态 & 当前有选中的元素 & 按键为删除
-      const continued =
-        !canvasStore.editing &&
-        preziStore.currentElement &&
-        (ev.code === 'Backspace' || ev.code === 'Delete');
-      if (continued) {
-        preziStore.deleteElement();
-      }
-    },
   },
   render() {
     if (!this.ready) return null;
@@ -102,6 +84,7 @@ export default defineComponent({
               <Canvas
                 id={CANVAS_ID}
                 ref="canvas"
+                key={preziStore.currentSlide.id}
                 slide={preziStore.currentSlide}
                 width={width}
                 height={height}

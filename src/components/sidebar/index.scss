@@ -31,18 +31,8 @@
       }
       .item-thumbnail {
         position: relative;
-        &:hover i {
+        &:hover .item-actions {
           display: flex;
-        }
-        i {
-          display: none;
-          border-radius: 2px;
-          color: #FFF;
-          position: absolute;
-          bottom: 5px;
-          left: 5px;
-          padding: 2px;
-          background-color: rgba($color: #1a1a1a, $alpha: .4);
         }
       }
       &.active {
@@ -51,6 +41,21 @@
         }
         & > .item-thumbnail {
           outline:1px solid #5B72DD;
+        }
+      }
+      .item-actions {
+        display: none;
+        position: absolute;
+        bottom: 5px;
+        left: 5px;
+        i {
+          &:nth-child(n+2) {
+            margin-left: 10px;
+          }
+          border-radius: 2px;
+          color: #FFF;
+          padding: 2px;
+          background-color: rgba($color: #1a1a1a, $alpha: .4);
         }
       }
     }
