@@ -1,0 +1,19 @@
+.pithy-beautify-box {
+  .pithy-templates {
+    &-wrapper {
+      width: 100%;
+      overflow-x: auto;
+    }
+    display: flex;
+    padding: 10px 2px;
+    & > * {
+      flex-shrink: 0;
+      &:hover {
+        outline: 1px solid #5B72DD;
+      }
+    }
+    & > *:nth-child(n+2) {
+      margin-left: 15px;
+    }
+  }
+}

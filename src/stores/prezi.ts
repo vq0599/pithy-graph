@@ -29,6 +29,8 @@ class PreziStore {
 
   public currentElementId = 0;
 
+  public previewSlide?: ISlide;
+
   private dirty: DeepPartial<IElement> = {};
 
   public get currentSlide() {

@@ -10,6 +10,8 @@ import { decode } from '@/utils/encryption';
 import { CANVAS_ID } from '@/utils/constants';
 import { globalStore } from '@/stores/global';
 import { bindKeyboardEvents } from '@/utils/element-events-bind';
+import PithyTemplates from '@/components/template';
+import { useRoute } from 'vue-router';
 import './index.scss';
 
 export default defineComponent({
@@ -19,10 +21,12 @@ export default defineComponent({
     const hashToId = (hash: string) => {
       return hash ? decode(hash.replace(/^#/, '')) : 0;
     };
+    const { params, hash } = useRoute();
     return {
       ready: ref(false),
       canvas,
-      hashToId,
+      slideId: hashToId(hash),
+      workspaceId: +params.id,
     };
   },
   computed: {
@@ -42,9 +46,9 @@ export default defineComponent({
   },
   methods: {
     async initialize() {
-      const { params, hash } = this.$route;
+      const { workspaceId, slideId } = this;
       // hash记录着默认的打开的slide
-      await preziStore.initialize(+params.id, this.hashToId(hash));
+      await preziStore.initialize(workspaceId, slideId);
       this.ready = true;
       globalStore.fetchImages();
     },
@@ -82,6 +86,7 @@ export default defineComponent({
           <main>
             <div class="pithy-editor-main">
               <Canvas
+                v-show={!preziStore.previewSlide}
                 id={CANVAS_ID}
                 ref="canvas"
                 key={preziStore.currentSlide.id}
@@ -90,7 +95,18 @@ export default defineComponent({
                 height={height}
               />
               <PithyEditLayer canvas={this.canvasEl} />
+              {preziStore.previewSlide && (
+                <Canvas
+                  key={`preview-${preziStore.previewSlide.id}`}
+                  slide={preziStore.previewSlide}
+                  width={width}
+                  height={height}
+                  readonly
+                />
+              )}
             </div>
+            <hr />
+            <PithyTemplates />
           </main>
           <SlideMenu />
         </div>
