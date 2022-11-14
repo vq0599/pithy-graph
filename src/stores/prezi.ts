@@ -126,10 +126,13 @@ class PreziStore {
     }
   }
 
-  async copyElement(id = this.currentElementId) {
-    const { data: el } = await ElementAPI.copy(id);
-    el.x += 100;
-    el.y += 100;
+  async copyElement(id: number, fromSlideId: number) {
+    const { data: el } = await ElementAPI.copy(id, this.currentSlideId);
+    // 如果当前页复制/黏贴，挪动一下位置避免重合
+    if (fromSlideId === this.currentSlideId) {
+      el.x += 80;
+      el.y += 80;
+    }
     this.elements.push(el);
     this.selectElement(el.id);
   }
