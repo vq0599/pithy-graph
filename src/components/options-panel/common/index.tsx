@@ -2,6 +2,8 @@ import { defineComponent } from 'vue';
 import { preziStore, ZIndexOptions } from '@/stores/prezi';
 import { ElButton, ElButtonGroup } from 'element-plus';
 import { Edit, Share, Delete } from '@element-plus/icons-vue';
+import { ElInputNumber } from 'element-plus';
+import { IElement } from '@/structs';
 
 const list = [
   { label: '最上', value: ZIndexOptions.highest },
@@ -26,6 +28,11 @@ export default defineComponent({
     handleSetZIndex(step: ZIndexOptions) {
       preziStore.updateZIndex(step);
     },
+    handleUpdate(options: Pick<IElement, 'mark'>) {
+      console.log(options);
+      preziStore.updateElement(options);
+      preziStore.save();
+    },
   },
   render() {
     return (
@@ -41,6 +48,20 @@ export default defineComponent({
               ))}
             </ElButtonGroup>
           </div>
+        </div>
+        <div class="panel-form">
+          <span>标记</span>
+          <ElInputNumber
+            v-editable
+            modelValue={this.element?.mark}
+            onChange={(mark) => this.handleUpdate({ mark: mark as number })}
+            size="small"
+            valueOnClear={0}
+            controls={false}
+            min={0}
+            max={10000}
+            step={1}
+          />
         </div>
       </div>
     );
