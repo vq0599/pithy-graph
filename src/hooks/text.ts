@@ -1,9 +1,8 @@
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { canvasStore } from '@/stores/canvas';
 import { preziStore } from '@/stores/prezi';
 import { IEText } from '@/structs';
 import { draggable } from '@/utils/draggable';
-import { editLayerStore } from '@/stores/edit-layer';
 
 const defaultText = '<p><br></p>';
 
@@ -62,6 +61,18 @@ export function useText(data: IEText, readonly: boolean) {
   onMounted(() => {
     addFocusListener();
   });
+
+  // 字号、行高、宽度这三个因素会影响元素高度
+  watch(
+    () => `${data.payload.fontSize}-${data.payload.lineSpacing}-${data.width}`,
+    () => {
+      const height = content?.value?.clientHeight;
+      if (height) {
+        preziStore.updateElement({ height });
+        preziStore.save();
+      }
+    }
+  );
 
   const handleBlur = (ev: Event) => {
     const $content = ev.target as HTMLDivElement;
