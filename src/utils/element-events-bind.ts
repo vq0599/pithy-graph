@@ -48,5 +48,6 @@ export const bindKeyboardEvents = ({ code, metaKey }: KeyboardEvent) => {
         break;
     }
     preziStore.updateElement(options);
+    preziStore.save();
   }
 };

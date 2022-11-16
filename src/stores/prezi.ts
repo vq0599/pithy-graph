@@ -4,6 +4,7 @@ import { IElement, IElementTypes, ISlide, IWorkspace } from '@/structs';
 import { reactive } from 'vue';
 import { router } from '@/router';
 import { encode } from '@/utils/encryption';
+import { debounce } from 'lodash-es';
 
 /**
  * 变更层级选项
@@ -170,12 +171,22 @@ class PreziStore {
     }
   }
 
-  async save(id = this.currentElementId) {
-    if (Object.keys(this.dirty).length) {
-      await ElementAPI.update(id, this.dirty);
-      this.dirty = {};
+  /**
+   * 防抖保存
+   */
+  save = debounce(
+    async (id = this.currentElementId) => {
+      if (Object.keys(this.dirty).length) {
+        await ElementAPI.update(id, this.dirty);
+        this.dirty = {};
+      }
+    },
+    500,
+    {
+      leading: false,
+      trailing: true,
     }
-  }
+  );
 
   setSlideBackground(options: Partial<ISlide['background']>) {
     const background = Object.assign(this.currentSlide.background, options);

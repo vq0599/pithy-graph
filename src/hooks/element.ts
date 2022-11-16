@@ -58,11 +58,18 @@ export function useElement(data: IElement, readonly: boolean) {
       startY + ty / canvasStore.scale
     );
     preziStore.updateElement({ x, y });
+    return true;
   };
 
-  const onStop = () => {
-    editLayerStore.clearAlignLine();
-    preziStore.save();
+  const onStop = (
+    event: MouseEvent,
+    data: DraggableData,
+    changed?: boolean
+  ) => {
+    if (changed) {
+      editLayerStore.clearAlignLine();
+      preziStore.save();
+    }
   };
 
   onMounted(() => {

@@ -29,7 +29,6 @@ export default defineComponent({
       preziStore.updateZIndex(step);
     },
     handleUpdate(options: Pick<IElement, 'mark'>) {
-      console.log(options);
       preziStore.updateElement(options);
       preziStore.save();
     },

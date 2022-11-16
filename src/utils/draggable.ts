@@ -28,7 +28,7 @@ export interface DraggableData {
 export interface DraggableOptions<T = any, U = any> {
   onStart(event: MouseEvent, data: DraggableData): T;
   onDrag(event: MouseEvent, data: DraggableData, truck: T): U;
-  onStop(event: MouseEvent, data: DraggableData, payload: U): void;
+  onStop(event: MouseEvent, data: DraggableData, payload?: U): void;
   /**
    * 是否将move事件添加至document上
    */
