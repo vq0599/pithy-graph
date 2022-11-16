@@ -8,6 +8,7 @@ import ShapeMenu from '@/components/menus/shape';
 import PicMenu from '@/components/menus/image';
 import { IElementTypes } from '@/structs';
 import { globalStore } from '@/stores/global';
+import { RouterLink } from 'vue-router';
 import './index.scss';
 
 const list = [
@@ -37,6 +38,9 @@ export default defineComponent({
   render() {
     return (
       <header class="pithy-editor-header">
+        <RouterLink class="header-logo" to="/">
+          <img src="/logo.png" alt="logo" />
+        </RouterLink>
         <ul class="header-menu">
           {list.map(({ label, Icon, Menu, key }) => (
             <ElPopover
@@ -58,7 +62,6 @@ export default defineComponent({
             </ElPopover>
           ))}
         </ul>
-        <div></div>
       </header>
     );
   },

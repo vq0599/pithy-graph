@@ -5,7 +5,7 @@ import { IElement, IETextPayload } from '@/structs';
 import { draggable, DraggableData } from '@/utils/draggable';
 import { parseStyles } from '@/utils/parse-styles';
 import { calcPointsOfIntersection } from '@/utils/tool';
-import { CSSProperties, defineComponent, PropType, ref } from 'vue';
+import { CSSProperties, defineComponent, ref } from 'vue';
 import './index.scss';
 
 /**
@@ -16,11 +16,6 @@ const controllerDisplayRecord: Record<string, string[]> = {
 };
 
 export default defineComponent({
-  props: {
-    canvas: {
-      type: Object as PropType<HTMLDivElement>,
-    },
-  },
   setup() {
     const layer = ref<HTMLDivElement>();
     return {

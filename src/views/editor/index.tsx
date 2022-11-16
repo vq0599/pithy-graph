@@ -94,7 +94,7 @@ export default defineComponent({
                 width={width}
                 height={height}
               />
-              <PithyEditLayer canvas={this.canvasEl} />
+              <PithyEditLayer />
               {preziStore.previewSlide && (
                 <Canvas
                   key={`preview-${preziStore.previewSlide.id}`}

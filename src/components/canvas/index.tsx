@@ -66,6 +66,8 @@ export default defineComponent({
               <PithyElement
                 data={el}
                 data-id={`${el.id}`}
+                data-height={`${el.height}`}
+                data-type={`${el.type}`}
                 key={el.id}
                 readonly={this.readonly}
               />
