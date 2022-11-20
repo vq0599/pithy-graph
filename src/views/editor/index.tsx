@@ -51,6 +51,7 @@ export default defineComponent({
       await preziStore.initialize(workspaceId, slideId);
       this.ready = true;
       globalStore.fetchImages();
+      globalStore.fetchVideos();
     },
     setRect() {
       canvasStore.calcRect();

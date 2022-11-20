@@ -1,9 +1,9 @@
 import { reactive } from 'vue';
 import { IElementTypes } from '@/structs';
-import { ImageAPI } from '@/api';
+import { ResourceAPI } from '@/api';
 
 class GlobalStore {
-  menuVisible: Record<IElementTypes, boolean> = {
+  menuVisible: Record<string, boolean> = {
     TEXT: false,
     IMAGE: false,
     SHAPE: false,
@@ -11,13 +11,20 @@ class GlobalStore {
 
   images: string[] = [];
 
+  videos: string[] = [];
+
   closeMenu(key: IElementTypes) {
     this.menuVisible[key] = false;
   }
 
   async fetchImages() {
-    const { data: images } = await ImageAPI.getAll();
+    const { data: images } = await ResourceAPI.getImages();
     this.images = images;
+  }
+
+  async fetchVideos() {
+    const { data: videos } = await ResourceAPI.getVideos();
+    this.videos = videos;
   }
 }
 

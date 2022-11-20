@@ -13,6 +13,7 @@ import './index.scss';
  */
 const controllerDisplayRecord: Record<string, string[]> = {
   TEXT: ['left', 'right'],
+  VIDEO: ['top-left', 'top-right', 'bottom-left', 'bottom-right'],
 };
 
 export default defineComponent({

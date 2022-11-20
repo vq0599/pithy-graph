@@ -1,4 +1,4 @@
-export type IElementTypes = 'TEXT' | 'IMAGE' | 'SHAPE';
+export type IElementTypes = 'TEXT' | 'IMAGE' | 'SHAPE' | 'VIDEO';
 
 export interface IElement<
   T extends IElementTypes = any,

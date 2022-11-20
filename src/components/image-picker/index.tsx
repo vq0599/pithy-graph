@@ -1,6 +1,6 @@
 import { defineComponent, ref } from 'vue';
 import PithyMediaLibrary from '@/components/media-library';
-import { ImageSelectOptions } from '@/structs';
+import { MediaSelectOptions } from '@/structs';
 import { Close } from '@element-plus/icons-vue';
 import { ElIcon } from 'element-plus';
 import './index.scss';
@@ -20,13 +20,13 @@ export default defineComponent({
   },
   emits: {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    select: (payload?: ImageSelectOptions) => true,
+    select: (payload?: MediaSelectOptions) => true,
   },
   methods: {
     handleOpenModal() {
       this.modelVisible = true;
     },
-    handleSelect(payload?: ImageSelectOptions) {
+    handleSelect(payload?: MediaSelectOptions) {
       this.$emit('select', payload);
     },
   },
@@ -42,6 +42,7 @@ export default defineComponent({
         </div>
         <PithyMediaLibrary
           withModal
+          useVideo={false}
           v-model={this.modelVisible}
           onSelect={this.handleSelect}
         />

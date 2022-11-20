@@ -2,6 +2,7 @@ import { defineComponent, PropType } from 'vue';
 import PithyText from './text';
 import PithyImage from './image';
 import PithyShape from './shape';
+import PithyVideo from './video';
 import { IElement } from '@/structs';
 import { parseStyles } from '@/utils/parse-styles';
 import { useElement } from '@/hooks/element';
@@ -59,9 +60,11 @@ export const PithyElement = defineComponent({
         case 'TEXT':
           return <PithyText {...this.$props} />;
         case 'IMAGE':
-          return <PithyImage data={data} />;
+          return <PithyImage {...this.$props} />;
         case 'SHAPE':
-          return <PithyShape data={data} />;
+          return <PithyShape {...this.$props} />;
+        case 'VIDEO':
+          return <PithyVideo {...this.$props} />;
         default:
           return null;
       }

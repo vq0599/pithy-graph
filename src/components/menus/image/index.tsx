@@ -2,6 +2,7 @@ import { defineComponent } from 'vue';
 import MediaLibrary from '@/components/media-library';
 import { preziStore } from '@/stores/prezi';
 import { globalStore } from '@/stores/global';
+import { IElementTypes } from '@/structs';
 import './index.scss';
 
 export default defineComponent({
@@ -9,14 +10,16 @@ export default defineComponent({
   methods: {
     handleSelect({
       url,
+      type,
       naturalHeight,
       naturalWidth,
     }: {
+      type: IElementTypes;
       url: string;
       naturalWidth: number;
       naturalHeight: number;
     }) {
-      preziStore.createElement('IMAGE', {
+      preziStore.createElement(type, {
         x: 100,
         y: 500,
         width: 500,
