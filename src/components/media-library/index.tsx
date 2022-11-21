@@ -135,7 +135,7 @@ export default defineComponent({
             <ElDivider />
             <ElSpace class="media-list" wrap>
               {this.images.map((url) => (
-                <img src={url} onClick={this.handleSelectImage} />
+                <img v-lazy={url} onClick={this.handleSelectImage} />
               ))}
             </ElSpace>
           </ElScrollbar>
