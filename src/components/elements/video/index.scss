@@ -16,6 +16,8 @@
     opacity: 0.6;
     color: #FFF;
     transition: opacity .15s;
+    background: rgba($color: #101010, $alpha: .8);
+    border-radius: 50%;
     &.video-is-play {
       opacity: 0;
     }

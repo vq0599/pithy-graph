@@ -1,9 +1,10 @@
-import { computed, onMounted, watch, ref } from 'vue';
+import { computed, onMounted, watch, ref, inject } from 'vue';
 import { canvasStore } from '@/stores/canvas';
 import { editLayerStore } from '@/stores/edit-layer';
 import { preziStore } from '@/stores/prezi';
 import { IElement } from '@/structs';
 import { draggable, DraggableData } from '@/utils/draggable';
+import { scaleKey } from '@/components/canvas/provide-keys';
 
 export function useElement(data: IElement, readonly: boolean) {
   if (readonly) {
@@ -11,7 +12,7 @@ export function useElement(data: IElement, readonly: boolean) {
       handleMousedown: undefined,
     };
   }
-
+  const scale = inject(scaleKey, ref(1));
   const active = computed(() => data.id === preziStore.currentElementId);
   const element = ref<HTMLDivElement>();
 
@@ -54,8 +55,8 @@ export function useElement(data: IElement, readonly: boolean) {
       return;
     }
     const { x, y } = editLayerStore.calcAlignCoord(
-      startX + tx / canvasStore.scale,
-      startY + ty / canvasStore.scale
+      startX + tx / scale.value,
+      startY + ty / scale.value
     );
     preziStore.updateElement({ x, y });
     return true;

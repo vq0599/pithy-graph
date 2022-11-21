@@ -1,7 +1,14 @@
-import { CSSProperties, defineComponent, PropType, ref } from 'vue';
+import {
+  computed,
+  CSSProperties,
+  defineComponent,
+  PropType,
+  provide,
+  ref,
+} from 'vue';
 import { PithyElement } from '@/components/elements';
-import { canvasStore } from '@/stores/canvas';
 import { ISlide } from '@/structs';
+import { scaleKey } from './provide-keys';
 import './index.scss';
 
 export default defineComponent({
@@ -25,21 +32,24 @@ export default defineComponent({
       default: false,
     },
   },
-  setup() {
+  setup(props) {
     const container = ref<HTMLDivElement | null>(null);
+    const scale = computed(() => props.width / 1920);
+    provide(scaleKey, scale);
     return {
       container,
+      scale,
     };
   },
   computed: {
     styles() {
-      const { height, width } = this;
+      const { height, width, scale } = this;
       return {
         // 宽高是为了让容器保持这个区域（transform不会改变元素本身的占位区域）
         width: width + 'px',
         height: height + 'px',
         // scale是让子元素能缩写到当前的区域大小
-        transform: `scale(${width / canvasStore.maxWidth})`,
+        transform: `scale(${scale})`,
       };
     },
     bgStyle(): CSSProperties {
