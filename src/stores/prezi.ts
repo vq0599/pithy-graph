@@ -172,9 +172,18 @@ class PreziStore {
   }
 
   /**
-   * 防抖保存
+   * 即时保存
    */
-  save = debounce(
+  async save(id = this.currentElementId) {
+    if (Object.keys(this.dirty).length) {
+      await ElementAPI.update(id, this.dirty);
+      this.dirty = {};
+    }
+  }
+  /**
+   * 防抖保存，用于一些持续触发保存的场景
+   */
+  delaySave = debounce(
     async (id = this.currentElementId) => {
       if (Object.keys(this.dirty).length) {
         await ElementAPI.update(id, this.dirty);

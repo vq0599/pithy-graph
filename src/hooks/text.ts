@@ -66,10 +66,11 @@ export function useText(data: IEText, readonly: boolean) {
   watch(
     () => `${data.payload.fontSize}-${data.payload.lineSpacing}-${data.width}`,
     () => {
-      const height = content?.value?.clientHeight;
+      if (!content.value) return;
+      const { clientHeight: height } = content?.value;
       if (height) {
         preziStore.updateElement({ height });
-        preziStore.save();
+        preziStore.save(data.id);
       }
     }
   );
