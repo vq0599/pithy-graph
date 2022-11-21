@@ -8,14 +8,14 @@ let copyFromSlide = 0;
 export const bindKeyboardEvents = ({ code, metaKey }: KeyboardEvent) => {
   // 处于输入状态
   if (canvasStore.editing) return;
-
   // 不需要选中也可以触发的事件
-  if (!preziStore.currentElement) {
-    if (code === 'KeyV' && metaKey) {
-      if (copyFromElement && copyFromSlide) {
-        preziStore.copyElement(copyFromElement, copyFromSlide);
-      }
+  if (code === 'KeyV' && metaKey) {
+    if (copyFromElement && copyFromSlide) {
+      preziStore.copyElement(copyFromElement, copyFromSlide);
     }
+  }
+
+  if (!preziStore.currentElement) {
     return;
   }
 
