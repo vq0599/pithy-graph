@@ -36,7 +36,7 @@ class CanvasStore {
     const containerHeight = window.innerHeight - parseInt(headerWidth) - 12 * 2;
     let width, height;
     // 4K屏幕，需要考虑最大值不能对于maxWidth * maxHeight
-    if (containerWidth >= maxWidth && containerHeight / maxHeight) {
+    if (containerWidth >= maxWidth && containerHeight >= maxHeight) {
       width = maxWidth;
       height = maxHeight;
     } else if (containerWidth / maxWidth < containerHeight / maxHeight) {

@@ -16,6 +16,11 @@ export const router = createRouter({
       component: () => import('@/views/editor'),
     },
     {
+      path: '/product/:id(\\d+)',
+      name: 'product',
+      component: () => import('@/views/product'),
+    },
+    {
       path: '/:pathMatch(.*)*',
       name: 'not-found',
       component: NotFoundView,
