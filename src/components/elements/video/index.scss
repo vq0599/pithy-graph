@@ -2,11 +2,6 @@
   video {
     width: 100%;
   }
-  &:hover {
-    .el-icon.video-is-play {
-      opacity: 0.6;
-    }
-  }
   .el-icon {
     position: absolute;
     top: 50%;
@@ -18,8 +13,6 @@
     transition: opacity .15s;
     background: rgba($color: #101010, $alpha: .8);
     border-radius: 50%;
-    &.video-is-play {
-      opacity: 0;
-    }
+    pointer-events: none;
   }
 }

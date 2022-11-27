@@ -12,6 +12,13 @@
     width: 100vw;
     height: calc(100vh - 50px);
   }
+  .product-clip-wrapper {
+    overflow: hidden;
+    &-long {
+      display: flex;
+      // transition: all 0.35s ease-in-out;
+    }
+  }
   .product-controller {
     height: 50px;
     display: flex;

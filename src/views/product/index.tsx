@@ -2,8 +2,9 @@ import { WorkspaceAPI } from '@/api';
 import { defineComponent, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { ISlide } from '@/structs';
-import './index.scss';
 import PithyCanvas from '@/components/canvas';
+import Hammer from 'hammerjs';
+import './index.scss';
 
 const calcRect = () => {
   const maxWidth = 1920;
@@ -38,6 +39,8 @@ export default defineComponent({
     const width = ref(rect.width);
     const height = ref(rect.height);
     const current = ref(0);
+    const offsetX = ref(0);
+    let flag = false;
 
     const handleCalcRect = () => {
       const rect = calcRect();
@@ -64,6 +67,29 @@ export default defineComponent({
           }
         }
       });
+
+      const hammer = new Hammer(document.body);
+      hammer.on('panleft', function (ev) {
+        if (current.value === slides.value.length - 1) return;
+        offsetX.value = ev.deltaX;
+        flag = true;
+      });
+      hammer.on('panright', function (ev) {
+        if (current.value === 0) return;
+        offsetX.value = ev.deltaX;
+        flag = true;
+      });
+      hammer.on('panend', function (ev) {
+        if (Math.abs(ev.deltaX) < 50 || !flag) {
+          offsetX.value = 0;
+          return;
+        }
+        console.log('放手执行了', ev.deltaX);
+        const step = ev.deltaX / Math.abs(ev.deltaX);
+        offsetX.value = 0;
+        current.value -= step;
+        flag = false;
+      });
     });
     return {
       root,
@@ -71,6 +97,7 @@ export default defineComponent({
       height,
       slides,
       current,
+      offsetX,
     };
   },
   methods: {
@@ -85,13 +112,39 @@ export default defineComponent({
     return (
       <div class="pithy-product-page" ref="root">
         <div class="product-container">
-          <PithyCanvas
-            key={current}
-            width={width}
-            height={height}
-            slide={slides[current]}
-            readonly
-          />
+          <div
+            class="product-clip-wrapper"
+            style={{ width: `${width}px`, height: `${height}px` }}
+          >
+            <div
+              class="product-clip-wrapper-long"
+              style={{
+                width: `${width * slides.length}px`,
+                height: `${height}px`,
+                transform: `translateX(${
+                  current * -1 * width + this.offsetX
+                }px)`,
+              }}
+            >
+              {slides.map((slide) => (
+                <PithyCanvas
+                  key={slide.id}
+                  width={width}
+                  height={height}
+                  slide={slide}
+                  readonly
+                />
+              ))}
+            </div>
+
+            {/* <PithyCanvas
+              key={current}
+              width={width}
+              height={height}
+              slide={slides[current]}
+              readonly
+            /> */}
+          </div>
         </div>
         <div class="product-controller">
           <div class="product-controller-indicator">
