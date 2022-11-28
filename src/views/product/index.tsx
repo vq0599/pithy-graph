@@ -40,6 +40,7 @@ export default defineComponent({
     const height = ref(rect.height);
     const current = ref(0);
     const offsetX = ref(0);
+    const moving = ref(false);
     let flag = false;
 
     const handleCalcRect = () => {
@@ -69,13 +70,18 @@ export default defineComponent({
       });
 
       const hammer = new Hammer(document.body);
-      hammer.on('panleft', function (ev) {
-        if (current.value === slides.value.length - 1) return;
-        offsetX.value = ev.deltaX;
-        flag = true;
-      });
-      hammer.on('panright', function (ev) {
-        if (current.value === 0) return;
+      hammer.on('panmove', function (ev) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore 类型定义错了
+        const direction = ev.additionalEvent;
+        if (!direction) return;
+        if (
+          current.value === slides.value.length - 1 &&
+          direction === 'panleft'
+        )
+          return;
+        if (current.value === 0 && direction === 'panright') return;
+
         offsetX.value = ev.deltaX;
         flag = true;
       });
@@ -85,8 +91,12 @@ export default defineComponent({
           return;
         }
         const step = ev.deltaX / Math.abs(ev.deltaX);
+        moving.value = true;
         offsetX.value = 0;
         current.value -= step;
+        setTimeout(() => {
+          moving.value = false;
+        }, 200);
         flag = false;
       });
     });
@@ -97,6 +107,7 @@ export default defineComponent({
       slides,
       current,
       offsetX,
+      moving,
     };
   },
   methods: {
@@ -123,6 +134,7 @@ export default defineComponent({
                 transform: `translateX(${
                   current * -1 * width + this.offsetX
                 }px)`,
+                transition: this.moving ? `all 0.2s ease-in-out` : 'none',
               }}
             >
               {slides.map((slide) => (

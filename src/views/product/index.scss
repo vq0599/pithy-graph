@@ -16,7 +16,9 @@
     overflow: hidden;
     &-long {
       display: flex;
-      // transition: all 0.35s ease-in-out;
+      &.moving {
+        transition: all 0.2s ease-in-out;
+      }
     }
   }
   .product-controller {
