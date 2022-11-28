@@ -1,4 +1,4 @@
-import { ISlide } from './slide';
+import { ISlide } from '@/core';
 
 export interface IWorkspace {
   id: number;

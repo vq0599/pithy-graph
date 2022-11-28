@@ -23,6 +23,13 @@ module.exports = {
 
     '@typescript-eslint/no-explicit-any': 'off',
 
+    '@typescript-eslint/no-unused-vars': [
+      'warn',
+      {
+        argsIgnorePattern: '^_',
+      },
+    ],
+
     // 使用window.name而不是name
     'no-restricted-globals': [
       'error',

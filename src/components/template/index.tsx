@@ -1,15 +1,17 @@
 import { BeautifyAPI, SlideAPI } from '@/api';
-import { preziStore } from '@/stores/prezi';
-import { ISlide } from '@/structs';
-import { ElButton, ElMessage } from 'element-plus';
+import { ISlide } from '@/core';
+import { ElButton, ElMessage, ElScrollbar } from 'element-plus';
 import { defineComponent, ref } from 'vue';
-import PithyCanvas from '@/components/canvas';
+import PithyCanvas from '@/core/components/canvas';
+import { usePreziStore } from '@/stores/pinia';
 import './index.scss';
 
 export default defineComponent({
   name: 'pithy-beautify-box',
   setup() {
+    const preziStore = usePreziStore();
     return {
+      preziStore,
       slides: ref<
         Array<{
           data: ISlide;
@@ -20,7 +22,7 @@ export default defineComponent({
   },
   methods: {
     async handleListTemplate() {
-      const slideId = preziStore.currentSlideId;
+      const slideId = this.preziStore.currentSlideId;
       const {
         data: { data },
       } = await BeautifyAPI.match(slideId);
@@ -43,7 +45,7 @@ export default defineComponent({
     ) {
       const previewSlide: ISlide = JSON.parse(JSON.stringify(slide));
       relations.forEach(({ sourceElementId, templateElementId }) => {
-        const sourceElement = preziStore.elements.find(
+        const sourceElement = this.preziStore.elements.find(
           (v) => v.id === sourceElementId
         );
         const templateElement = previewSlide.elements.find(
@@ -63,14 +65,14 @@ export default defineComponent({
         }
       });
 
-      preziStore.previewSlide = previewSlide;
+      this.preziStore.previewSlide = previewSlide;
     },
   },
   render() {
     return (
       <div class="pithy-beautify-box">
         <ElButton onClick={this.handleListTemplate}>AI-TO</ElButton>
-        <div class="pithy-templates-wrapper">
+        <ElScrollbar>
           <div class="pithy-templates">
             {this.slides.map(({ data, relations }) => (
               <div onClick={() => this.handleBeautify(data, relations)}>
@@ -78,7 +80,7 @@ export default defineComponent({
               </div>
             ))}
           </div>
-        </div>
+        </ElScrollbar>
       </div>
     );
   },

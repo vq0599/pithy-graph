@@ -1,7 +1,7 @@
 import { defineComponent } from 'vue';
 import type { IETextPayload } from '@/structs';
 import * as textCase from './case';
-import { preziStore } from '@/stores/prezi';
+import { usePreziStore } from '@/stores/pinia';
 import { globalStore } from '@/stores/global';
 import { Palette } from '@/utils/default-style-variables';
 import './index.scss';
@@ -56,6 +56,12 @@ const list: TextMenuItem[] = [
 export default defineComponent({
   name: 'pithy-text-menu',
   emits: ['select'],
+  setup() {
+    const preziStore = usePreziStore();
+    return {
+      preziStore,
+    };
+  },
   render() {
     return (
       <div class="pithy-text-menu">
@@ -74,7 +80,7 @@ export default defineComponent({
   },
   methods: {
     handleClick(options: Partial<IETextPayload>) {
-      preziStore.createElement('TEXT', {
+      this.preziStore.createElement('TEXT', {
         x: 100,
         y: 500,
         payload: {

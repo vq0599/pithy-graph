@@ -1,4 +1,4 @@
-import { IElementTypes } from './elements';
+import { IElementTypes } from '@/core';
 
 export interface MediaSelectOptions {
   url: string;

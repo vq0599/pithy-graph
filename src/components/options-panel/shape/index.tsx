@@ -1,9 +1,10 @@
 import { defineComponent } from 'vue';
-import { preziStore } from '@/stores/prezi';
 import { ElSlider, ElInputNumber } from 'element-plus';
 import { Edit, Share, Delete } from '@element-plus/icons-vue';
-import { IEShape, IEShapePayload } from '@/structs';
+import { IEShape, IEShapePayload } from '@/core';
 import PithyColorPicker from '@/components/color-picker';
+import { mapStores } from 'pinia';
+import { usePreziStore } from '@/stores/pinia';
 
 export default defineComponent({
   name: 'pithy-text-panel',
@@ -13,14 +14,15 @@ export default defineComponent({
     Edit,
   },
   computed: {
-    payload() {
-      return (preziStore.currentElement as IEShape).payload;
+    ...mapStores(usePreziStore),
+    payload(): IEShapePayload {
+      return (this.preziStore.currentElement as IEShape).payload;
     },
   },
   methods: {
     handleUpdatePayload(payload: Partial<IEShapePayload>) {
-      preziStore.updateElementPayload<IEShapePayload>(payload);
-      preziStore.save();
+      const { currentElementId, updateElement } = this.preziStore;
+      updateElement(currentElementId, { payload });
     },
   },
   render() {
@@ -55,7 +57,6 @@ export default defineComponent({
           <div class="panel-form">
             <span>圆角</span>
             <ElInputNumber
-              v-editable
               modelValue={this.payload.radius || 0}
               onChange={(radius) => this.handleUpdatePayload({ radius })}
               size="small"

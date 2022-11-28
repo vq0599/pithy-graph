@@ -1,11 +1,11 @@
 import { defineComponent } from 'vue';
-import DiamondShape from '@/components/elements/shape/diamond';
-import EllipseShape from '@/components/elements/shape/ellipse';
-import RectangleShape from '@/components/elements/shape/rectangle';
-import TriangleShape from '@/components/elements/shape/triangle';
+import DiamondShape from '@/core/elements/shape/diamond';
+import EllipseShape from '@/core/elements/shape/ellipse';
+import RectangleShape from '@/core/elements/shape/rectangle';
+import TriangleShape from '@/core/elements/shape/triangle';
 import { globalStore } from '@/stores/global';
 import { IEShapePayload } from '@/structs';
-import { preziStore } from '@/stores/prezi';
+import { usePreziStore } from '@/stores/pinia';
 import { Palette } from '@/utils/default-style-variables';
 import './index.scss';
 
@@ -48,13 +48,19 @@ const list = [
 
 export default defineComponent({
   name: 'pithy-shape-menu',
+  setup() {
+    const preziStore = usePreziStore();
+    return {
+      preziStore,
+    };
+  },
   methods: {
     handleClick(payload: Partial<IEShapePayload>) {
-      preziStore.createElement('SHAPE', {
+      this.preziStore.createElement('SHAPE', {
         x: 500,
         y: 500,
-        width: 100,
-        height: 100,
+        width: 200,
+        height: 200,
         payload,
       });
       globalStore.closeMenu('SHAPE');

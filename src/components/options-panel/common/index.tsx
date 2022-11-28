@@ -1,9 +1,10 @@
 import { defineComponent } from 'vue';
-import { preziStore, ZIndexOptions } from '@/stores/prezi';
 import { ElButton, ElButtonGroup } from 'element-plus';
 import { Edit, Share, Delete } from '@element-plus/icons-vue';
 import { ElInputNumber } from 'element-plus';
-import { IElement } from '@/structs';
+import { IElement } from '@/core';
+import { mapStores } from 'pinia';
+import { usePreziStore, ZIndexOptions } from '@/stores/pinia';
 
 const list = [
   { label: '最上', value: ZIndexOptions.highest },
@@ -13,24 +14,22 @@ const list = [
 ];
 
 export default defineComponent({
-  name: 'pithy-text-panel',
+  name: 'pithy-common-panel',
   components: {
     Delete,
     Share,
     Edit,
   },
   computed: {
-    element() {
-      return preziStore.currentElement;
-    },
+    ...mapStores(usePreziStore),
   },
   methods: {
     handleSetZIndex(step: ZIndexOptions) {
-      preziStore.updateZIndex(step);
+      this.preziStore.updateZIndex(step);
     },
     handleUpdate(options: Pick<IElement, 'mark'>) {
-      preziStore.updateElement(options);
-      preziStore.save();
+      const { currentElementId, updateElement } = this.preziStore;
+      updateElement(currentElementId, options);
     },
   },
   render() {
@@ -51,8 +50,7 @@ export default defineComponent({
         <div class="panel-form">
           <span>标记</span>
           <ElInputNumber
-            v-editable
-            modelValue={this.element?.mark}
+            modelValue={this.preziStore.currentElement?.mark}
             onChange={(mark) => this.handleUpdate({ mark: mark as number })}
             size="small"
             valueOnClear={0}

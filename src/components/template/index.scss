@@ -1,9 +1,6 @@
 .pithy-beautify-box {
   .pithy-templates {
-    &-wrapper {
-      width: 100%;
-      overflow-x: auto;
-    }
+    width: 100%;
     display: flex;
     padding: 10px 2px;
     & > * {

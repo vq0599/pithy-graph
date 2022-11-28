@@ -1,4 +1,4 @@
-import { ISlide } from '@/structs';
+import { ISlide } from '@/core';
 import { http } from '../http';
 
 const formatParams = <T extends Record<string, any>>(

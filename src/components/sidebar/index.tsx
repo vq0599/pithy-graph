@@ -1,50 +1,55 @@
-import PithyCanvas from '@/components/canvas';
-import { preziStore } from '@/stores/prezi';
+import PithyCanvas from '@/core/components/canvas';
 import { ElMessage, ElIcon } from 'element-plus';
 import { defineComponent } from 'vue';
 import { Delete, CopyDocument } from '@element-plus/icons-vue';
+import { usePreziStore } from '@/stores/pinia';
 import './index.scss';
 
 export default defineComponent({
   name: 'pithy-sidebar',
+  setup() {
+    const preziStore = usePreziStore();
+    return {
+      preziStore,
+    };
+  },
   methods: {
     async handleCreate() {
-      const { id } = await preziStore.createSlide();
-      preziStore.selectSlide(id);
-    },
-    handleSelect(id: number) {
-      preziStore.selectSlide(id);
+      const { createSlide, selectSlide } = this.preziStore;
+      const { id } = await createSlide();
+      selectSlide(id);
     },
     handleDelete(ev: MouseEvent, id: number) {
       ev.stopPropagation();
-      if (preziStore.slides.length > 1) {
-        if (preziStore.currentSlideId === id) {
-          preziStore.selectSlide(preziStore.slides[0].id);
+      const { slides, currentSlideId, selectSlide, deleteSlide } =
+        this.preziStore;
+      if (slides.length > 1) {
+        if (currentSlideId === id) {
+          selectSlide(slides[0].id);
         }
-        preziStore.deleteSlide(id);
+        deleteSlide(id);
       } else {
         ElMessage.warning('不能删除最后一页');
       }
     },
     async handleCopy(ev: MouseEvent, id: number) {
       ev.stopPropagation();
-      const slide = await preziStore.copySlide(id);
-      preziStore.selectSlide(slide.id);
+      const { copySlide, selectSlide } = this.preziStore;
+      const slide = await copySlide(id);
+      selectSlide(slide.id);
     },
   },
   render() {
+    const { slides, currentSlideId, selectSlide } = this.preziStore;
     return (
       <aside class="pithy-editor-aside">
         <div class="aside-slider">
-          {preziStore.slides.map((slide, index) => {
+          {slides.map((slide, index) => {
             const { id } = slide;
             return (
               <div
-                onClick={() => this.handleSelect(id)}
-                class={[
-                  'aside-slider-item',
-                  { active: id === preziStore.currentSlideId },
-                ]}
+                onClick={() => selectSlide(id)}
+                class={['aside-slider-item', { active: id === currentSlideId }]}
               >
                 <i class="item-indicator"></i>
                 <span>{index + 1}</span>

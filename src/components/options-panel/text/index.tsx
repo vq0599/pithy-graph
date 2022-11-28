@@ -1,5 +1,4 @@
 import { defineComponent } from 'vue';
-import { preziStore } from '@/stores/prezi';
 import {
   ElInputNumber,
   ElSwitch,
@@ -7,9 +6,11 @@ import {
   ElButtonGroup,
   ElSlider,
 } from 'element-plus';
-import { IEText, IETextPayload } from '@/structs';
+import { IEText, IETextPayload } from '@/core';
 import { Edit, Share, Delete } from '@element-plus/icons-vue';
 import PithyColorPicker from '@/components/color-picker';
+import { mapStores } from 'pinia';
+import { usePreziStore } from '@/stores/pinia';
 import './index.scss';
 
 export default defineComponent({
@@ -20,14 +21,15 @@ export default defineComponent({
     Edit,
   },
   computed: {
-    payload() {
-      return (preziStore.currentElement as IEText).payload;
+    ...mapStores(usePreziStore),
+    payload(): IETextPayload {
+      return (this.preziStore.currentElement as IEText).payload;
     },
   },
   methods: {
     handleUpdatePayload(payload: Partial<IETextPayload>) {
-      preziStore.updateElementPayload<IETextPayload>(payload);
-      preziStore.save();
+      const { currentElementId, updateElement } = this.preziStore;
+      updateElement(currentElementId, { payload });
     },
   },
   render() {
@@ -43,7 +45,6 @@ export default defineComponent({
         <div class="panel-form">
           <span>字号</span>
           <ElInputNumber
-            v-editable
             modelValue={this.payload.fontSize}
             onChange={(fontSize) => this.handleUpdatePayload({ fontSize })}
             size="small"

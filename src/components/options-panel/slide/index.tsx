@@ -1,26 +1,30 @@
 import { defineComponent } from 'vue';
-import { preziStore } from '@/stores/prezi';
 import PithyImagePicker from '@/components/image-picker';
 import PithyColorPicker from '@/components/color-picker';
 import { MediaSelectOptions } from '@/structs';
+import { usePreziStore } from '@/stores/pinia';
+import { mapStores } from 'pinia';
 import './index.scss';
 
 export default defineComponent({
   name: 'pithy-slide-panel',
+  computed: {
+    ...mapStores(usePreziStore),
+  },
   methods: {
     handleSetColor(color: string) {
       if (color) {
-        preziStore.setSlideBackground({ color });
+        this.preziStore.setSlideBackground({ color });
       }
     },
     handleSetImage(options?: MediaSelectOptions) {
-      preziStore.setSlideBackground({ image: options?.url });
+      this.preziStore.setSlideBackground({ image: options?.url });
     },
   },
   render() {
     const {
       background: { color, image },
-    } = preziStore.currentSlide;
+    } = this.preziStore.currentSlide!;
     return (
       <div class="pithy-slide-panel">
         <div class="panel-form">

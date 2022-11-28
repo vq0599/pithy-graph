@@ -12,6 +12,7 @@
   "dependencies": {
     "@ckpack/vue-color": "^1.2.4",
     "@vueuse/core": "^9.4.0",
+    "add": "^2.0.6",
     "axios": "^1.1.3",
     "element-plus": "^2.2.18",
     "eslint-config-vqzfss": "^0.1.6",
@@ -19,9 +20,11 @@
     "lodash-es": "^4.17.21",
     "nanoid": "^4.0.0",
     "normalize.css": "^8.0.1",
+    "pinia": "^2.0.26",
     "vue": "^3.2.38",
     "vue-lazyload": "^3.0.0-rc.2",
-    "vue-router": "^4.1.5"
+    "vue-router": "^4.1.5",
+    "yarn": "^1.22.19"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.4",

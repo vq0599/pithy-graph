@@ -1,12 +1,18 @@
 import { defineComponent } from 'vue';
 import MediaLibrary from '@/components/media-library';
-import { preziStore } from '@/stores/prezi';
 import { globalStore } from '@/stores/global';
 import { IElementTypes } from '@/structs';
+import { usePreziStore } from '@/stores/pinia';
 import './index.scss';
 
 export default defineComponent({
   name: 'pithy-image-menu',
+  setup() {
+    const preziStore = usePreziStore();
+    return {
+      preziStore,
+    };
+  },
   methods: {
     handleSelect({
       url,
@@ -19,7 +25,7 @@ export default defineComponent({
       naturalWidth: number;
       naturalHeight: number;
     }) {
-      preziStore.createElement(type, {
+      this.preziStore.createElement(type, {
         x: 100,
         y: 500,
         width: 500,

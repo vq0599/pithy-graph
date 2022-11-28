@@ -1,9 +1,9 @@
+import Hammer from 'hammerjs';
 import { WorkspaceAPI } from '@/api';
 import { defineComponent, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { ISlide } from '@/structs';
-import PithyCanvas from '@/components/canvas';
-import Hammer from 'hammerjs';
+import PithyCanvas from '@/core/components/canvas';
 import './index.scss';
 
 const calcRect = () => {
