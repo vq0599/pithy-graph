@@ -47,7 +47,7 @@ export default defineComponent({
                 ]}
               >
                 <i class="item-indicator"></i>
-                <span>{index}</span>
+                <span>{index + 1}</span>
                 <div class="item-thumbnail">
                   <PithyCanvas width={160} height={90} slide={slide} readonly />
                   <div class="item-actions">
