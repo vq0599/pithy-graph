@@ -1,1 +1,1 @@
-export * as PreziCanvas from './canvas';
+export { default as PreziCanvas } from './canvas';

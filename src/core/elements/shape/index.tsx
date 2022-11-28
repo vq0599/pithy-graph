@@ -1,4 +1,4 @@
-import { IEShape } from '@/structs/elements/shape';
+import { IEShape } from '@/core';
 import { defineComponent, PropType } from 'vue';
 import DiamondShape from './diamond';
 import EllipseShape from './ellipse';

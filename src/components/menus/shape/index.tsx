@@ -4,7 +4,7 @@ import EllipseShape from '@/core/elements/shape/ellipse';
 import RectangleShape from '@/core/elements/shape/rectangle';
 import TriangleShape from '@/core/elements/shape/triangle';
 import { globalStore } from '@/stores/global';
-import { IEShapePayload } from '@/structs';
+import { IEShapePayload } from '@/core';
 import { usePreziStore } from '@/stores/pinia';
 import { Palette } from '@/utils/default-style-variables';
 import './index.scss';

@@ -1,5 +1,5 @@
 import { defineComponent } from 'vue';
-import type { IETextPayload } from '@/structs';
+import type { IETextPayload } from '@/core';
 import * as textCase from './case';
 import { usePreziStore } from '@/stores/pinia';
 import { globalStore } from '@/stores/global';

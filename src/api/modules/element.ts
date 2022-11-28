@@ -1,4 +1,4 @@
-import { IElement, IElementTypes } from '@/structs';
+import { IElement, IElementTypes } from '@/core';
 import { http } from '../http';
 
 export const ElementAPI = {

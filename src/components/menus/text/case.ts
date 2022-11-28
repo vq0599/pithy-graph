@@ -1,4 +1,4 @@
-import { IETextPayload } from '@/structs';
+import { IETextPayload } from '@/core';
 
 export const H1: Partial<IETextPayload> = {
   fontSize: 3.6,

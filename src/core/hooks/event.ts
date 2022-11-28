@@ -1,4 +1,4 @@
-import { IElement } from '@/structs';
+import { IElement } from '@/core';
 import { onMounted, onUnmounted } from 'vue';
 import { useInject } from '../store';
 

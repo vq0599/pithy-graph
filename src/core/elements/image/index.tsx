@@ -1,5 +1,5 @@
 import { defineComponent, PropType, CSSProperties } from 'vue';
-import { IEImage } from '@/structs';
+import { IEImage } from '@/core';
 import './index.scss';
 
 export default defineComponent({

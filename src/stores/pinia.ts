@@ -49,9 +49,13 @@ export const usePreziStore = defineStore('prezi', {
     save: debounce(
       // 这里的this有点难理解
       async function (id: number) {
-        if (Object.keys(this.dirty).length) {
-          await ElementAPI.update(id, this.dirty);
-          this.dirty = {};
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore 没招了
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
+        const _this = this;
+        if (Object.keys(_this.dirty).length) {
+          await ElementAPI.update(id, _this.dirty);
+          _this.dirty = {};
         }
       },
       800,

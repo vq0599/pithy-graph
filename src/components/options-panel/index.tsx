@@ -1,12 +1,11 @@
 import { defineComponent } from 'vue';
-// import { preziStore } from '@/stores/prezi';
 import { ElTabPane, ElTabs } from 'element-plus';
 import SlidePanel from './slide';
 import TextPanel from './text';
 import ShapePanel from './shape';
 import ImagePanel from './image';
 import CommonPanel from './common';
-import { IElementTypes } from '@/structs';
+import { IElementTypes } from '@/core';
 import { mapStores } from 'pinia';
 import { usePreziStore } from '@/stores/pinia';
 import './index.scss';

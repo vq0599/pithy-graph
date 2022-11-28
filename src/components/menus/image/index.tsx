@@ -1,7 +1,7 @@
 import { defineComponent } from 'vue';
 import MediaLibrary from '@/components/media-library';
 import { globalStore } from '@/stores/global';
-import { IElementTypes } from '@/structs';
+import { IElementTypes } from '@/core';
 import { usePreziStore } from '@/stores/pinia';
 import './index.scss';
 

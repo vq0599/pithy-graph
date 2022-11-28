@@ -2,8 +2,7 @@ import Hammer from 'hammerjs';
 import { WorkspaceAPI } from '@/api';
 import { defineComponent, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { ISlide } from '@/structs';
-import PithyCanvas from '@/core/components/canvas';
+import { ISlide, PreziCanvas } from '@/core';
 import './index.scss';
 
 const calcRect = () => {
@@ -138,7 +137,7 @@ export default defineComponent({
               }}
             >
               {slides.map((slide) => (
-                <PithyCanvas
+                <PreziCanvas
                   key={slide.id}
                   width={width}
                   height={height}

@@ -1,5 +1,5 @@
 import { reactive } from 'vue';
-import { IElementTypes } from '@/structs';
+import { IElementTypes } from '@/core';
 import { ResourceAPI } from '@/api';
 
 class GlobalStore {

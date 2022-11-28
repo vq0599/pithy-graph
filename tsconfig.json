@@ -6,7 +6,7 @@
       "@/*": ["./src/*"]
     },
     "preserveValueImports": false,
-    "importsNotUsedAsValues": "remove",
+    "importsNotUsedAsValues": "remove"
   },
   "include": ["typings/**/*", "src/**/*"],
   "references": [
