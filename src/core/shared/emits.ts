@@ -5,6 +5,7 @@ export const canvasEmits = {
   change: (_id: number, _options: Partial<IElement>) => true,
   paste: (_id: number) => true,
   delete: (_id: number) => true,
+  click: (_ev: MouseEvent) => true,
 };
 
 export type CanvasEmits = typeof canvasEmits;

@@ -1,8 +1,9 @@
 import { BeautifyAPI, SlideAPI } from '@/api';
 import { ISlide } from '@/core';
-import { ElButton, ElMessage, ElScrollbar } from 'element-plus';
+import { ElMessage, ElScrollbar, ElIcon, ElPopover } from 'element-plus';
+import { MagicStick } from '@element-plus/icons-vue';
 import { defineComponent, ref } from 'vue';
-import PithyCanvas from '@/core/components/canvas';
+import { PreziCanvas } from '@/core';
 import { usePreziStore } from '@/stores/prezi';
 import './index.scss';
 
@@ -67,20 +68,51 @@ export default defineComponent({
 
       this.preziStore.previewSlide = previewSlide;
     },
+    handleCancel() {
+      this.preziStore.previewSlide = undefined;
+    },
+    handleSave() {
+      // 暂时不知道怎么处理多出的元素
+    },
+    renderTrigger() {
+      return (
+        <span class="box-trigger" onClick={this.handleListTemplate}>
+          智能美化&nbsp;&nbsp;
+          <ElIcon>
+            <MagicStick />
+          </ElIcon>
+        </span>
+      );
+    },
   },
   render() {
     return (
       <div class="pithy-beautify-box">
-        <ElButton onClick={this.handleListTemplate}>AI-TO</ElButton>
-        <ElScrollbar>
-          <div class="pithy-templates">
-            {this.slides.map(({ data, relations }) => (
-              <div onClick={() => this.handleBeautify(data, relations)}>
-                <PithyCanvas width={160} height={90} slide={data} readonly />
-              </div>
-            ))}
-          </div>
-        </ElScrollbar>
+        <ElPopover
+          width="100%"
+          onAfter-leave={this.handleCancel}
+          trigger="click"
+          teleported={false}
+          v-slots={{ reference: () => this.renderTrigger() }}
+        >
+          <ElScrollbar>
+            <div class="box-template-list">
+              {this.slides.map(({ data, relations }) => (
+                <div
+                  class="box-template-item"
+                  onMouseenter={() => this.handleBeautify(data, relations)}
+                >
+                  <PreziCanvas width={160} height={90} slide={data} withMask />
+                  <div class="box-action-layer">
+                    {/* <ElButton size="small" onClick={this.handleSave}>
+                      点击保存
+                    </ElButton> */}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </ElScrollbar>
+        </ElPopover>
       </div>
     );
   },

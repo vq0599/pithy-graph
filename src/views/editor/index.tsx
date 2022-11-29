@@ -77,17 +77,18 @@ export default defineComponent({
           <Sidebar />
           <main>
             <div class="pithy-editor-main">
-              <Canvas
-                v-show={!this.preziStore.previewSlide}
-                v-model={this.preziStore.currentElementId}
-                slide={this.preziStore.currentSlide}
-                width={width}
-                height={height}
-                onChange={this.handleChange}
-                onDelete={this.handleDelete}
-                onPaste={this.handlePaste}
-                readonly={false}
-              />
+              {!this.preziStore.previewSlide && (
+                <Canvas
+                  v-model={this.preziStore.currentElementId}
+                  slide={this.preziStore.currentSlide}
+                  width={width}
+                  height={height}
+                  onChange={this.handleChange}
+                  onDelete={this.handleDelete}
+                  onPaste={this.handlePaste}
+                  readonly={false}
+                />
+              )}
               {this.preziStore.previewSlide && (
                 <Canvas
                   key={`preview-${this.preziStore.previewSlide.id}`}

@@ -26,6 +26,10 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
+    withMask: {
+      type: Boolean,
+      default: false,
+    },
     modelValue: {
       type: Number,
       default: -1,
@@ -61,6 +65,7 @@ export default defineComponent({
           <PreziReadLayer ref="containerIns" slide={this.slide} />
         </div>
         {!this.readonly && <PreziEditLayer />}
+        {this.withMask && this.readonly && <div class="pithy-canvas-mask" />}
       </div>
     );
   },
