@@ -10,9 +10,9 @@ import { ElPopover } from 'element-plus';
 import TextMenu from '@/components/menus/text';
 import ShapeMenu from '@/components/menus/shape';
 import ImageMenu from '@/components/menus/image';
-import { globalStore } from '@/stores/global';
 import { RouterLink } from 'vue-router';
 import './index.scss';
+import { useEditorStore } from '@/stores';
 
 const EmptyMenu = () => <div>敬请期待</div>;
 
@@ -64,7 +64,12 @@ const list = [
 
 export default defineComponent({
   name: 'pithy-editor-header',
-  methods: {},
+  setup() {
+    const editorStore = useEditorStore();
+    return {
+      editorStore,
+    };
+  },
   render() {
     return (
       <header class="pithy-editor-header">
@@ -78,7 +83,7 @@ export default defineComponent({
               popperClass={popperClass}
               trigger="click"
               hideAfter={0}
-              v-model:visible={globalStore.menuVisible[key]}
+              v-model:visible={this.editorStore.menuVisible[key]}
               width="auto"
               showArrow={false}
               v-slots={{

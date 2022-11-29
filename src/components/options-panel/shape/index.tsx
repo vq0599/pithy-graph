@@ -4,7 +4,7 @@ import { Edit, Share, Delete } from '@element-plus/icons-vue';
 import { IEShape, IEShapePayload } from '@/core';
 import PithyColorPicker from '@/components/color-picker';
 import { mapStores } from 'pinia';
-import { usePreziStore } from '@/stores/pinia';
+import { usePreziStore } from '@/stores/prezi';
 
 export default defineComponent({
   name: 'pithy-text-panel',

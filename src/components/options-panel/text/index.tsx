@@ -10,7 +10,7 @@ import { IEText, IETextPayload } from '@/core';
 import { Edit, Share, Delete } from '@element-plus/icons-vue';
 import PithyColorPicker from '@/components/color-picker';
 import { mapStores } from 'pinia';
-import { usePreziStore } from '@/stores/pinia';
+import { usePreziStore } from '@/stores/prezi';
 import './index.scss';
 
 export default defineComponent({

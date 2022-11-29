@@ -1,16 +1,17 @@
 import { defineComponent } from 'vue';
 import MediaLibrary from '@/components/media-library';
-import { globalStore } from '@/stores/global';
 import { IElementTypes } from '@/core';
-import { usePreziStore } from '@/stores/pinia';
+import { usePreziStore, useEditorStore } from '@/stores';
 import './index.scss';
 
 export default defineComponent({
   name: 'pithy-image-menu',
   setup() {
     const preziStore = usePreziStore();
+    const editorStore = useEditorStore();
     return {
       preziStore,
+      editorStore,
     };
   },
   methods: {
@@ -36,7 +37,7 @@ export default defineComponent({
           naturalWidth,
         },
       });
-      globalStore.closeMenu('IMAGE');
+      this.editorStore.closeMenu('IMAGE');
     },
   },
   render() {

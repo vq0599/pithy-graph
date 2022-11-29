@@ -2,7 +2,7 @@ import { defineComponent } from 'vue';
 import PithyImagePicker from '@/components/image-picker';
 import PithyColorPicker from '@/components/color-picker';
 import { MediaSelectOptions } from '@/structs';
-import { usePreziStore } from '@/stores/pinia';
+import { usePreziStore } from '@/stores/prezi';
 import { mapStores } from 'pinia';
 import './index.scss';
 

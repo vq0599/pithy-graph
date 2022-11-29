@@ -1,8 +1,7 @@
 import { defineComponent } from 'vue';
 import type { IETextPayload } from '@/core';
 import * as textCase from './case';
-import { usePreziStore } from '@/stores/pinia';
-import { globalStore } from '@/stores/global';
+import { usePreziStore, useEditorStore } from '@/stores';
 import { Palette } from '@/utils/default-style-variables';
 import './index.scss';
 
@@ -58,8 +57,10 @@ export default defineComponent({
   emits: ['select'],
   setup() {
     const preziStore = usePreziStore();
+    const editorStore = useEditorStore();
     return {
       preziStore,
+      editorStore,
     };
   },
   render() {
@@ -90,7 +91,7 @@ export default defineComponent({
           free: true,
         },
       });
-      globalStore.closeMenu('TEXT');
+      this.editorStore.closeMenu('TEXT');
     },
   },
 });

@@ -3,7 +3,7 @@ import { ElInputNumber } from 'element-plus';
 import { Edit, Share, Delete } from '@element-plus/icons-vue';
 import { IEImage, IEImagePayload } from '@/core';
 import { mapStores } from 'pinia';
-import { usePreziStore } from '@/stores/pinia';
+import { usePreziStore } from '@/stores/prezi';
 
 export default defineComponent({
   name: 'pithy-image-panel',

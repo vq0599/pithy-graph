@@ -3,9 +3,8 @@ import DiamondShape from '@/core/elements/shape/diamond';
 import EllipseShape from '@/core/elements/shape/ellipse';
 import RectangleShape from '@/core/elements/shape/rectangle';
 import TriangleShape from '@/core/elements/shape/triangle';
-import { globalStore } from '@/stores/global';
 import { IEShapePayload } from '@/core';
-import { usePreziStore } from '@/stores/pinia';
+import { usePreziStore, useEditorStore } from '@/stores';
 import { Palette } from '@/utils/default-style-variables';
 import './index.scss';
 
@@ -50,8 +49,10 @@ export default defineComponent({
   name: 'pithy-shape-menu',
   setup() {
     const preziStore = usePreziStore();
+    const editorStore = useEditorStore();
     return {
       preziStore,
+      editorStore,
     };
   },
   methods: {
@@ -63,7 +64,7 @@ export default defineComponent({
         height: 200,
         payload,
       });
-      globalStore.closeMenu('SHAPE');
+      this.editorStore.closeMenu('SHAPE');
     },
   },
   render() {

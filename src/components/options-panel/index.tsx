@@ -7,7 +7,7 @@ import ImagePanel from './image';
 import CommonPanel from './common';
 import { IElementTypes } from '@/core';
 import { mapStores } from 'pinia';
-import { usePreziStore } from '@/stores/pinia';
+import { usePreziStore } from '@/stores/prezi';
 import './index.scss';
 
 export default defineComponent({

@@ -13,9 +13,9 @@ import {
 } from 'element-plus';
 import { MediaSelectOptions } from '@/structs';
 import { http } from '@/api/http';
-import { globalStore } from '@/stores/global';
 import { Upload } from '@element-plus/icons-vue';
 import './index.scss';
+import { useEditorStore } from '@/stores';
 
 export default defineComponent({
   props: {
@@ -37,9 +37,11 @@ export default defineComponent({
     },
   },
   setup() {
+    const editorStore = useEditorStore();
     return {
       progress: ref(-1),
       key: 'images' as 'image' | 'video',
+      editorStore,
     };
   },
   // 2023年了都不知道还在纠结运行时验证干啥
@@ -60,10 +62,10 @@ export default defineComponent({
       },
     },
     images() {
-      return globalStore.images;
+      return this.editorStore.images;
     },
     videos() {
-      return globalStore.videos;
+      return this.editorStore.videos;
     },
   },
   methods: {
@@ -101,7 +103,7 @@ export default defineComponent({
       }
     },
     handleUploadSuccess(url: string) {
-      globalStore[`${this.key}s`].unshift(url);
+      this.editorStore[`${this.key}s`].unshift(url);
       setTimeout(() => {
         this.progress = -1;
       }, 1000);

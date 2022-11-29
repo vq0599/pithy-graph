@@ -1,15 +1,15 @@
-import { defineComponent, ref } from 'vue';
+import { defineComponent, onMounted, onUnmounted, ref } from 'vue';
 import Canvas from '@/core/components/canvas';
 import Sidebar from '@/components/sidebar';
 import Header from '@/components/header';
 import SlideMenu from '@/components/options-panel';
-import { canvasStore } from '@/stores/canvas';
 import { decode } from '@/utils/encryption';
-import { globalStore } from '@/stores/global';
 import PithyTemplates from '@/components/template';
 import { useRoute } from 'vue-router';
 import { IElement } from '@/core';
-import { usePreziStore } from '@/stores/pinia';
+import { useEditorStore, usePreziStore } from '@/stores';
+import { calcCanvasRect } from '@/utils/tool';
+
 import './index.scss';
 
 export default defineComponent({
@@ -19,30 +19,43 @@ export default defineComponent({
     };
     const { params, hash } = useRoute();
     const preziStore = usePreziStore();
+    const editorStore = useEditorStore();
+    const width = ref(0);
+    const height = ref(0);
+    const setRect = () => {
+      const containerWidth = window.innerWidth - 220 - 12 * 2 - 240;
+      const containerHeight = window.innerHeight - 60 - 12 * 2;
+      const rect = calcCanvasRect(containerWidth, containerHeight);
+      width.value = rect.width;
+      height.value = rect.height;
+    };
+    setRect();
+    onMounted(() => {
+      window.addEventListener('resize', setRect);
+    });
+    onUnmounted(() => {
+      window.removeEventListener('resize', setRect);
+    });
     return {
       current: ref(-1),
       slideId: hashToId(hash),
       workspaceId: +params.id,
       preziStore,
+      editorStore,
+      width,
+      height,
     };
   },
   mounted() {
     this.initialize();
-    window.addEventListener('resize', this.setRect);
-  },
-  unmounted() {
-    window.removeEventListener('resize', this.setRect);
   },
   methods: {
     async initialize() {
       const { workspaceId, slideId } = this;
       // hash记录着默认的打开的slide
       await this.preziStore.initialize(workspaceId, slideId);
-      globalStore.fetchImages();
-      globalStore.fetchVideos();
-    },
-    setRect() {
-      canvasStore.calcRect();
+      this.editorStore.fetchImages();
+      this.editorStore.fetchVideos();
     },
     handleChange(id: number, changes: Partial<IElement>) {
       this.preziStore.updateElement(id, changes);
@@ -56,7 +69,7 @@ export default defineComponent({
   },
   render() {
     if (!this.preziStore.currentSlide) return null;
-    const { width, height } = canvasStore;
+    const { width, height } = this;
     return (
       <div class="pithy-editor-page">
         <Header />

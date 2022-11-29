@@ -2,7 +2,7 @@ import PithyCanvas from '@/core/components/canvas';
 import { ElMessage, ElIcon } from 'element-plus';
 import { defineComponent } from 'vue';
 import { Delete, CopyDocument } from '@element-plus/icons-vue';
-import { usePreziStore } from '@/stores/pinia';
+import { usePreziStore } from '@/stores/prezi';
 import './index.scss';
 
 export default defineComponent({

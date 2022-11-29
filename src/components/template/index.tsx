@@ -3,7 +3,7 @@ import { ISlide } from '@/core';
 import { ElButton, ElMessage, ElScrollbar } from 'element-plus';
 import { defineComponent, ref } from 'vue';
 import PithyCanvas from '@/core/components/canvas';
-import { usePreziStore } from '@/stores/pinia';
+import { usePreziStore } from '@/stores/prezi';
 import './index.scss';
 
 export default defineComponent({

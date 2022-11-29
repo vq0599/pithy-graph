@@ -4,7 +4,7 @@ import { Edit, Share, Delete } from '@element-plus/icons-vue';
 import { ElInputNumber } from 'element-plus';
 import { IElement } from '@/core';
 import { mapStores } from 'pinia';
-import { usePreziStore, ZIndexOptions } from '@/stores/pinia';
+import { usePreziStore, ZIndexOptions } from '@/stores/prezi';
 
 const list = [
   { label: '最上', value: ZIndexOptions.highest },

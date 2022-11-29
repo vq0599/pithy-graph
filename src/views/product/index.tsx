@@ -3,30 +3,8 @@ import { WorkspaceAPI } from '@/api';
 import { defineComponent, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { ISlide, PreziCanvas } from '@/core';
+import { calcCanvasRect } from '@/utils/tool';
 import './index.scss';
-
-const calcRect = () => {
-  const maxWidth = 1920;
-  const maxHeight = 1080;
-  const canvasRatio = 16 / 9;
-  const containerWidth = window.innerWidth;
-  const containerHeight = window.innerHeight - 50;
-
-  let width, height;
-  // 4K屏幕，需要考虑最大值不能对于maxWidth * maxHeight
-  if (containerWidth >= maxWidth && containerHeight >= maxHeight) {
-    width = maxWidth;
-    height = maxHeight;
-  } else if (containerWidth / maxWidth < containerHeight / maxHeight) {
-    width = containerWidth;
-    height = containerWidth / canvasRatio;
-  } else {
-    width = containerHeight * canvasRatio;
-    height = containerHeight;
-  }
-
-  return { height, width };
-};
 
 export default defineComponent({
   name: 'pithy-product-page',
@@ -34,24 +12,26 @@ export default defineComponent({
     const root = ref<HTMLDivElement>();
     const { params } = useRoute();
     const slides = ref<ISlide[]>([]);
-    const rect = calcRect();
-    const width = ref(rect.width);
-    const height = ref(rect.height);
+    const width = ref(0);
+    const height = ref(0);
     const current = ref(0);
     const offsetX = ref(0);
     const moving = ref(false);
     let flag = false;
 
-    const handleCalcRect = () => {
-      const rect = calcRect();
+    const handleResize = () => {
+      const containerWidth = window.innerWidth;
+      const containerHeight = window.innerHeight - 50;
+      const rect = calcCanvasRect(containerWidth, containerHeight);
       width.value = rect.width;
       height.value = rect.height;
     };
+    handleResize();
 
     onMounted(async () => {
       const { data } = await WorkspaceAPI.getOne(+params.id);
       slides.value = data.slides;
-      window.addEventListener('resize', handleCalcRect);
+      window.addEventListener('resize', handleResize);
       document.addEventListener('keydown', (ev: KeyboardEvent) => {
         if (ev.code === 'F5') {
           if (root.value && !document.fullscreenElement) {
@@ -146,14 +126,6 @@ export default defineComponent({
                 />
               ))}
             </div>
-
-            {/* <PithyCanvas
-              key={current}
-              width={width}
-              height={height}
-              slide={slides[current]}
-              readonly
-            /> */}
           </div>
         </div>
         <div class="product-controller">
