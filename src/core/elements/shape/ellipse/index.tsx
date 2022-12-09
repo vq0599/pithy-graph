@@ -25,14 +25,6 @@ export default defineComponent({
   },
   render() {
     const { width, height, fill, strokeWidth, stroke } = this;
-    // const half = strokeWidth / 2;
-    // const points = [
-    //   `${strokeWidth},${strokeWidth}`,
-    //   `${width - strokeWidth},${strokeWidth}`,
-    //   `${width - strokeWidth},${height - strokeWidth}`,
-    //   `${strokeWidth},${height - strokeWidth}`,
-    // ];
-
     return (
       <svg
         width={width}
@@ -45,7 +37,12 @@ export default defineComponent({
         stroke={stroke}
       >
         <g class="clickable">
-          <ellipse cx={width / 2} cy={ height / 2 } rx={ width / 2 - strokeWidth / 2 } ry={ height / 2 - strokeWidth / 2 }></ellipse>
+          <ellipse
+            cx={width / 2}
+            cy={height / 2}
+            rx={width / 2 - strokeWidth / 2}
+            ry={height / 2 - strokeWidth / 2}
+          ></ellipse>
         </g>
       </svg>
     );

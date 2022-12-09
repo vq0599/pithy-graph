@@ -4,7 +4,9 @@ export type IEShapeAppearance =
   | 'diamond'
   | 'ellipse'
   | 'rectangle'
-  | 'triangle';
+  | 'triangle'
+  | 'line'
+  | 'arrow';
 
 export interface IEShapePayload {
   /**
@@ -27,6 +29,10 @@ export interface IEShapePayload {
    * 圆角，有效范围0-50（单位：%）
    */
   radius: number;
+  /**
+   * 是否是双箭头
+   */
+  double: boolean;
 }
 
 export type IEShape = IElement<'SHAPE', IEShapePayload>;

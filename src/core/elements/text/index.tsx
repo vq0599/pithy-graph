@@ -46,7 +46,7 @@ export default defineComponent({
   },
   render() {
     return (
-      <div style={this.styles} class="pithy-element-text">
+      <div style={this.styles} class="pithy-element-text" ref="root">
         {this.showPlaceholder && (
           <div class="text-placeholder">
             <p>Add Text</p>

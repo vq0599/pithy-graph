@@ -4,6 +4,8 @@ import DiamondShape from './diamond';
 import EllipseShape from './ellipse';
 import RectangleShape from './rectangle';
 import TriangleShape from './triangle';
+import LineShape from './line';
+import ArrowShape from './arrow';
 import './index.scss';
 
 export default defineComponent({
@@ -16,7 +18,7 @@ export default defineComponent({
   },
   methods: {
     renderShape() {
-      const { payload, width, height } = this.data;
+      const { payload, width, height, id } = this.data;
       switch (payload.appearance) {
         case 'diamond':
           return <DiamondShape width={width} height={height} {...payload} />;
@@ -26,6 +28,10 @@ export default defineComponent({
           return <RectangleShape width={width} height={height} {...payload} />;
         case 'triangle':
           return <TriangleShape width={width} height={height} {...payload} />;
+        case 'line':
+          return <LineShape width={width} elId={id} {...payload} />;
+        case 'arrow':
+          return <ArrowShape width={width} markerId={id} {...payload} />;
         default:
           return null;
       }

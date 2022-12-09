@@ -3,15 +3,12 @@ import { CSSProperties, defineComponent } from 'vue';
 import { useEditLayerInject, useInject } from '@/core/store';
 import { useResize } from '@/core/hooks/resize';
 import { useEvent } from '@/core/hooks/event';
+import { getResizeDirections } from './resize-direction';
 import './index.scss';
 
 /**
  * 如果不是需要全部的拖拽按钮，就定义出来
  */
-const controllerDisplayRecord: Record<string, string[]> = {
-  TEXT: ['left', 'right'],
-  VIDEO: ['top-left', 'top-right', 'bottom-left', 'bottom-right'],
-};
 
 export default defineComponent({
   setup() {
@@ -73,11 +70,10 @@ export default defineComponent({
     },
     renderActionDots() {
       if (!this.current || this.moving) return;
-      const { type } = this.current;
       // 如果拖拽中，则只显示在拖拽的按钮
       const filters = this.resizing
         ? [this.resizing]
-        : controllerDisplayRecord[type];
+        : getResizeDirections(this.current);
 
       const controllers = [
         <i

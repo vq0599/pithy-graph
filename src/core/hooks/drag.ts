@@ -60,6 +60,9 @@ export const useDrag = (el: Ref<HTMLElement | undefined>) => {
       originY + ty / scale.value
     );
 
+    // console.log('输入', { x, y });
+    console.log('输出', { x, y });
+
     setDragData(vLines, hLines, aligned);
     emitChange(current.value!.id, { x, y });
     return true;

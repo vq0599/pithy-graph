@@ -99,7 +99,6 @@ export default defineComponent({
                 />
               )}
             </div>
-            <hr />
             <PithyTemplates />
           </main>
           <SlideMenu />

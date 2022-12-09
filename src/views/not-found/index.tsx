@@ -1,55 +1,146 @@
 import { defineComponent } from 'vue';
+import './index.scss';
 
 export default defineComponent({
   name: 'not-found',
   data() {
     return {
-      arrowHeight: 8,
-      arrowWidth: 8,
-      width: 200,
-      height: 20,
+      // arrowHeight: 8,
+      width: 400,
+      strokeWidth: 8,
+      // width: 200,
+      // height: 20,
     };
+  },
+  mounted() {
+    // const a = document.getElementById('keke');
+    // console.dir(a);
+    // console.log(a?.clientWidth, a?.clientHeight);
+  },
+
+  methods: {
+    renderArrow() {
+      const markerWidth = 5;
+      const markerHeight = 6;
+      const lineLength = this.width - markerWidth * this.strokeWidth;
+      const height = markerHeight * this.strokeWidth;
+      const { width } = this;
+      return (
+        <svg
+          width={`${width}`}
+          height={`${height}`}
+          version="2.0"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox={`0 0 ${width} ${height}`}
+        >
+          <g>
+            <defs>
+              <marker
+                id="triangle"
+                refX="0"
+                refY={markerHeight / 2}
+                // 这个的height/width会实际渲染会乘以line的stroke-width
+                markerWidth={markerWidth}
+                markerHeight={markerHeight}
+                stroke="none"
+                // origin="auto"
+                orient="auto-start-reverse"
+                fill="green"
+              >
+                <path
+                  d={`M 0,0 L 0,${markerHeight} L ${markerWidth},${
+                    markerHeight / 2
+                  } z`}
+                ></path>
+              </marker>
+            </defs>
+            <line
+              x1="0"
+              y1={height / 2}
+              x2={lineLength}
+              y2={height / 2}
+              marker-end="url(#triangle)"
+              // marker-start="url(#triangle)"
+              stroke-width={this.strokeWidth}
+              stroke="red"
+            ></line>
+          </g>
+        </svg>
+      );
+    },
+    renderDoubleArrow() {
+      const markerWidth = 5;
+      const markerHeight = 6;
+      const arrowWidth = markerWidth * this.strokeWidth;
+      const lineLength = this.width - arrowWidth;
+      const height = markerHeight * this.strokeWidth;
+      const { width } = this;
+      return (
+        <svg
+          width={`${width}`}
+          height={`${height}`}
+          version="2.0"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox={`0 0 ${width} ${height}`}
+        >
+          <g>
+            <defs>
+              <marker
+                id="triangle"
+                refX="0"
+                refY={markerHeight / 2}
+                // 这个的height/width会实际渲染会乘以line的stroke-width
+                markerWidth={markerWidth}
+                markerHeight={markerHeight}
+                stroke="none"
+                // origin="auto"
+                orient="auto-start-reverse"
+                fill="green"
+              >
+                <path
+                  d={`M 0,0 L 0,${markerHeight} L ${markerWidth},${
+                    markerHeight / 2
+                  } z`}
+                ></path>
+              </marker>
+            </defs>
+            <line
+              x1={arrowWidth}
+              y1={height / 2}
+              x2={lineLength}
+              y2={height / 2}
+              marker-end="url(#triangle)"
+              marker-start="url(#triangle)"
+              stroke-width={this.strokeWidth}
+              stroke="red"
+            ></line>
+          </g>
+        </svg>
+      );
+    },
   },
   render() {
     return (
-      <div>
+      <div class="keke-container">
+        {this.renderArrow()}
+        <hr />
+        {this.renderDoubleArrow()}
+        <hr />
         <svg
-          width="400px"
-          height="8px"
+          width="600"
+          height="50"
+          viewBox="0 0 600 50"
           version="2.0"
           xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 400 8"
-          // class="shape-block-svg"
-          style="overflow: visible; stroke: rgb(21, 21, 21);"
         >
-          <g>
-            <g>
-              <defs>
-                <marker
-                  id="0b7eab73-0227-497a-9a3b-b5d3d8e98065"
-                  // class="fill-with-stroke-color"
-                  refX="0.03"
-                  refY="3"
-                  markerWidth="5"
-                  markerHeight="6"
-                  orient="auto-start-reverse"
-                  style="stroke: none; fill: rgb(21, 21, 21);"
-                >
-                  <path d="M 0 0 L 5 3 L 0 6 z"></path>
-                </marker>
-              </defs>
-              <line
-                x1="360.00799760079974"
-                y1="4"
-                x2="0"
-                y2="4"
-                marker-start="url(#0b7eab73-0227-497a-9a3b-b5d3d8e98065)"
-                // class="fill-with-stroke-color"
-                // style="stroke-width: 8;"
-                stroke-width={8}
-              ></line>
-            </g>
-          </g>
+          <line
+            x1="0"
+            y1="10"
+            x2="600"
+            y2="10"
+            stroke-width="20"
+            stroke="rgba(191,22,122,1)"
+          ></line>
         </svg>
       </div>
     );

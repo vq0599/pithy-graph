@@ -47,7 +47,6 @@ export default defineComponent({
             width={width - strokeWidth}
             height={height - strokeWidth}
             rx={`${radius}%`}
-
           ></rect>
         </g>
       </svg>

@@ -1,7 +1,8 @@
-import { onMounted, ref, computed, watch } from 'vue';
-import { IElement, IEText } from '@/core/types';
+import { onMounted, ref, computed } from 'vue';
+import { IEText } from '@/core/types';
 import { draggable } from '@/core/utils/draggable';
 import { useInject } from '../store';
+import { useRecordRect } from './record-rect';
 
 const defaultText = '<p><br></p>';
 
@@ -37,29 +38,16 @@ export const useText = (data: IEText) => {
     }
   };
 
-  // 监听可能引起宽高变化的属性
-  watch(
-    () => [
-      data.payload.content,
-      data.payload.fontSize,
-      data.payload.bold,
-      data.payload.letterSpacing,
-      data.payload.italic,
-      data.payload.lineSpacing,
-      data.payload.paragraphSpacing,
-    ],
-    () => {
-      const { offsetWidth: width, offsetHeight: height } = editor.value!;
-      const changes: Partial<Pick<IElement, 'width' | 'height'>> = { height };
-      if (data.payload.free) {
-        changes.width = width;
-      }
-      emitChange(data.id, changes);
-    },
-    {
-      flush: 'post',
-    }
-  );
+  // 监听可能引起宽高变化的属性，同步宽高
+  useRecordRect(data.id, () => [
+    data.payload.content,
+    data.payload.fontSize,
+    data.payload.bold,
+    data.payload.letterSpacing,
+    data.payload.italic,
+    data.payload.lineSpacing,
+    data.payload.paragraphSpacing,
+  ]);
 
   const onDrag = () => {
     if (editable.value) {

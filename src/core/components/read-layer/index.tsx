@@ -1,15 +1,8 @@
-import {
-  CSSProperties,
-  defineComponent,
-  onMounted,
-  onUnmounted,
-  PropType,
-  ref,
-} from 'vue';
+import { CSSProperties, defineComponent, PropType } from 'vue';
 import PithyElement from '@/core/elements';
 import { ISlide } from '@/core/types';
-import { useInject } from '@/core/store';
 import './index.scss';
+import { useBackgroundHandle } from '@/core/hooks';
 
 export default defineComponent({
   inheritAttrs: true,
@@ -21,19 +14,7 @@ export default defineComponent({
     },
   },
   setup() {
-    const { emitSelect } = useInject();
-    const container = ref<HTMLElement>();
-    const callback = (ev: MouseEvent) => {
-      if (ev.target === container.value) {
-        emitSelect(0);
-      }
-    };
-    onMounted(() => {
-      container.value?.addEventListener('click', callback);
-    });
-    onUnmounted(() => {
-      container.value?.removeEventListener('click', callback);
-    });
+    return useBackgroundHandle();
   },
   computed: {
     bgStyle(): CSSProperties {
@@ -54,7 +35,7 @@ export default defineComponent({
   },
   render() {
     return (
-      <div ref="container" class="pithy-read-layer" style={this.bgStyle}>
+      <div ref="root" class="pithy-read-layer" style={this.bgStyle}>
         {this.slide.elements.map((el) => (
           <PithyElement
             data={el}

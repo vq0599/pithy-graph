@@ -1,5 +1,5 @@
 import { defineComponent } from 'vue';
-import { ElSlider, ElInputNumber } from 'element-plus';
+import { ElInputNumber } from 'element-plus';
 import { Edit, Share, Delete } from '@element-plus/icons-vue';
 import { IEShape, IEShapePayload } from '@/core';
 import PithyColorPicker from '@/components/color-picker';
@@ -44,11 +44,12 @@ export default defineComponent({
         </div>
         <div class="panel-form">
           <span>边框长度</span>
-          <ElSlider
+          <ElInputNumber
             min={0}
-            max={30}
+            max={100}
+            size="small"
             modelValue={this.payload.strokeWidth}
-            onInput={(val) =>
+            onChange={(val) =>
               this.handleUpdatePayload({ strokeWidth: val as number })
             }
           />

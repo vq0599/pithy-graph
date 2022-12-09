@@ -122,6 +122,7 @@ export const useResize = () => {
       }
     }
 
+    console.log('resize', id, changes);
     emitChange(id, changes);
     if (type === 'TEXT' && payload.free) {
       emitChange(id, { payload: { free: false } });

@@ -68,7 +68,7 @@ const getRealOffsetRect = (el: HTMLElement, ev: MouseEvent) => {
   const { left, top } = el.getBoundingClientRect();
   const x = ev.pageX - left;
   const y = ev.pageY - top;
-  return [x, y];
+  return [Math.round(x), Math.round(y)];
 };
 
 /**
@@ -122,10 +122,7 @@ export function draggable<T, U>(
     const tx = screenX - initialX;
     const ty = screenY - initialY;
 
-    const { left, top } = el.getBoundingClientRect();
-    const offsetX = ev.pageX - left;
-    const offsetY = ev.pageY - top;
-
+    const [offsetX, offsetY] = getRealOffsetRect(el, ev);
     draggableData = { dx, dy, tx, ty, offsetX, offsetY };
     payload = options.onDrag(ev, draggableData, truck);
   }
