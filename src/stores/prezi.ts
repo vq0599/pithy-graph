@@ -17,11 +17,14 @@ export const usePreziStore = defineStore('prezi', {
   state: () => ({
     data: {} as IWorkspace,
     currentSlideId: 0,
-    currentElementId: 0,
+    currentElementId: -1,
     dirty: {} as DeepPartial<IElement>,
-    previewSlide: undefined as ISlide | undefined,
+    // previewSlide: undefined as ISlide | undefined,
   }),
   getters: {
+    title(): string {
+      return this.data.title;
+    },
     slides(state) {
       return state.data.slides || [];
     },
@@ -173,6 +176,10 @@ export const usePreziStore = defineStore('prezi', {
       }
 
       ElementAPI.bulkUpdate(params);
+    },
+    setTitle(title: string) {
+      this.data.title = title;
+      WorkspaceAPI.update(this.data.id, { title });
     },
   },
 });

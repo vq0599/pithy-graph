@@ -17,6 +17,10 @@ export interface IEImagePayload {
    * 圆角，有效范围0-50（单位：%）
    */
   radius: number;
+  /**
+   * 滤镜
+   */
+  filter: string;
 }
 
 export type IEImage = IElement<'IMAGE', IEImagePayload>;

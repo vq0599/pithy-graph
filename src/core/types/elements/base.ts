@@ -1,4 +1,33 @@
-export type IElementTypes = 'TEXT' | 'IMAGE' | 'SHAPE' | 'VIDEO';
+export type IElementTypes = 'TEXT' | 'IMAGE' | 'SHAPE' | 'AVATAR';
+
+/**
+ * 元素动画
+ */
+export interface IElementAnimation {
+  /**
+   * 动画类型
+   */
+  type: string;
+  /**
+   * 持续时间（秒）
+   */
+  duration: number;
+  /**
+   * 延迟执行（秒）
+   */
+  delay: number;
+}
+
+export interface IElementShadow {
+  /**
+   * 投影类型
+   */
+  type: string;
+  /**
+   * 投影数值（0-100）
+   */
+  value: number;
+}
 
 export interface IElement<
   T extends IElementTypes = any,
@@ -29,9 +58,25 @@ export interface IElement<
    */
   y: number;
   /**
+   * 投影
+   */
+  shadow: IElementShadow;
+  /**
+   * 入场动画
+   */
+  enterAnimation: IElementAnimation | null;
+  /**
+   * 出场动画
+   */
+  leaveAnimation: IElementAnimation | null;
+  /**
+   * 透明度（0-100）
+   */
+  alpha: number;
+  /**
    * 旋转角度
    */
-  rotate?: number;
+  rotate: number;
   /**
    * 层级，默认为添加顺序
    */

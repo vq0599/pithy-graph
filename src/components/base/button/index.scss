@@ -1,0 +1,44 @@
+.jx-btn {
+  font-size: 13px;
+  padding: 0 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+  border: 0;
+  border-radius: 4px;
+  height: 32px;
+  transition: all .15s;
+  position: relative;
+  svg {
+    width: 1em;
+    height: 1em;
+  }
+  &:hover {
+    opacity: .9;
+  }
+  &-primary {
+    background: var(--blue-primary);
+    color: #FFF;
+  }
+  &-secondary {
+    background: var(--blue-secondary);
+    color: var(--blue-primary);
+  }
+  &-action {
+    background: var(--form-bg-color);
+    border: 1px solid var(--form-bg-color);
+    &.jx-btn-active {
+      border-color: var(--blue-primary);
+      background-color: #FFF;
+    }
+    &:hover {
+      box-shadow: #505dfb80 0px 0px 3px 1px;
+    }
+    .action-icon {
+      position: absolute;
+      right: 10px;
+    }
+  }
+}

@@ -8,7 +8,7 @@ export interface IETextPayload {
    */
   content: string;
   /**
-   * 文字级别
+   * 文字级别（标记用，无实际意义）
    */
   level: IETextLevel;
   /**
@@ -46,7 +46,7 @@ export interface IETextPayload {
   /**
    * 段落间距
    */
-  paragraphSpacing: number;
+  // paragraphSpacing: number;
   /**
    * 自适应宽高（不适用width和height）
    */

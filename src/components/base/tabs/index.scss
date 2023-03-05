@@ -1,0 +1,9 @@
+
+.jx-tabs {
+  &-aside {
+    padding: 24px 16px;
+    & > ul {
+      // @extend .event-enable;
+    }
+  }
+}

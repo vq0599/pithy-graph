@@ -1,82 +1,80 @@
-import { defineComponent } from 'vue';
-import TextIcon from '@/assets/icons/text.svg?component';
-import PicIcon from '@/assets/icons/picture.svg?component';
-import ShapeIcon from '@/assets/icons/shape.svg?component';
-import GraphIcon from '@/assets/icons/graph.svg?component';
-import TableIcon from '@/assets/icons/table.svg?component';
-import VideoIcon from '@/assets/icons/video.svg?component';
-import RecordIcon from '@/assets/icons/record.svg?component';
-import { ElPopover } from 'element-plus';
-import TextMenu from '@/components/menus/text';
-import ShapeMenu from '@/components/menus/shape';
-import ImageMenu from '@/components/menus/image';
+import { defineComponent, ref } from 'vue';
+import { ElPopover, ElIcon, ElPopper } from 'element-plus';
+import { ArrowLeft, ArrowDown } from '@element-plus/icons-vue';
+// import TextMenu from '@/components/menus/text';
+// import ShapeMenu from '@/components/menus/shape';
+// import ImageMenu from '@/components/menus/image';
 import { RouterLink } from 'vue-router';
+import IconPlay from '@/assets/svg/play.svg?component';
+import { useEditorStore, usePreziStore } from '@/stores';
+import JXIconButton from '@/components/base/icon-button';
+import JXButton from '@/components/base/button';
+import HeaderMenu from './menu';
 import './index.scss';
-import { useEditorStore } from '@/stores';
-
-const EmptyMenu = () => <div>敬请期待</div>;
-
-const list = [
-  {
-    key: 'TEXT',
-    label: '文字',
-    Icon: TextIcon,
-    Menu: TextMenu,
-  },
-  {
-    key: 'IMAGE',
-    label: '图片',
-    Icon: PicIcon,
-    Menu: ImageMenu,
-    popperClass: 'px-0',
-  },
-  {
-    key: 'SHAPE',
-    label: '图形',
-    Icon: ShapeIcon,
-    Menu: ShapeMenu,
-  },
-  {
-    key: 'GRAPH',
-    label: '图表',
-    Icon: GraphIcon,
-    Menu: EmptyMenu,
-  },
-  {
-    key: 'TABLE',
-    label: '表格',
-    Icon: TableIcon,
-    Menu: EmptyMenu,
-  },
-  {
-    key: 'VIDEO',
-    label: '视频',
-    Icon: VideoIcon,
-    Menu: EmptyMenu,
-  },
-  {
-    key: 'RECORD',
-    label: '录制',
-    Icon: RecordIcon,
-    Menu: EmptyMenu,
-  },
-];
 
 export default defineComponent({
   name: 'pithy-editor-header',
   setup() {
     const editorStore = useEditorStore();
+    const preziStore = usePreziStore();
+    const titleInputVisible = ref(false);
+    const titleInput = ref<HTMLInputElement>();
     return {
       editorStore,
+      preziStore,
+      titleInput,
+      titleInputVisible,
     };
+  },
+  methods: {
+    setTitle(ev: FocusEvent) {
+      const title = (ev.target as HTMLInputElement).value;
+      this.preziStore.setTitle(title);
+      this.titleInputVisible = false;
+    },
+    handleToEdit() {
+      this.titleInputVisible = true;
+      this.$nextTick(() => {
+        this.titleInput?.focus();
+      });
+    },
   },
   render() {
     return (
       <header class="pithy-editor-header">
-        <RouterLink class="header-logo" to="/">
-          <img src="/logo.png" alt="logo" />
-        </RouterLink>
-        <ul class="header-menu">
+        <div class="header-left">
+          <RouterLink to="/">
+            <JXIconButton size="l">
+              <ElIcon>
+                <ArrowLeft />
+              </ElIcon>
+            </JXIconButton>
+          </RouterLink>
+          <div class="header-title-editable">
+            {this.titleInputVisible && (
+              <input
+                type="text"
+                ref="titleInput"
+                onBlur={this.setTitle}
+                value={this.preziStore.title}
+              />
+            )}
+            {!this.titleInputVisible && [
+              <span class="title-plain" onClick={this.handleToEdit}>
+                {this.preziStore.title}
+              </span>,
+              <JXIconButton class="dropdown-entry" size="l">
+                <ElIcon>
+                  <ArrowDown />
+                </ElIcon>
+              </JXIconButton>,
+            ]}
+          </div>
+        </div>
+        <div class="header-menu-wrapper">
+          <HeaderMenu />
+        </div>
+        {/* <ul class="header-menu">
           {list.map(({ label, Icon, Menu, key, popperClass }) => (
             <ElPopover
               persistent={false}
@@ -98,7 +96,16 @@ export default defineComponent({
               <Menu />
             </ElPopover>
           ))}
-        </ul>
+        </ul> */}
+        <div class="header-action">
+          <JXButton type="secondary">
+            {{
+              icon: () => <IconPlay />,
+              default: () => '预览',
+            }}
+          </JXButton>
+          <JXButton>生成视频</JXButton>
+        </div>
       </header>
     );
   },

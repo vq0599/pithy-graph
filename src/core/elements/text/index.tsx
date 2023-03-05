@@ -29,7 +29,7 @@ export default defineComponent({
         color,
         letterSpacing,
         lineSpacing,
-        paragraphSpacing,
+        // paragraphSpacing,
       } = this.data.payload;
       return {
         fontSize: `${fontSize}em`,
@@ -39,7 +39,7 @@ export default defineComponent({
         textAlign: alignment,
         color,
         letterSpacing: `${letterSpacing}em`,
-        '--paragraph-spacing': `${paragraphSpacing || 0}em`,
+        // '--paragraph-spacing': `${paragraphSpacing || 0}em`,
         lineHeight: `${lineSpacing}`,
       };
     },

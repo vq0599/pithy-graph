@@ -1,72 +1,48 @@
-@import '@/styles/utils/variable';
-
 .pithy-editor-aside {
   position: relative;
   display: flex;
-  flex-basis: $sidebar-width;
+  flex-basis: var(--editor-sidebar-width);
   flex-shrink: 0;
   flex-direction: column;
-  border-right: 1px solid #E7E7E9;
+  border-right: 1px solid var(--border-color);
   .aside-slider {
-    padding: 12px;
-    overflow-y: auto;
+    padding-top: 20px;
+    padding-right: 15px;
+    overflow-y: overlay;
     flex-grow: 1;
     &-item {
+      padding: 12px 15px 12px 12px;
       display: flex;
-      margin-bottom: 20px;
+      justify-content: space-between;
+      align-items: center;
       position: relative;
       cursor: pointer;
-      & > .item-indicator {
-        visibility: hidden;
-        width: 3px;
-        transform: translate(-5px);
-        background-color: #5B72DD;
-      }
-      & > span {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-basis: 30px;
-        color: #666;
+      .item-order {
+        color: var(--text-color-dark);
       }
       .item-thumbnail {
         position: relative;
+        border: 1px solid var(--border-color);
         &:hover .item-actions {
           display: flex;
         }
       }
       &.active {
-        & > i {
-          visibility: visible;
-        }
+        background-color: #ECF3FF;
         & > .item-thumbnail {
-          outline:1px solid #5B72DD;
-        }
-      }
-      .item-actions {
-        display: none;
-        position: absolute;
-        bottom: 5px;
-        left: 5px;
-        i {
-          &:nth-child(n+2) {
-            margin-left: 10px;
-          }
-          border-radius: 2px;
-          color: #FFF;
-          padding: 2px;
-          background-color: rgba($color: #1a1a1a, $alpha: .4);
+          border-color: #5A72DD;
         }
       }
     }
   }
 
   .aside-btn {
-    flex-basis: 42px;
+    flex-basis: 50px;
     flex-shrink: 0;
     outline: 0;
     border: 0;
-    border-top: 1px solid $border-color;
+    border-top: 1px solid var(--border-color);
+    color: var(--blue-primary);
     cursor: pointer;
     background: #FFFFFF;
   }

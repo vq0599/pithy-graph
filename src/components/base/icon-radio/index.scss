@@ -1,0 +1,26 @@
+.jx-icon-radio {
+  position: relative;
+  display: flex;
+  background: var(--form-bg-color);
+  border-radius: 6px;
+  transition: all .15s;
+  padding: 6px;
+  & > li {
+    width: 20px;
+    height: 20px;
+    color: #606060;
+    cursor: pointer;
+    border-radius: 2px;
+    &:hover {
+      background-color: var(--blur-hover);
+    }
+    &.active {
+      background-color: var(--blue-active);
+      color: var(--blue-primary);
+    }
+    svg {
+      width: 14px;
+      height: 14px;
+    }
+  }
+}

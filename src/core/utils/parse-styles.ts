@@ -20,7 +20,7 @@ export const parseStyles = (
     transform.push(`translate(${x! * scale}px, ${y! * scale}px)`);
   }
   if (rotate) {
-    transform.push(`rotate($rotate}deg)`);
+    transform.push(`rotate(${rotate}deg)`);
   }
   // 宽高值为0时忽略
   if (width) {

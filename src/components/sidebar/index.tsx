@@ -1,6 +1,6 @@
 import PithyCanvas from '@/core/components/canvas';
 import { ElMessage, ElIcon } from 'element-plus';
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { Delete, CopyDocument } from '@element-plus/icons-vue';
 import { usePreziStore } from '@/stores/prezi';
 import './index.scss';
@@ -9,8 +9,19 @@ export default defineComponent({
   name: 'pithy-sidebar',
   setup() {
     const preziStore = usePreziStore();
+    const menuVisible = ref(false);
+    const menuOptions = ref({
+      zIndex: 3,
+      minWidth: 200,
+      x: 500,
+      y: 200,
+    });
+
     return {
       preziStore,
+      menuVisible,
+      menuOptions,
+      menuTargetId: -1,
     };
   },
   methods: {
@@ -19,8 +30,8 @@ export default defineComponent({
       const { id } = await createSlide();
       selectSlide(id);
     },
-    handleDelete(ev: MouseEvent, id: number) {
-      ev.stopPropagation();
+    handleDelete() {
+      const id = this.menuTargetId;
       const { slides, currentSlideId, selectSlide, deleteSlide } =
         this.preziStore;
       if (slides.length > 1) {
@@ -32,11 +43,18 @@ export default defineComponent({
         ElMessage.warning('不能删除最后一页');
       }
     },
-    async handleCopy(ev: MouseEvent, id: number) {
-      ev.stopPropagation();
+    async handleCopy() {
+      const id = this.menuTargetId;
       const { copySlide, selectSlide } = this.preziStore;
       const slide = await copySlide(id);
       selectSlide(slide.id);
+    },
+    handleClick(ev: MouseEvent, id: number) {
+      ev.preventDefault();
+      this.menuOptions.x = ev.x;
+      this.menuOptions.y = ev.y;
+      this.menuVisible = true;
+      this.menuTargetId = id;
     },
   },
   render() {
@@ -51,36 +69,43 @@ export default defineComponent({
                 onClick={() => selectSlide(id)}
                 class={['aside-slider-item', { active: id === currentSlideId }]}
               >
-                <i class="item-indicator"></i>
-                <span>{index + 1}</span>
-                <div class="item-thumbnail">
-                  <PithyCanvas width={160} height={90} slide={slide} withMask />
-                  <div class="item-actions">
-                    <ElIcon
-                      size={22}
-                      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                      // @ts-ignore Element的错误
-                      onClick={(ev) => this.handleDelete(ev, id)}
-                    >
-                      <Delete />
-                    </ElIcon>
-                    <ElIcon
-                      size={22}
-                      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                      // @ts-ignore Element的错误
-                      onClick={(ev) => this.handleCopy(ev, id)}
-                    >
-                      <CopyDocument />
-                    </ElIcon>
-                  </div>
+                <span class="item-order">{index + 1}</span>
+                <div
+                  class="item-thumbnail"
+                  onContextmenu={(ev) => this.handleClick(ev, id)}
+                >
+                  <PithyCanvas width={128} height={72} slide={slide} withMask />
                 </div>
               </div>
             );
           })}
         </div>
         <button class="aside-btn" onClick={this.handleCreate}>
-          +新建幻灯片
+          + 新场景
         </button>
+        <context-menu
+          v-model:show={this.menuVisible}
+          options={this.menuOptions}
+        >
+          <context-menu-item label="删除" onClick={this.handleDelete}>
+            {{
+              icon: () => (
+                <ElIcon size={14}>
+                  <Delete />
+                </ElIcon>
+              ),
+            }}
+          </context-menu-item>
+          <context-menu-item label="复制" onClick={this.handleCopy}>
+            {{
+              icon: () => (
+                <ElIcon size={14}>
+                  <CopyDocument />
+                </ElIcon>
+              ),
+            }}
+          </context-menu-item>
+        </context-menu>
       </aside>
     );
   },

@@ -1,33 +1,16 @@
-@import '@/styles/utils/variable';
+
 
 .pithy-options-panels {
-  flex-basis: $options-panel-width;
+  flex-basis: var(--editor-menu-width);
   flex-shrink: 0;
-  border-left: 1px solid $border-color;
-  .el-tabs {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-  .el-tabs__content {
-    flex-grow: 1;
-    padding: 8px 12px;
-  }
-
-  .panel-form {
-    display: flex;
-    justify-content: space-between;
-    & > span {
-      font-weight: bold;
-    }
-    & + .panel-form {
-      margin-top: 30px;
-    }
-
-    .el-slider,
-    .el-select {
-      max-width: 120px;
-    }
+  border-left: 1px solid var(--border-color);
+  padding: 15px;
+  overflow-y: auto;
+  hr {
+    margin: 20px 0;
+    background-color: #F5F5F5;
+    height: 1px;
+    border: 0;
   }
 }
 

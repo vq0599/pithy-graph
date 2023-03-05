@@ -1,0 +1,19 @@
+.jx-select-dropdown {
+  padding: 8px 0;
+  max-height: 256px;
+  overflow: auto;
+  li {
+    line-height: 30px;
+    text-indent: 1em;
+    cursor: pointer;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    &:hover {
+      background: var(--blur-hover);
+    }
+    &.active {
+      color: var(--blue-primary);
+    }
+  }
+}

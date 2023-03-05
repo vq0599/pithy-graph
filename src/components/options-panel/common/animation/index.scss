@@ -1,0 +1,53 @@
+.jx-animation-panel {
+  .panel-subtitle {
+    margin-right: 16px;
+    border: 1px solid #F0EEEE;
+    line-height: 32px;
+    padding: 0 8px;
+    border-radius: 4px;
+    font-size: 13px;
+  }
+  .jx-btn {
+    flex-grow: 1;
+  }
+}
+
+.jx-animation-panel-box {
+  padding: 7px;
+  .box-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    li {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 80px;
+      height: 80px;
+      border: 1px solid #F0EEEE;
+      border-radius: 4px;
+      cursor: pointer;
+      &:hover {
+        background-color: var(--gary-hover);
+      }
+      &.active {
+        background-color: var(--blue-secondary);
+        border-color: var(--blue-primary);
+      }
+  
+      span {
+        text-align: center;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        width: 100%;
+        padding: 0 8px;
+        margin-top: 8px;
+        white-space: nowrap;
+        font-size: 12px;
+      }
+    }
+  }
+  .box-options {
+    margin-top: 16px;
+  }
+}

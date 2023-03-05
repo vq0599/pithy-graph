@@ -4,7 +4,6 @@ import Sidebar from '@/components/sidebar';
 import Header from '@/components/header';
 import SlideMenu from '@/components/options-panel';
 import { decode } from '@/utils/encryption';
-import PithyTemplates from '@/components/template';
 import { useRoute } from 'vue-router';
 import { IElement } from '@/core';
 import { useEditorStore, usePreziStore } from '@/stores';
@@ -54,8 +53,8 @@ export default defineComponent({
       const { workspaceId, slideId } = this;
       // hash记录着默认的打开的slide
       await this.preziStore.initialize(workspaceId, slideId);
-      this.editorStore.fetchImages();
-      this.editorStore.fetchVideos();
+      // this.editorStore.fetchImages();
+      // this.editorStore.fetchVideos();
     },
     handleChange(id: number, changes: Partial<IElement>) {
       this.preziStore.updateElement(id, changes);
@@ -73,33 +72,21 @@ export default defineComponent({
     return (
       <div class="pithy-editor-page">
         <Header />
-        <div>
+        <div onContextmenu={(ev) => ev.preventDefault()}>
           <Sidebar />
           <main>
             <div class="pithy-editor-main">
-              {!this.preziStore.previewSlide && (
-                <Canvas
-                  v-model={this.preziStore.currentElementId}
-                  slide={this.preziStore.currentSlide}
-                  width={width}
-                  height={height}
-                  onChange={this.handleChange}
-                  onDelete={this.handleDelete}
-                  onPaste={this.handlePaste}
-                  readonly={false}
-                />
-              )}
-              {this.preziStore.previewSlide && (
-                <Canvas
-                  key={`preview-${this.preziStore.previewSlide.id}`}
-                  slide={this.preziStore.previewSlide}
-                  width={width}
-                  height={height}
-                  readonly
-                />
-              )}
+              <Canvas
+                v-model={this.preziStore.currentElementId}
+                slide={this.preziStore.currentSlide}
+                width={width}
+                height={height}
+                onChange={this.handleChange}
+                onDelete={this.handleDelete}
+                onPaste={this.handlePaste}
+                readonly={false}
+              />
             </div>
-            <PithyTemplates />
           </main>
           <SlideMenu />
         </div>

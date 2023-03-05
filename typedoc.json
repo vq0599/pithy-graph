@@ -1,0 +1,8 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["./src/core/types"],
+  "basePath": "docs",
+  "skipErrorChecking": true,
+  "includeVersion": false,
+  "searchInComments": true,
+}

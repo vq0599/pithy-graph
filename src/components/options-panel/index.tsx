@@ -1,10 +1,9 @@
 import { defineComponent } from 'vue';
-import { ElTabPane, ElTabs } from 'element-plus';
 import SlidePanel from './slide';
 import TextPanel from './text';
 import ShapePanel from './shape';
 import ImagePanel from './image';
-import CommonPanel from './common';
+// import CommonPanel from './common';
 import { IElementTypes } from '@/core';
 import { mapStores } from 'pinia';
 import { usePreziStore } from '@/stores/prezi';
@@ -40,7 +39,8 @@ export default defineComponent({
     const { currentElement } = this.preziStore;
     return (
       <div class="pithy-options-panels">
-        <ElTabs stretch={true}>
+        {this.renderChildPanel()}
+        {/* <ElTabs stretch={true}>
           <ElTabPane label={this.currentName}>
             {this.renderChildPanel()}
           </ElTabPane>
@@ -49,7 +49,7 @@ export default defineComponent({
               <CommonPanel />
             </ElTabPane>
           )}
-        </ElTabs>
+        </ElTabs> */}
       </div>
     );
   },

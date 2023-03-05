@@ -9,4 +9,8 @@ export const WorkspaceAPI = {
   getOne(id: number) {
     return http.get<IWorkspace>(`/workspaces/${id}`);
   },
+
+  update(id: number, options: Pick<IWorkspace, 'title'>) {
+    return http.patch<IWorkspace>(`/workspaces/${id}`, options);
+  },
 };

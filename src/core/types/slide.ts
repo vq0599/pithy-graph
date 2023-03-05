@@ -1,9 +1,12 @@
 import { IElement } from './elements';
 
 export interface ISlide {
+  /**
+   * 帧ID
+   */
   id: number;
   /**
-   * 背景图
+   * 背景相关
    */
   background: {
     /**
@@ -11,9 +14,13 @@ export interface ISlide {
      */
     color: string;
     /**
-     * 颜色
+     * 图片
      */
     image?: string;
+    /**
+     * 视频
+     */
+    video?: string;
   };
   /**
    * 元素集合

@@ -21,13 +21,13 @@ const list: TextMenuItem[] = [
     options: textCase.H1,
   },
   {
-    label: '标题',
-    fontSize: 28,
+    label: '主标题',
+    fontSize: 24,
     options: textCase.H2,
   },
   {
     label: '副标题',
-    fontSize: 24,
+    fontSize: 18,
     options: textCase.H3,
   },
   {
@@ -41,7 +41,7 @@ const list: TextMenuItem[] = [
     options: textCase.SP,
   },
   {
-    label: '有序列表',
+    label: '列表',
     fontSize: 14,
     options: textCase.OL,
   },

@@ -6,6 +6,8 @@ import '@/styles/index.scss';
 import VueLazyLoad from 'vue-lazyload';
 import placeholder from '@/assets/placeholder.png';
 import { createPinia } from 'pinia';
+import ContextMenu from '@imengyu/vue3-context-menu';
+
 const pinia = createPinia();
 const app = createApp(App);
 
@@ -15,5 +17,6 @@ app.use(VueLazyLoad, {
   preLoad: 1,
   loading: placeholder,
 });
+app.use(ContextMenu);
 
 app.mount('#app');
