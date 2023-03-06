@@ -1,0 +1,17 @@
+.jx-avatar-menu {
+  position: relative;
+  display: flex;
+  padding: 24px 16px;
+  gap: 8px;
+  img {
+    width: 160px;
+    height: 90px;
+    border-radius: 3px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid var(--border-color-light);
+    &:hover {
+      border-color: var(--blue-primary);
+    }
+  }
+}

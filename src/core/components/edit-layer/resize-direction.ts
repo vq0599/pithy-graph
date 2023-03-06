@@ -4,7 +4,7 @@ export const getResizeDirections = (el: IElement) => {
   switch (el.type) {
     case 'TEXT':
       return ['left', 'right'];
-    case 'VIDEO':
+    case 'AVATAR':
       return ['top-left', 'top-right', 'bottom-left', 'bottom-right'];
     case 'SHAPE':
       const shapeEl = el as IEShape;

@@ -54,14 +54,14 @@ export default defineComponent({
         // scale是让子元素能缩写到当前的区域大小
         width: width + 'px',
         height: height + 'px',
-        transform: `scale(${scale})`,
+        // transform: `scale(${scale})`,
       };
     },
   },
   render() {
     return (
-      <div class="pithy-canvas">
-        <div class="pithy-scaler" style={this.styles}>
+      <div class="pithy-canvas" style={this.styles}>
+        <div class="pithy-scaler" style={{ transform: `scale(${this.scale})` }}>
           <PreziReadLayer ref="containerIns" slide={this.slide} />
         </div>
         {!this.readonly && <PreziEditLayer />}

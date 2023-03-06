@@ -1,54 +1,30 @@
 import { defineComponent } from 'vue';
-import type { IETextPayload } from '@/core';
-import * as textCase from './case';
 import { usePreziStore, useEditorStore } from '@/stores';
-import { Palette } from '@/utils/default-style-variables';
+import { ElementAPI } from '@/api';
+import { memoize, pick } from 'lodash-es';
 import './index.scss';
 
-interface TextMenuItem {
-  label: string;
-  fontSize: number;
-  /**
-   * 需要添加到元素里的属性
-   */
-  options: Partial<IETextPayload>;
-}
-
-const list: TextMenuItem[] = [
-  {
-    label: '大标题',
-    fontSize: 36,
-    options: textCase.H1,
-  },
+const library = [
   {
     label: '主标题',
-    fontSize: 24,
-    options: textCase.H2,
+    fontSize: 30,
+    sample: 4,
   },
   {
     label: '副标题',
-    fontSize: 18,
-    options: textCase.H3,
+    fontSize: 20,
+    sample: 5,
   },
   {
     label: '正文',
     fontSize: 14,
-    options: textCase.P,
+    sample: 6,
   },
   {
-    label: '小文本',
-    fontSize: 12,
-    options: textCase.SP,
-  },
-  {
-    label: '列表',
+    label: '列表项',
     fontSize: 14,
-    options: textCase.OL,
-  },
-  {
-    label: '无序列表',
-    fontSize: 14,
-    options: textCase.UL,
+    sample: 7,
+    list: true,
   },
 ];
 
@@ -63,35 +39,43 @@ export default defineComponent({
       editorStore,
     };
   },
+  methods: {
+    fetchExample: memoize(async (id: number) => {
+      const { data } = await ElementAPI.get(id);
+      return data;
+    }),
+    async handleClick(id: number) {
+      const data = await this.fetchExample(id);
+      this.preziStore.createElement('TEXT', {
+        x: 100,
+        y: 500,
+        ...pick(data, [
+          'payload',
+          'enterAnimation',
+          'leaveAnimation',
+          'shadow',
+          'width',
+          'height',
+        ]),
+      });
+      this.editorStore.closeMenu('TEXT');
+    },
+  },
   render() {
     return (
       <div class="pithy-text-menu">
         <ul>
-          {list.map(({ fontSize, options, label }) => (
+          {library.map(({ fontSize, sample, label, list }) => (
             <li
+              class={[{ 'list-sample': list }]}
               style={{ fontSize: `${fontSize}px` }}
-              onClick={() => this.handleClick(options)}
+              onClick={() => this.handleClick(sample)}
             >
-              {label}
+              <span>{label}</span>
             </li>
           ))}
         </ul>
       </div>
     );
-  },
-  methods: {
-    handleClick(options: Partial<IETextPayload>) {
-      this.preziStore.createElement('TEXT', {
-        x: 100,
-        y: 500,
-        payload: {
-          color: Palette.textColor,
-          lineSpacing: Palette.lineSpacing,
-          ...options,
-          free: true,
-        },
-      });
-      this.editorStore.closeMenu('TEXT');
-    },
   },
 });

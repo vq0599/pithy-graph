@@ -1,18 +1,18 @@
 import { IElement } from './base';
 
-enum IEAvatarDisplay {
+export enum IEAvatarDisplay {
   /**
    * 全身像
    */
-  Full,
+  Full = 'full',
   /**
    * 圆头像
    */
-  Circle,
+  Circle = 'circle',
   /**
    * 仅声音
    */
-  Voice,
+  Voice = 'voice',
 }
 
 export interface IEAvatarPayload {
@@ -32,6 +32,8 @@ export interface IEAvatarPayload {
    * 素材本身的高度
    */
   naturalHeight: number;
+
+  naturalWidth: number;
 }
 
 export type IEAvatar = IElement<'AVATAR', IEAvatarPayload>;

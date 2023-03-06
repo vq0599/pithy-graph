@@ -1,0 +1,17 @@
+.jx-user-media-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  video,
+  img {
+    width: 114px;
+    height: 64px;
+    cursor: pointer;
+    border-radius: 3px;
+    border: 1px solid var(--border-color-light);
+    object-fit: cover;
+    &:hover {
+      border-color: var(--blue-primary);
+    }
+  }
+}

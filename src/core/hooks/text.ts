@@ -46,7 +46,7 @@ export const useText = (data: IEText) => {
     data.payload.letterSpacing,
     data.payload.italic,
     data.payload.lineSpacing,
-    data.payload.paragraphSpacing,
+    // data.payload.paragraphSpacing,
   ]);
 
   const onDrag = () => {

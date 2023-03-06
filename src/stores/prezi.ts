@@ -1,5 +1,11 @@
 import { defineStore } from 'pinia';
-import { WorkspaceAPI, ElementAPI, SlideAPI } from '@/api';
+import {
+  WorkspaceAPI,
+  ElementAPI,
+  SlideAPI,
+  AIWorkspaceForm,
+  AISlideForm,
+} from '@/api';
 import { IElement, IElementTypes, ISlide } from '@/core';
 import { IWorkspace } from '@/structs';
 import { router } from '@/router';
@@ -22,6 +28,9 @@ export const usePreziStore = defineStore('prezi', {
     // previewSlide: undefined as ISlide | undefined,
   }),
   getters: {
+    workspace(): IWorkspace {
+      return this.data;
+    },
     title(): string {
       return this.data.title;
     },
@@ -77,6 +86,9 @@ export const usePreziStore = defineStore('prezi', {
     async createSlide() {
       const { data: newSlide } = await SlideAPI.create({
         workspaceId: this.data.id,
+        background: {
+          color: 'rgba(255,255,255,1)',
+        },
       });
       this.slides.push(newSlide);
       return newSlide;
@@ -92,9 +104,12 @@ export const usePreziStore = defineStore('prezi', {
       this.slides.splice(index + 1, 0, newSlide);
       return newSlide;
     },
+    updateSlide(options: AISlideForm) {
+      return SlideAPI.update(this.currentSlideId, options);
+    },
     setSlideBackground(options: Partial<ISlide['background']>) {
       const background = Object.assign(this.currentSlide!.background, options);
-      return SlideAPI.update(this.currentSlideId, { background });
+      this.updateSlide({ background });
     },
     async createElement(type: IElementTypes, options: Partial<IElement>) {
       const { data: newElement } = await ElementAPI.create(
@@ -177,9 +192,9 @@ export const usePreziStore = defineStore('prezi', {
 
       ElementAPI.bulkUpdate(params);
     },
-    setTitle(title: string) {
-      this.data.title = title;
-      WorkspaceAPI.update(this.data.id, { title });
+    updateWorkspace(options: Partial<AIWorkspaceForm>) {
+      Object.assign(this.data, options);
+      WorkspaceAPI.update(this.data.id, options);
     },
   },
 });

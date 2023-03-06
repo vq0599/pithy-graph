@@ -29,7 +29,7 @@ export default defineComponent({
   methods: {
     setTitle(ev: FocusEvent) {
       const title = (ev.target as HTMLInputElement).value;
-      this.preziStore.setTitle(title);
+      this.preziStore.updateWorkspace({ title });
       this.titleInputVisible = false;
     },
     handleToEdit() {

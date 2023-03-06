@@ -29,6 +29,7 @@
   &-action {
     background: var(--form-bg-color);
     border: 1px solid var(--form-bg-color);
+    justify-content: flex-start;
     &.jx-btn-active {
       border-color: var(--blue-primary);
       background-color: #FFF;

@@ -7,17 +7,27 @@ import IconVideo from '@/assets/svg/video.svg?component';
 import IconRecord from '@/assets/svg/record.svg?component';
 import IconMan from '@/assets/svg/man.svg?component';
 import TextMenu from '@/components/menus/text';
+import ImageMenu from '@/components/menus/image';
+import AvatarMenu from '@/components/menus/avatar';
+import { useEditorStore } from '@/stores';
 
 export default defineComponent({
   name: 'header-menu',
+  setup() {
+    const editorStore = useEditorStore();
+    return {
+      editorStore,
+    };
+  },
   render() {
+    const { menuVisible } = this.editorStore;
     return (
       <ul class="header-menu">
         <ElPopover
           showArrow={false}
           trigger="click"
+          v-model:visible={menuVisible['TEXT']}
           offset={8}
-          popperStyle={{ padding: '10px' }}
         >
           {{
             reference: () => (
@@ -29,7 +39,13 @@ export default defineComponent({
             default: () => <TextMenu />,
           }}
         </ElPopover>
-        <ElPopover>
+        <ElPopover
+          width={'auto'}
+          trigger="click"
+          v-model:visible={menuVisible['IMAGE']}
+          popperStyle={{ padding: 0 }}
+          showArrow={false}
+        >
           {{
             reference: () => (
               <li>
@@ -37,7 +53,7 @@ export default defineComponent({
                 <span>图片</span>
               </li>
             ),
-            default: () => <span>hello world</span>,
+            default: () => <ImageMenu />,
           }}
         </ElPopover>
         <li>
@@ -56,12 +72,29 @@ export default defineComponent({
             <span>录制</span>
           </li>
         </ElTooltip>
-        <ElTooltip content="敬请期待">
+        {/* <ElTooltip content="敬请期待">
           <li>
             <IconMan />
             <span>数字人</span>
           </li>
-        </ElTooltip>
+        </ElTooltip> */}
+        <ElPopover
+          width={'auto'}
+          trigger="click"
+          v-model:visible={menuVisible['AVATAR']}
+          popperStyle={{ padding: 0 }}
+          showArrow={false}
+        >
+          {{
+            reference: () => (
+              <li>
+                <IconMan />
+                <span>数字人</span>
+              </li>
+            ),
+            default: () => <AvatarMenu />,
+          }}
+        </ElPopover>
       </ul>
     );
   },

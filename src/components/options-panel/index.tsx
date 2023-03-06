@@ -3,6 +3,7 @@ import SlidePanel from './slide';
 import TextPanel from './text';
 import ShapePanel from './shape';
 import ImagePanel from './image';
+import AvatarPanel from './avatar';
 // import CommonPanel from './common';
 import { IElementTypes } from '@/core';
 import { mapStores } from 'pinia';
@@ -29,6 +30,8 @@ export default defineComponent({
           return <ImagePanel />;
         case 'SHAPE':
           return <ShapePanel />;
+        case 'AVATAR':
+          return <AvatarPanel />;
         default:
           return null;
       }
@@ -36,7 +39,7 @@ export default defineComponent({
   },
 
   render() {
-    const { currentElement } = this.preziStore;
+    // const { currentElement } = this.preziStore;
     return (
       <div class="pithy-options-panels">
         {this.renderChildPanel()}

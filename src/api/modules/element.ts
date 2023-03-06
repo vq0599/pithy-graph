@@ -2,23 +2,20 @@ import { IElement, IElementTypes } from '@/core';
 import { http } from '../http';
 
 export const ElementAPI = {
+  get(id: number) {
+    return http.get<IElement>(`/elements/${id}`);
+  },
   create(slideId: number, type: IElementTypes, options: Partial<IElement>) {
-    // if (typeof options.payload === 'object') {
-    //   options.payload = JSON.stringify(options.payload);
-    // }
-    return http.post<IElement>(`/elements`, {
+    return http.post<IElement>(`/elements/create`, {
       ...options,
-      slideId,
       type,
+      slideId,
     });
   },
   delete(id: number) {
     return http.delete(`/elements/${id}`);
   },
   update(id: number, options: Partial<IElement>) {
-    // if (typeof options.payload === 'object') {
-    //   options.payload = JSON.stringify(options.payload);
-    // }
     return http.patch(`/elements/${id}`, options);
   },
   bulkUpdate(body: Record<number, Partial<IElement>>) {

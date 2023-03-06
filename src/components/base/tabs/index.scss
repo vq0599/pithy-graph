@@ -1,9 +1,25 @@
 
 .jx-tabs {
+  position: relative;
   &-aside {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     padding: 24px 16px;
+    border-right: 1px solid var(--border-color);
     & > ul {
-      // @extend .event-enable;
+      li {
+        line-height: 2.0;
+        text-indent: 1em;
+        &:nth-child(n+2) {
+          margin-top: 8px;
+        }
+      }
     }
+  }
+  &-content {
+    flex-grow: 1;
+    padding: 24px 16px;
+    overflow-y: auto
   }
 }

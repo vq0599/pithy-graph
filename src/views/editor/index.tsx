@@ -8,7 +8,7 @@ import { useRoute } from 'vue-router';
 import { IElement } from '@/core';
 import { useEditorStore, usePreziStore } from '@/stores';
 import { calcCanvasRect } from '@/utils/tool';
-
+import JXSlideCaption from '@/components/caption-box';
 import './index.scss';
 
 export default defineComponent({
@@ -22,8 +22,8 @@ export default defineComponent({
     const width = ref(0);
     const height = ref(0);
     const setRect = () => {
-      const containerWidth = window.innerWidth - 220 - 12 * 2 - 240;
-      const containerHeight = window.innerHeight - 60 - 12 * 2;
+      const containerWidth = window.innerWidth - 195 - 16 * 2 - 251;
+      const containerHeight = window.innerHeight - 60 - 16 * 2;
       const rect = calcCanvasRect(containerWidth, containerHeight);
       width.value = rect.width;
       height.value = rect.height;
@@ -53,8 +53,6 @@ export default defineComponent({
       const { workspaceId, slideId } = this;
       // hash记录着默认的打开的slide
       await this.preziStore.initialize(workspaceId, slideId);
-      // this.editorStore.fetchImages();
-      // this.editorStore.fetchVideos();
     },
     handleChange(id: number, changes: Partial<IElement>) {
       this.preziStore.updateElement(id, changes);
@@ -87,6 +85,7 @@ export default defineComponent({
                 readonly={false}
               />
             </div>
+            <JXSlideCaption />
           </main>
           <SlideMenu />
         </div>

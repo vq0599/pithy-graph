@@ -1,0 +1,16 @@
+.jx-slide-caption {
+  padding: 16px;
+  background: #FFF;
+  height: 240px;
+  width: 100%;
+  border: 1px solid var(--border-color);
+  border-bottom: none;
+  textarea {
+    padding: 16px 32px;
+    resize: none;
+    width: 100%;
+    color: inherit;
+    line-height: 1.8;
+    border: none;
+  }
+}

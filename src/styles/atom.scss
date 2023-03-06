@@ -52,7 +52,7 @@
   border-radius: 3px;
   &:hover {
     background-color: var(--blue-secondary);
-    color: var(--blue-primary);
+    // color: var(--blue-primary);
   }
   &.active {
     background-color: var(--blue-active);

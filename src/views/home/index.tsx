@@ -1,4 +1,4 @@
-import { WorkspaceAPI } from '@/api';
+import { SlideAPI, WorkspaceAPI } from '@/api';
 import { IWorkspace } from '@/structs';
 import { defineComponent, ref } from 'vue';
 import { RouterLink } from 'vue-router';
@@ -18,6 +18,13 @@ export default defineComponent({
       const { data: workspaces } = await WorkspaceAPI.getAll();
       this.workspaces = workspaces;
     },
+    async handleClick() {
+      const { data: workspace } = await WorkspaceAPI.create({
+        title: '新项目',
+      });
+      await SlideAPI.create({ workspaceId: workspace.id });
+      this.workspaces.push(workspace);
+    },
   },
   render() {
     return (
@@ -34,6 +41,7 @@ export default defineComponent({
             </RouterLink>
           ))}
         </div>
+        <button onClick={this.handleClick}>创建新项目</button>
       </div>
     );
   },

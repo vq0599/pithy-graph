@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { ResourceAPI } from '@/api';
+// import { ResourceAPI } from '@/api';
 
 interface State {
   menuVisible: Record<string, boolean>;
@@ -17,13 +17,13 @@ export const useEditorStore = defineStore('editor', {
     closeMenu(key: string) {
       this.menuVisible[key] = false;
     },
-    async fetchImages() {
-      const { data: images } = await ResourceAPI.getImages();
-      this.images = images;
-    },
-    async fetchVideos() {
-      const { data: videos } = await ResourceAPI.getVideos();
-      this.videos = videos;
-    },
+    // async fetchImages() {
+    //   const { data: images } = await ResourceAPI.getImages();
+    //   this.images = images;
+    // },
+    // async fetchVideos() {
+    //   const { data: videos } = await ResourceAPI.getVideos();
+    //   this.videos = videos;
+    // },
   },
 });

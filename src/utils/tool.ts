@@ -8,8 +8,10 @@ export const calcCanvasRect = (
   containerWidth: number,
   containerHeight: number
 ) => {
-  const maxWidth = 1920;
-  const maxHeight = 1080;
+  // const maxWidth = 1920;
+  // const maxHeight = 1080;
+  const maxWidth = 800;
+  const maxHeight = 450;
   const canvasRatio = 16 / 9;
 
   let width, height;

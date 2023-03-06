@@ -2,29 +2,12 @@ import { computed, defineComponent, PropType, ref } from 'vue';
 import { JXFlex, JXFlexItem } from '../flex';
 import './index.scss';
 
-const options = [
-  {
-    label: '在线图片',
-    value: 'image',
-    component: <div>hello 在线图片</div>,
-  },
-  {
-    label: '在线视频',
-    value: 'video',
-    component: <div>hello 在线视频</div>,
-  },
-  {
-    label: '我上传的',
-    value: 'my-upload',
-    component: <div>hello 我上传的</div>,
-  },
-];
-
 interface Options {
   label: string;
   value: string;
-  component: JSX.Element;
+  component: JSX.Element | string;
 }
+
 export default defineComponent({
   name: 'jx-tabs',
   props: {
@@ -34,7 +17,7 @@ export default defineComponent({
     },
     options: {
       type: Array as PropType<Options[]>,
-      default: () => options,
+      default: () => [],
     },
     width: {
       type: String,
@@ -44,7 +27,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const currentKey = ref(props.defaultActive || options[0].value);
+    const currentKey = ref(props.defaultActive || props.options[0].value);
     const current = computed(() => {
       return props.options.find((option) => option.value === currentKey.value);
     });
@@ -53,20 +36,30 @@ export default defineComponent({
       current,
     };
   },
+  methods: {
+    handleSelect(value: string) {
+      this.currentKey = value;
+    },
+  },
   render() {
     const { height, width } = this;
     return (
       <JXFlex class="jx-tabs" style={{ width, height }}>
-        <JXFlexItem basis="150px" class="jx-tabs-aside">
+        <JXFlexItem basis="151px" shrink={0} class="jx-tabs-aside">
           <ul class="jx-tabs-menu">
             {this.options.map(({ value, label }) => (
-              <li class={{ active: this.currentKey === value }} key={value}>
+              <li
+                class={['event-enable', { active: this.currentKey === value }]}
+                key={value}
+                onClick={() => this.handleSelect(value)}
+              >
                 {label}
               </li>
             ))}
           </ul>
+          <div>{this.$slots.controller?.()}</div>
         </JXFlexItem>
-        <div>{this.current?.component}</div>
+        <div class="jx-tabs-content">{this.current?.component}</div>
       </JXFlex>
     );
   },

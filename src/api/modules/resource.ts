@@ -1,10 +1,28 @@
 import { http } from '../http';
+import { IResource } from '@/structs';
+import mime from 'mime';
+import { AxiosResponse } from 'axios';
+
+const parseFileType = async (response: Promise<AxiosResponse<IResource[]>>) => {
+  (await response).data.forEach((source) => {
+    source.mimeType = mime.getType(source.fileType.slice(1)) || '';
+  });
+  return response;
+};
 
 export const ResourceAPI = {
-  getImages() {
-    return http.get<string[]>(`/resource/images`);
+  getImageList() {
+    return parseFileType(
+      http.get<IResource[]>(`/resource?extList=.jpg,.jpeg,.png,.webp`)
+    );
   },
-  getVideos() {
-    return http.get<string[]>(`/resource/videos`);
+  getVideoList() {
+    return parseFileType(http.get<IResource[]>(`/resource?extList=.mp4`));
+  },
+  getMediaList() {
+    const exts = ['.jpg,.jpeg,.png,.webp,.mp4'];
+    return parseFileType(
+      http.get<IResource[]>(`/resource?extList=${exts.join()}`)
+    );
   },
 };

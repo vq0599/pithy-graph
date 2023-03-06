@@ -7,11 +7,14 @@ import { mapStores } from 'pinia';
 import './index.scss';
 import {
   JXColorPicker,
-  JXImagePicker,
+  // JXImagePicker,
   JXFlex,
   JXButton,
 } from '@/components/base';
 import { ISlide } from '@/core';
+import JXMediaPicker from '@/components/media-picker';
+import { IResource } from '@/structs';
+import SlideTransition from './transition';
 // import { ElSwitch } from 'element-plus';
 
 export default defineComponent({
@@ -20,16 +23,15 @@ export default defineComponent({
     ...mapStores(usePreziStore),
   },
   methods: {
-    // handleSetColor(color: string) {
-    //   if (color) {
-    //     this.preziStore.setSlideBackground({ color });
-    //   }
-    // },
-    // handleSetImage(options?: MediaSelectOptions) {
-    //   this.preziStore.setSlideBackground({ image: options?.url });
-    // },
     setBackground(options: Partial<ISlide['background']>) {
       this.preziStore.setSlideBackground(options);
+    },
+    handleSelectMedia({ mimeType, url }: IResource) {
+      if (mimeType.startsWith('video')) {
+        this.setBackground({ video: url, image: '' });
+      } else {
+        this.setBackground({ image: url, video: '' });
+      }
     },
   },
   render() {
@@ -54,7 +56,7 @@ export default defineComponent({
               justifyContent="space-between"
             >
               <span>图片/视频</span>
-              <JXImagePicker image={image} />
+              <JXMediaPicker image={image} onSelect={this.handleSelectMedia} />
             </JXFlex>
           </div>
         </div>
@@ -71,9 +73,10 @@ export default defineComponent({
         <div>
           <span>转场动画</span>
           <div class="mt-2">
-            <JXButton width="100%" type="action">
+            {/* <JXButton width="100%" type="action">
               Transition Scene
-            </JXButton>
+            </JXButton> */}
+            <SlideTransition />
           </div>
         </div>
 

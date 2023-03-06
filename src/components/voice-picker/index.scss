@@ -1,0 +1,19 @@
+.jx-voice-picker-modal {
+  height: 340px;
+  width: 500px;
+  overflow-y: auto;
+  li {
+    padding: 5px 16px;
+    &:nth-child(n+2) {
+      margin-top: 8px;
+    }
+    img {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      object-fit: cover;
+      overflow: hidden;
+      border: 1px solid var(--border-color-light);
+    }
+  }
+}
