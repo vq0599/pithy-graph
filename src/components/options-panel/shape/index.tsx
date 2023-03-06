@@ -9,6 +9,10 @@ import {
 } from '../common';
 import { IEShapePayload } from '@/core';
 
+const pickInputValue = (ev: InputEvent) => {
+  return Number((ev.target as HTMLInputElement).value) || 0;
+};
+
 export default defineComponent({
   name: 'jx-shape-panel',
   setup() {
@@ -57,6 +61,16 @@ export default defineComponent({
               modelValue={this.payload.strokeWidth}
               // @ts-ignore
               onBlur={this.handleBlur}
+            />
+          </JXFlexItem>
+        </JXFlex>,
+        <JXFlex class="mt-1" justifyContent="space-between" alignItems="center">
+          <span>圆角</span>
+          <JXFlexItem basis="60px">
+            <JXInput
+              modelValue={this.payload.radius}
+              // @ts-ignore
+              onBlur={(ev) => this.setShape({ radius: pickInputValue(ev) })}
             />
           </JXFlexItem>
         </JXFlex>,

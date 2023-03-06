@@ -29,7 +29,7 @@ const library = [
 ];
 
 export default defineComponent({
-  name: 'pithy-text-menu',
+  name: 'jx-text-menu',
   emits: ['select'],
   setup() {
     const preziStore = usePreziStore();
@@ -63,7 +63,7 @@ export default defineComponent({
   },
   render() {
     return (
-      <div class="pithy-text-menu">
+      <div class="jx-text-menu">
         <ul>
           {library.map(({ fontSize, sample, label, list }) => (
             <li

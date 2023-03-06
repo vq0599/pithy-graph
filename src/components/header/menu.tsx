@@ -1,4 +1,4 @@
-import { defineComponent } from 'vue';
+import { defineComponent, FunctionalComponent } from 'vue';
 import { ElTooltip, ElPopover } from 'element-plus';
 import IconText from '@/assets/svg/text.svg?component';
 import IconImage from '@/assets/svg/image.svg?component';
@@ -8,8 +8,10 @@ import IconRecord from '@/assets/svg/record.svg?component';
 import IconMan from '@/assets/svg/man.svg?component';
 import TextMenu from '@/components/menus/text';
 import ImageMenu from '@/components/menus/image';
+import ShapeMenu from '@/components/menus/shape';
 import AvatarMenu from '@/components/menus/avatar';
 import { useEditorStore } from '@/stores';
+import { IElementTypes } from '@/core';
 
 export default defineComponent({
   name: 'header-menu',
@@ -19,47 +21,43 @@ export default defineComponent({
       editorStore,
     };
   },
+  methods: {
+    renderPopover(
+      type: IElementTypes,
+      label: string,
+      Icon: FunctionalComponent,
+      // 这个咋定义
+      Component: any
+    ) {
+      const { menuVisible } = this.editorStore;
+      return (
+        <ElPopover
+          showArrow={false}
+          trigger="click"
+          width={'auto'}
+          v-model:visible={menuVisible[type]}
+          offset={8}
+          popperStyle={{ padding: 0 }}
+        >
+          {{
+            reference: () => (
+              <li>
+                <Icon />
+                <span>{label}</span>
+              </li>
+            ),
+            default: () => <Component />,
+          }}
+        </ElPopover>
+      );
+    },
+  },
   render() {
-    const { menuVisible } = this.editorStore;
     return (
       <ul class="header-menu">
-        <ElPopover
-          showArrow={false}
-          trigger="click"
-          v-model:visible={menuVisible['TEXT']}
-          offset={8}
-        >
-          {{
-            reference: () => (
-              <li>
-                <IconText />
-                <span>文字</span>
-              </li>
-            ),
-            default: () => <TextMenu />,
-          }}
-        </ElPopover>
-        <ElPopover
-          width={'auto'}
-          trigger="click"
-          v-model:visible={menuVisible['IMAGE']}
-          popperStyle={{ padding: 0 }}
-          showArrow={false}
-        >
-          {{
-            reference: () => (
-              <li>
-                <IconImage />
-                <span>图片</span>
-              </li>
-            ),
-            default: () => <ImageMenu />,
-          }}
-        </ElPopover>
-        <li>
-          <IconShape />
-          <span>图形</span>
-        </li>
+        {this.renderPopover('TEXT', '文字', IconText, TextMenu)}
+        {this.renderPopover('IMAGE', '图片', IconImage, ImageMenu)}
+        {this.renderPopover('SHAPE', '图形', IconShape, ShapeMenu)}
         <ElTooltip content="敬请期待">
           <li>
             <IconVideo />
@@ -72,29 +70,7 @@ export default defineComponent({
             <span>录制</span>
           </li>
         </ElTooltip>
-        {/* <ElTooltip content="敬请期待">
-          <li>
-            <IconMan />
-            <span>数字人</span>
-          </li>
-        </ElTooltip> */}
-        <ElPopover
-          width={'auto'}
-          trigger="click"
-          v-model:visible={menuVisible['AVATAR']}
-          popperStyle={{ padding: 0 }}
-          showArrow={false}
-        >
-          {{
-            reference: () => (
-              <li>
-                <IconMan />
-                <span>数字人</span>
-              </li>
-            ),
-            default: () => <AvatarMenu />,
-          }}
-        </ElPopover>
+        {this.renderPopover('AVATAR', '数字人', IconMan, AvatarMenu)}
       </ul>
     );
   },

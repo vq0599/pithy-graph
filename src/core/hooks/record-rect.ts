@@ -5,7 +5,10 @@ export const useRecordRect = (
   id: number,
   target: Parameters<typeof watch>[0]
 ) => {
-  const { emitChange, readonly } = useInject();
+  const injectData = useInject();
+  // 组件脱离canvas使用，就获取不到了
+  if (!injectData) return;
+  const { emitChange, readonly } = injectData;
   if (readonly.value) return;
   const ins = getCurrentInstance();
 

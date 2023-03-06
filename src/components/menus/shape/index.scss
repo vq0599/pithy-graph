@@ -1,15 +1,13 @@
-.pithy-shape-menu {
-  width: 500px;
-  & > ul {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-
-    &:nth-child(n+2) {
-      margin-top: 15px;
-    }
-    li {
-      display: flex;
+.jx-shape-menu {
+  padding: 24px 16px;
+  .element-wrapper {
+    margin-top: 16px;
+    & > li {
+      zoom: .3;
+      cursor: pointer;
+      &:hover {
+        outline: 1px solid var(--blue-primary);
+      }
     }
   }
 }
