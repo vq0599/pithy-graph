@@ -1,33 +1,44 @@
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { usePreziStore, useEditorStore } from '@/stores';
-import './index.scss';
 import { IEAvatarDisplay } from '@/core';
+import './index.scss';
+import { AvatarAPI } from '@/api/modules/avatar';
+import { IAvatar } from '@/structs';
+import { ElScrollbar } from 'element-plus';
+import { JXImg } from '@/components/base';
 
 export default defineComponent({
   name: 'jx-avatar-menu',
   setup() {
     const preziStore = usePreziStore();
     const editorStore = useEditorStore();
+    const samples = ref<IAvatar[]>([]);
     return {
+      samples,
       preziStore,
       editorStore,
     };
   },
+  mounted() {
+    this.fetchSample();
+  },
   methods: {
-    handleClick(ev: MouseEvent) {
-      const { naturalHeight, naturalWidth, src } =
-        ev.target as HTMLImageElement;
-      this.preziStore.createElement('AVATAR', {
+    async fetchSample() {
+      const { data } = await AvatarAPI.getList();
+      this.samples = data;
+    },
+    handleSelect({ id, headImageUrl, fullImageUrl }: IAvatar) {
+      this.preziStore.createOrUpdateAvatar({
         x: 100,
         y: 500,
-        width: naturalWidth,
-        height: naturalHeight,
+        width: 300,
+        height: 300,
         payload: {
-          display: IEAvatarDisplay.Full,
+          display: IEAvatarDisplay.Circle,
+          relationId: id,
+          headImageUrl,
+          fullImageUrl,
           background: 'rgba(255,255,255,1)',
-          cover: src,
-          naturalHeight,
-          naturalWidth,
         },
       });
       this.editorStore.closeMenu('AVATAR');
@@ -35,13 +46,13 @@ export default defineComponent({
   },
   render() {
     return (
-      <div class="jx-avatar-menu">
-        <img
-          onClick={this.handleClick}
-          src="https://www.jianxing.top/file_statics/4e5c9423-d5c5-439d-879e-1fea35482d10.png"
-          alt=""
-        />
-      </div>
+      <ElScrollbar class="jx-avatar-menu" tag="ul" height={300}>
+        {this.samples.map((avatar) => (
+          <li onClick={() => this.handleSelect(avatar)}>
+            <JXImg src={avatar.headImageUrl} width={100} height={100} />
+          </li>
+        ))}
+      </ElScrollbar>
     );
   },
 });

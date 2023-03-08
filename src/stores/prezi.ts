@@ -6,7 +6,7 @@ import {
   AIWorkspaceForm,
   AISlideForm,
 } from '@/api';
-import { IElement, IElementTypes, ISlide } from '@/core';
+import { IEAvatar, IElement, IElementTypes, ISlide } from '@/core';
 import { IWorkspace } from '@/structs';
 import { router } from '@/router';
 import { encode } from '@/utils/encryption';
@@ -111,6 +111,19 @@ export const usePreziStore = defineStore('prezi', {
       const background = Object.assign(this.currentSlide!.background, options);
       this.updateSlide({ background });
     },
+    async createOrUpdateAvatar(options: Partial<IEAvatar>) {
+      const oldAvatar = this.elements.find((v) => v.type === 'AVATAR');
+      if (oldAvatar) {
+        this.updateElement(oldAvatar.id, {
+          payload: {
+            headImageUrl: options.payload?.headImageUrl,
+            fullImageUrl: options.payload?.fullImageUrl,
+          },
+        });
+      } else {
+        await this.createElement('AVATAR', options);
+      }
+    },
     async createElement(type: IElementTypes, options: Partial<IElement>) {
       const { data: newElement } = await ElementAPI.create(
         this.currentSlideId,
@@ -120,7 +133,7 @@ export const usePreziStore = defineStore('prezi', {
       this.currentSlide?.elements.push(newElement);
       this.currentElementId = newElement.id;
     },
-    async updateElement(id: number, options: Partial<IElement>) {
+    updateElement(id: number, options: Partial<IElement>) {
       const target = this.elements.find((el) => el.id === id);
       if (!target) return;
       for (const _key in options) {

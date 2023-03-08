@@ -10,10 +10,10 @@
       display: flex;
       cursor: pointer;
       &:hover {
-        background-color: var(--blur-hover);
+        background-color: var(--blue-hover);
       }
       &.active {
-        background-color: var(--blur-active);
+        background-color: var(--blue-active);
       }
       img {
         object-fit: cover;

@@ -16,30 +16,27 @@ export default defineComponent({
       if (display === IEAvatarDisplay.Circle) {
         return {
           background,
-          transform: `translateX(calc(-50% + ${this.data.width / 2}px))`,
         };
       }
       return {};
     },
-    imageStyles(): CSSProperties {
-      const { display } = this.data.payload;
-      if (display === IEAvatarDisplay.Circle) {
-        return {
-          transform: `translateX(calc(-50% + ${this.data.width / 2}px))`,
-        };
-      }
-      return {};
+    src() {
+      const { headImageUrl, fullImageUrl, display } = this.data.payload;
+      return {
+        [IEAvatarDisplay.Circle]: headImageUrl,
+        [IEAvatarDisplay.Full]: fullImageUrl,
+        [IEAvatarDisplay.Voice]: '',
+      }[display];
     },
   },
   render() {
-    const { cover, display } = this.data.payload;
-    if (display === IEAvatarDisplay.Voice) return null;
+    const { display } = this.data.payload;
     return (
       <div
         style={this.styles}
         class={['jx-element-avatar', `jx-element-avatar-${display}`]}
       >
-        <img style={this.imageStyles} src={cover} />
+        {this.src && <img src={this.src} />}
       </div>
     );
   },

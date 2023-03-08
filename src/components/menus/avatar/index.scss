@@ -1,17 +1,27 @@
 .jx-avatar-menu {
-  position: relative;
-  display: flex;
-  padding: 24px 16px;
-  gap: 8px;
-  img {
-    width: 160px;
-    height: 90px;
-    border-radius: 3px;
-    overflow: hidden;
-    cursor: pointer;
-    border: 1px solid var(--border-color-light);
-    &:hover {
-      border-color: var(--blue-primary);
+  padding: 20px 12px;
+  ul {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    padding: 4px;
+    gap: 16px;
+    li {
+      display: flex;
+      width: 100px;
+      height: 100px;
+      border-radius: 5px;
+      background: #EFEFEF;
+      cursor: pointer;
+      &:hover {
+        box-shadow: var(--blue-box-shadow);
+      }
+      &.active {
+        box-shadow: var(--blue-box-shadow-border);
+      }
+      img {
+        width: 100%;
+        height: 100%;
+      }
     }
   }
 }

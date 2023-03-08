@@ -17,23 +17,25 @@ export enum IEAvatarDisplay {
 
 export interface IEAvatarPayload {
   /**
+   * 对应模型的数据库ID
+   */
+  relationId: number;
+  /**
    * 展示类型
    */
   display: IEAvatarDisplay;
   /**
-   * 实例图片地址
+   * 头像图片地址
    */
-  cover: string;
+  headImageUrl: string;
+  /**
+   * 全身图片地址
+   */
+  fullImageUrl: string;
   /**
    * 圆头像时的背景色
    */
-  background?: string;
-  /**
-   * 素材本身的高度
-   */
-  naturalHeight: number;
-
-  naturalWidth: number;
+  background: string;
 }
 
 export type IEAvatar = IElement<'AVATAR', IEAvatarPayload>;

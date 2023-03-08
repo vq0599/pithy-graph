@@ -70,7 +70,6 @@ export default defineComponent({
   },
   render() {
     if (!this.samples.length) return null;
-    console.log(this.fillSamples, this.strokeSamples, this.lineSamples);
     return (
       <div class="jx-shape-menu">
         <div>

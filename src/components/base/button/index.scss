@@ -35,7 +35,7 @@
       background-color: #FFF;
     }
     &:hover {
-      box-shadow: #505dfb80 0px 0px 3px 1px;
+      box-shadow: var(--blue-box-shadow);
     }
     .action-icon {
       position: absolute;

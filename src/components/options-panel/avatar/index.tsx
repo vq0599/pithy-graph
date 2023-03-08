@@ -8,6 +8,7 @@ import IconAvatarVoice from '@/assets/svg/avatar-voice.svg?component';
 import { JXColorPicker, JXFlex } from '@/components/base';
 import './index.scss';
 import { IEAvatarDisplay, IEAvatarPayload } from '@/core';
+import { ResourceAPI } from '@/api';
 
 const list = [
   { value: IEAvatarDisplay.Full, label: '全身', Icon: IconAvatarFull },
@@ -32,16 +33,25 @@ export default defineComponent({
       const { currentElementId, updateElement } = this.preziStore;
       updateElement(currentElementId, { payload });
     },
-    setDisplay(display: IEAvatarDisplay) {
+    async setDisplay(display: IEAvatarDisplay) {
       const { currentElementId, updateElement } = this.preziStore;
-      const { naturalHeight, naturalWidth } = this.payload;
+      const { headImageUrl, fullImageUrl } = this.payload;
       if (display === IEAvatarDisplay.Circle) {
-        const rect = Math.round(naturalHeight / 2);
-        updateElement(currentElementId, { width: rect, height: rect });
-      } else if (display === IEAvatarDisplay.Full) {
+        const {
+          data: { width, height },
+        } = await ResourceAPI.getImageInfo(headImageUrl);
+        console.log(width, height);
         updateElement(currentElementId, {
-          width: naturalWidth,
-          height: naturalHeight,
+          width: 300,
+          height: (300 / width) * height,
+        });
+      } else if (display === IEAvatarDisplay.Full) {
+        const {
+          data: { width, height },
+        } = await ResourceAPI.getImageInfo(fullImageUrl);
+        updateElement(currentElementId, {
+          width: 500,
+          height: (500 / width) * height,
         });
       }
       this.setPayload({ display });

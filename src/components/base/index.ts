@@ -6,3 +6,4 @@ export { default as JXSelect } from './select';
 export { default as JXColorPicker } from './color-picker';
 export { default as JXIconRadio } from './icon-radio';
 export { default as JXTabs } from './tabs';
+export { default as JXImg } from './img';
