@@ -3,8 +3,10 @@ import { usePreziStore } from '@/stores';
 import { IVoice } from '@/structs';
 import { ElDialog } from 'element-plus';
 import { computed, defineComponent, onMounted, ref } from 'vue';
-import { JXButton } from '../base';
+import { JXButton, JXFlex } from '../base';
 import VoiceItem from './voice-item';
+import IconMale from '@/assets/svg/male.svg?component';
+import IconFemale from '@/assets/svg/female.svg?component';
 import './index.scss';
 
 export default defineComponent({
@@ -22,12 +24,12 @@ export default defineComponent({
       }
     };
     const fetchVoiceList = async () => {
+      if (options.value.length) return;
       const { data } = await VoiceAPI.getList();
       options.value = data;
     };
     onMounted(async () => {
       fetchCurrentVoice();
-      fetchVoiceList();
     });
     const text = computed(() => {
       if (!current.value) return '选择播音员';
@@ -40,6 +42,7 @@ export default defineComponent({
       visible,
       options,
       preziStore,
+      fetchVoiceList,
     };
   },
   methods: {
@@ -48,23 +51,37 @@ export default defineComponent({
       this.preziStore.updateWorkspace({ voice: String(voice.id) });
       this.visible = false;
     },
-  },
-  render() {
-    return (
-      <div>
+    renderTrigger() {
+      if (!this.current) return '选择播音员';
+      const { gender, country, language, nickname } = this.current;
+      return (
         <JXButton
-          width="150px"
+          width="200px"
           type="action"
           active={this.visible}
           // @ts-ignore
           onClick={() => (this.visible = true)}
         >
-          {this.text}
+          <span class="mr-2">
+            {country} - {language}
+          </span>
+          <JXFlex tag="span" inline alignItems="center">
+            {gender === 'male' ? <IconMale /> : <IconFemale />}
+            <span class="ml-1">{nickname}</span>
+          </JXFlex>
         </JXButton>
+      );
+    },
+  },
+  render() {
+    return (
+      <div>
+        {this.renderTrigger()}
         <ElDialog
           closeOnPressEscape={false}
           closeOnClickModal={false}
           v-model={this.visible}
+          onOpen={this.fetchVoiceList}
           title="选择播音员"
           class="jx-voice-picker-modal"
         >

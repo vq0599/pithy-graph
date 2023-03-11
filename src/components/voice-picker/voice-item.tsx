@@ -3,6 +3,8 @@ import { ElIcon } from 'element-plus';
 import { defineComponent, onMounted, PropType, ref } from 'vue';
 import { JXFlex, JXFlexItem } from '../base';
 import { VideoPause, VideoPlay } from '@element-plus/icons-vue';
+import IconMale from '@/assets/svg/male.svg?component';
+import IconFemale from '@/assets/svg/female.svg?component';
 import './index.scss';
 
 export default defineComponent({
@@ -42,7 +44,7 @@ export default defineComponent({
     },
   },
   render() {
-    const { country, language, nickname, avatarUrl, previewUrl, scene } =
+    const { country, language, nickname, previewUrl, scene, gender } =
       this.voice;
     return (
       <JXFlex
@@ -56,7 +58,7 @@ export default defineComponent({
             {country}-{language}
           </JXFlexItem>
           <JXFlex inline alignItems="center" style={{ flexShrink: 0 }}>
-            <img src={avatarUrl} />
+            {gender === 'male' ? <IconMale /> : <IconFemale />}
             <span class="ml-1">{nickname}</span>
           </JXFlex>
         </JXFlex>
