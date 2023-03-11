@@ -1,10 +1,9 @@
-// import { VoiceAPI } from '@/api/modules/voice';
 import { usePreziStore } from '@/stores';
 import { IVoice } from '@/structs';
 import { ElSwitch } from 'element-plus';
 import { computed, defineComponent, ref } from 'vue';
-import { JXFlex } from '../base';
-import JXVoicePicker from '@/components/voice-picker';
+import { JXFlex } from '@/components/base';
+import JXVoicePicker from '@/components/editor/voice-picker';
 import './index.scss';
 
 export default defineComponent({
@@ -40,7 +39,6 @@ export default defineComponent({
     return (
       <div class="jx-slide-caption">
         <JXFlex justifyContent="space-between" alignItems="center">
-          {/* <button>语音选择 - {this.voice?.nickname}</button> */}
           <JXVoicePicker />
           <JXFlex alignItems="center">
             <span class="mr-1">字幕</span>

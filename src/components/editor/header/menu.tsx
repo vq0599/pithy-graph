@@ -6,10 +6,10 @@ import IconShape from '@/assets/svg/shape.svg?component';
 import IconVideo from '@/assets/svg/video.svg?component';
 import IconRecord from '@/assets/svg/record.svg?component';
 import IconMan from '@/assets/svg/man.svg?component';
-import TextMenu from '@/components/menus/text';
-import ImageMenu from '@/components/menus/image';
-import ShapeMenu from '@/components/menus/shape';
-import AvatarMenu from '@/components/menus/avatar';
+import TextMenu from '../menus/text';
+import ImageMenu from '../menus/image';
+import ShapeMenu from '../menus/shape';
+import AvatarMenu from '../menus/avatar';
 import { useEditorStore } from '@/stores';
 import { IElementTypes } from '@/core';
 

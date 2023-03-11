@@ -1,21 +1,12 @@
 import { defineComponent } from 'vue';
-// import PithyImagePicker from '@/components/image-picker';
-// import PithyColorPicker from '@/components/color-picker';
-// import { MediaSelectOptions } from '@/structs';
 import { usePreziStore } from '@/stores/prezi';
 import { mapStores } from 'pinia';
-import './index.scss';
-import {
-  JXColorPicker,
-  // JXImagePicker,
-  JXFlex,
-  JXButton,
-} from '@/components/base';
+import { JXColorPicker, JXFlex, JXButton } from '@/components/base';
 import { ISlide } from '@/core';
-import JXMediaPicker from '@/components/media-picker';
+import JXMediaPicker from '../../media-picker';
 import { IResource } from '@/structs';
 import SlideTransition from './transition';
-// import { ElSwitch } from 'element-plus';
+import './index.scss';
 
 export default defineComponent({
   name: 'jx-slide-panel',
@@ -73,21 +64,9 @@ export default defineComponent({
         <div>
           <span>转场动画</span>
           <div class="mt-2">
-            {/* <JXButton width="100%" type="action">
-              Transition Scene
-            </JXButton> */}
             <SlideTransition />
           </div>
         </div>
-
-        {/* <div class="panel-form">
-          <span>背景色</span>
-          <PithyColorPicker color={color} onSelect={this.handleSetColor} />
-        </div>
-        <div class="panel-form">
-          <span>背景图片</span>
-          <PithyImagePicker url={image} onSelect={this.handleSetImage} />
-        </div> */}
       </div>
     );
   },

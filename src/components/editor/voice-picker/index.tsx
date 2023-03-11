@@ -3,7 +3,7 @@ import { usePreziStore } from '@/stores';
 import { IVoice } from '@/structs';
 import { ElDialog } from 'element-plus';
 import { computed, defineComponent, onMounted, ref } from 'vue';
-import { JXButton, JXFlex } from '../base';
+import { JXButton, JXFlex } from '@/components/base';
 import VoiceItem from './voice-item';
 import IconMale from '@/assets/svg/male.svg?component';
 import IconFemale from '@/assets/svg/female.svg?component';

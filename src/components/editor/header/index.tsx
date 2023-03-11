@@ -1,9 +1,6 @@
 import { defineComponent, ref } from 'vue';
-import { ElPopover, ElIcon, ElPopper } from 'element-plus';
+import { ElIcon } from 'element-plus';
 import { ArrowLeft, ArrowDown } from '@element-plus/icons-vue';
-// import TextMenu from '@/components/menus/text';
-// import ShapeMenu from '@/components/menus/shape';
-// import ImageMenu from '@/components/menus/image';
 import { RouterLink } from 'vue-router';
 import IconPlay from '@/assets/svg/play.svg?component';
 import { useEditorStore, usePreziStore } from '@/stores';
@@ -13,7 +10,7 @@ import HeaderMenu from './menu';
 import './index.scss';
 
 export default defineComponent({
-  name: 'pithy-editor-header',
+  name: 'jx-editor-header',
   setup() {
     const editorStore = useEditorStore();
     const preziStore = usePreziStore();
@@ -41,9 +38,9 @@ export default defineComponent({
   },
   render() {
     return (
-      <header class="pithy-editor-header">
+      <header class="jx-editor-header">
         <div class="header-left">
-          <RouterLink to="/">
+          <RouterLink to="/dashboard">
             <JXIconButton size="l">
               <ElIcon>
                 <ArrowLeft />

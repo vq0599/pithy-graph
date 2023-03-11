@@ -3,7 +3,7 @@ import { defineComponent, ref } from 'vue';
 // import { IElementTypes } from '@/core';
 import { usePreziStore, useEditorStore } from '@/stores';
 import { JXTabs, JXButton } from '@/components/base';
-import JXMediaList from '@/components/media-list';
+import JXMediaList from '@/components/editor/media-list';
 import { IResource } from '@/structs';
 import { ElUpload } from 'element-plus';
 import { http } from '@/api';

@@ -1,8 +1,8 @@
 import { defineComponent, ref } from 'vue';
 import { ElPopover, ElUpload } from 'element-plus';
-import { JXButton, JXTabs } from '../base';
+import { JXButton, JXTabs } from '@/components/base';
 import { http } from '@/api';
-import JXMediaList from '@/components/media-list';
+import JXMediaList from '@/components/editor/media-list';
 import { IResource } from '@/structs';
 import './index.scss';
 

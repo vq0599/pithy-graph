@@ -1,7 +1,7 @@
 import { IVoice } from '@/structs';
 import { ElIcon } from 'element-plus';
 import { defineComponent, onMounted, PropType, ref } from 'vue';
-import { JXFlex, JXFlexItem } from '../base';
+import { JXFlex, JXFlexItem } from '@/components/base';
 import { VideoPause, VideoPlay } from '@element-plus/icons-vue';
 import IconMale from '@/assets/svg/male.svg?component';
 import IconFemale from '@/assets/svg/female.svg?component';

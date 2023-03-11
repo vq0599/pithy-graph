@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '@/views/home';
+import DashboardView from '@/views/dashboard';
 import NotFoundView from '@/views/not-found';
 
 export const router = createRouter({
@@ -9,6 +10,11 @@ export const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
+    },
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: DashboardView,
     },
     {
       path: '/editor/:id(\\d+)',

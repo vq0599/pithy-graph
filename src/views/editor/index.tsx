@@ -1,14 +1,14 @@
 import { defineComponent, onMounted, onUnmounted, ref } from 'vue';
 import Canvas from '@/core/components/canvas';
-import Sidebar from '@/components/sidebar';
-import Header from '@/components/header';
-import SlideMenu from '@/components/options-panel';
+import Sidebar from '@/components/editor/sidebar';
+import Header from '@/components/editor/header';
+import OptionPanel from '@/components/editor/options-panel';
 import { decode } from '@/utils/encryption';
 import { useRoute } from 'vue-router';
 import { IElement } from '@/core';
 import { useEditorStore, usePreziStore } from '@/stores';
 import { calcCanvasRect } from '@/utils/tool';
-import JXSlideCaption from '@/components/caption-box';
+import JXSlideCaption from '@/components/editor/caption-box';
 import './index.scss';
 
 export default defineComponent({
@@ -87,7 +87,7 @@ export default defineComponent({
             </div>
             <JXSlideCaption />
           </main>
-          <SlideMenu />
+          <OptionPanel />
         </div>
       </div>
     );
