@@ -1,0 +1,62 @@
+.jx-auth-box {
+  background: #FFF;
+  width: 450px;
+  padding: 60px 42px;
+  border-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .box-title {
+    color: #3D3D3D;
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 40px;
+  }
+  .box-form {
+    & > * {
+      margin-top: 30px;
+    }
+  }
+  input {
+    display: inline-block;
+    width: 100%;
+    height: 45px;
+    border: 0;
+    padding: 0 1.5em;
+    background-color: #F5F7FA;
+    &::placeholder {
+      color: #CBCBCB;
+    }
+  }
+  .box-submit-button {
+    height: 45px;
+    font-weight: 500;
+    margin-top: 40px;
+    font-size: 16px;
+    letter-spacing: 1px;
+  }
+
+  .box-tips {
+    margin-top: 16px;
+    a {
+      color: #5A72DD;
+      cursor: pointer;
+    }
+  }
+  .box-ver-code {
+    display: flex;
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-basis: 108px;
+      flex-shrink: 0;
+      border: 0;
+      margin-left: 16px;
+      border: 1px solid var(--border-color-light);
+      background-color: #FFF;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  }
+}

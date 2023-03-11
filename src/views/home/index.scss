@@ -1,4 +1,25 @@
 .jx-home-page {
-  
+  width: 100vw;
+  height: 100vh;
+  background-image: url('https://static.zcool.cn/passport4.0/images/login-geng.jpg'); 
+  background-size: cover;
+  header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 16px;
+    align-items: center;
+    a {
+      color: #FFF;
+      font-size: 20px;
+    }
+    img {
+      height: 80px;
+    }
+  }
+  main {
+    padding-top: 80px;
+    display: flex;
+    justify-content: center;
+  }
 }
 
