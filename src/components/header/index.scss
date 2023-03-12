@@ -2,7 +2,20 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
   border-bottom: 1px solid var(--border-color);
-  height: var(--editor-header-height);
-  padding: 0 20px;
+  height: 62px;
+  padding: 0 16px;
+  &-logo {
+    height: 56px;
+  }
+  &-action {
+    display: flex;
+    align-items: center;
+  }
+  &-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+  }
 }

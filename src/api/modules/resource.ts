@@ -12,6 +12,11 @@ const parseFileType = async (response: Promise<AxiosResponse<IResource[]>>) => {
 };
 
 export const ResourceAPI = {
+  upload(file: File) {
+    const form = new FormData();
+    form.append('file', file);
+    return http.post('/resource/upload', form);
+  },
   getImageList() {
     return parseFileType(
       http.get<IResource[]>(`/resource?extList=.jpg,.jpeg,.png,.webp`)

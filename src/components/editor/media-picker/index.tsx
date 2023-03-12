@@ -1,7 +1,7 @@
 import { defineComponent, ref } from 'vue';
-import { ElPopover, ElUpload } from 'element-plus';
+import { ElPopover, ElUpload, UploadRequestOptions } from 'element-plus';
 import { JXButton, JXTabs } from '@/components/base';
-import { http } from '@/api';
+import { ResourceAPI } from '@/api';
 import JXMediaList from '@/components/editor/media-list';
 import { IResource } from '@/structs';
 import './index.scss';
@@ -25,6 +25,9 @@ export default defineComponent({
   methods: {
     handleUploadSuccess() {
       this.contentRef?.reload();
+    },
+    handleRequest({ file }: UploadRequestOptions) {
+      return ResourceAPI.upload(file);
     },
     handleSelect(resource: IResource) {
       this.$emit('select', resource);
@@ -65,9 +68,9 @@ export default defineComponent({
             controller: () => (
               <ElUpload
                 showFileList={false}
-                action={`${http.getUri()}/resource/upload`}
                 onSuccess={this.handleUploadSuccess}
                 accept="image/*,video/*"
+                httpRequest={this.handleRequest}
               >
                 <JXButton width="118px" type="primary">
                   上传

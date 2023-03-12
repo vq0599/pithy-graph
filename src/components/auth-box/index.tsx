@@ -2,18 +2,21 @@ import { UserAPI } from '@/api/modules/user';
 import { ElMessage } from 'element-plus';
 import { defineComponent, ref } from 'vue';
 import { JXButton } from '../base';
+import { useStorage } from '@vueuse/core';
+import { STORAGE_TOKEN_KEY } from '@/utils/constants';
 import './index.scss';
 
 export default defineComponent({
   name: 'jx-auth-box',
   setup() {
-    const status = ref<'login' | 'register'>('register');
+    const status = ref<'login' | 'register'>('login');
     const account = ref('');
     const password = ref('');
     const invitedByCode = ref('');
     const verificationCode = ref('');
-
+    const token = useStorage(STORAGE_TOKEN_KEY, '');
     return {
+      token,
       status,
       account,
       password,
@@ -23,9 +26,17 @@ export default defineComponent({
   },
 
   methods: {
-    handleLogin() {
-      ElMessage.error('暂未取到短信验证码签名，明天再来看看吧');
-      // UserAPI.login(this.account, this.password);
+    async handleLogin() {
+      const { data } = await UserAPI.login(this.account, this.password);
+      if (data.code) {
+        ElMessage.error(data.message);
+        return;
+      }
+      this.token = data.data.token;
+      ElMessage.success('登录成功~');
+      setTimeout(() => {
+        this.$router.push('/dashboard');
+      }, 1000);
     },
     handleRegister() {
       ElMessage.error('暂未取到短信验证码签名，明天再来看看吧');

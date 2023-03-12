@@ -1,12 +1,10 @@
 import { defineComponent, ref } from 'vue';
-// import MediaLibrary from '@/components/media-library';
-// import { IElementTypes } from '@/core';
 import { usePreziStore, useEditorStore } from '@/stores';
 import { JXTabs, JXButton } from '@/components/base';
 import JXMediaList from '@/components/editor/media-list';
 import { IResource } from '@/structs';
-import { ElUpload } from 'element-plus';
-import { http } from '@/api';
+import { ElUpload, UploadRequestOptions } from 'element-plus';
+import { ResourceAPI } from '@/api';
 import './index.scss';
 
 export default defineComponent({
@@ -22,6 +20,9 @@ export default defineComponent({
     };
   },
   methods: {
+    handleRequest({ file }: UploadRequestOptions) {
+      return ResourceAPI.upload(file);
+    },
     handleUploadSuccess() {
       this.contentRef?.reload();
     },
@@ -81,9 +82,9 @@ export default defineComponent({
           controller: () => (
             <ElUpload
               showFileList={false}
-              action={`${http.getUri()}/resource/upload`}
               onSuccess={this.handleUploadSuccess}
               accept="image/*"
+              httpRequest={this.handleRequest}
             >
               <JXButton width="118px" type="primary">
                 上传

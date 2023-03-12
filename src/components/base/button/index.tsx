@@ -1,6 +1,6 @@
 import { ElIcon } from 'element-plus';
 import { ArrowDown } from '@element-plus/icons-vue';
-import { defineComponent, PropType, EmitsOptions } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import './index.scss';
 
 export default defineComponent({

@@ -2,6 +2,7 @@ import { SlideAPI, WorkspaceAPI } from '@/api';
 import { IWorkspace } from '@/structs';
 import { defineComponent, ref } from 'vue';
 import { RouterLink } from 'vue-router';
+import JXHeader from '@/components/header';
 import './index.scss';
 
 export default defineComponent({
@@ -29,6 +30,7 @@ export default defineComponent({
   render() {
     return (
       <div class="jx-dashboard-page">
+        <JXHeader />
         <div class="workspace-list">
           {this.workspaces.map(({ id, title }) => (
             <RouterLink
@@ -41,7 +43,7 @@ export default defineComponent({
             </RouterLink>
           ))}
         </div>
-        <button onClick={this.handleClick}>创建新项目</button>
+        {/* <button onClick={this.handleClick}>创建新项目</button> */}
       </div>
     );
   },

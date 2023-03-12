@@ -1,5 +1,5 @@
 export interface IAvatar {
-  id: 1;
+  id: number;
   fullImageUrl: string;
   headImageUrl: string;
 }
